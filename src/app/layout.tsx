@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
+import { AppContext } from "@/app/context";
 import "./globals.css";
+import Navbar from "@/components/common/Navbar";
 
 export const metadata: Metadata = {
   title: "Youtube",
@@ -16,7 +17,14 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body>{children}</body>
+        <body>
+          <AppContext>
+            <div className="w-full min-h-screen bg-black">
+              <Navbar />
+              <>{children}</>
+            </div>
+          </AppContext>
+        </body>
       </html>
     </ClerkProvider>
   );

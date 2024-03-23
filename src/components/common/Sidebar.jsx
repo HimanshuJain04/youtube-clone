@@ -1,15 +1,12 @@
 "use client"
 
 import React from "react";
-import { categories } from "../assets/constants";
+import { categories } from "@/constant/Sidebar";
 import { useContext } from "react";
-import { Context } from "../Context";
+import { Context } from "@/app/context";
 
 function SideBar() {
     const { category, setCategory, showSideBar } = useContext(Context);
-
-    console.log(showSideBar);
-
 
     return (
         <div className={`overflow-y-auto text-white  z-10 top-[60px]  fixed scroll-smooth  h-full bg-black px-2 pb-10 scrollbar-none transition-all duration-200 ease-in-out hover:scrollbar-thin scrollbar-track-transparent scrollbar-thumb-[white]/[0.5] ` + (showSideBar ? " w-[230px] block" : " w-[100px] md:block hidden")}>
