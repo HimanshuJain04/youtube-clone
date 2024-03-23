@@ -12,26 +12,62 @@ datasource db {
 // psql -h localhost -d postgres -U postgres
 // npx prisma generate
 
+model User {
+  id             Int        @id @default(autoincrement())
+  email          String     @unique
+  userName       String     @unique
+  name           String?
+  password       String?
+  profileImage   String?
+  coverImage     String?
+  description    String?
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @default(now())
+  viewedVideos   Video[]    @relation("Viewers")
+  likedVideos    Video[]    @relation("Likers")
+  dislikedVideos Video[]    @relation("Dislikers")
+  authoredVideos Video[]    @relation("Author")
+  Playlist       Playlist[]
+  Comment        Comment[]
+}
+
 model Video {
-  user            Int
+  id              Int        @id @default(autoincrement())
+  userId          Int
   duration        Int
   url             String
   description     String
   title           String
   thumbnail       String
-  isAgeRestricted Boolean
-  createdAt       DateTime
-  updatedAt       DateTime
+  isAgeRestricted Boolean    @default(false)
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @default(now())
   tags            String[]
-  comments        Comment[]
-  views           User[]    @relation(name: "Views")
-  likes           User[]    @relation(name: "Likes")
-  dislikes        User[]    @relation(name: "Dislikes")
-  id              Int       @id @default(autoincrement())
-  author          User      @relation(name: "Author", fields: [user], references: [id])
+  comments        Int[]
+  viewers         User[]     @relation("Viewers")
+  likers          User[]     @relation("Likers")
+  dislikers       User[]     @relation("Dislikers")
+  author          User       @relation("Author", fields: [userId], references: [id])
+  playlists       Playlist[] @relation("Videos")
+  Comment         Comment[]
+}
+
+model Playlist {
+  id          Int      @id @default(autoincrement())
+  userId      Int
+  title       String
+  description String
+  createdAt   DateTime
+  updatedAt   DateTime
+  author      User     @relation(fields: [userId], references: [id])
+  videos      Video[]  @relation("Videos")
 }
 
 model Comment {
-  Video   Video? @relation(fields: [videoId], references: [id])
-  videoId Int?
+  id      Int    @id @default(autoincrement())
+  videoId Int
+  content String
+  userId  Int
+  video   Video  @relation(fields: [videoId], references: [id])
+  user    User   @relation(fields: [userId], references: [id])
 }
