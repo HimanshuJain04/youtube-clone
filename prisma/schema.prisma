@@ -1,0 +1,37 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// npx prisma migrate dev --name Initialize the schema
+
+// psql -h localhost -d postgres -U postgres
+// npx prisma generate
+
+model Video {
+  user            Int
+  duration        Int
+  url             String
+  description     String
+  title           String
+  thumbnail       String
+  isAgeRestricted Boolean
+  createdAt       DateTime
+  updatedAt       DateTime
+  tags            String[]
+  comments        Comment[]
+  views           User[]    @relation(name: "Views")
+  likes           User[]    @relation(name: "Likes")
+  dislikes        User[]    @relation(name: "Dislikes")
+  id              Int       @id @default(autoincrement())
+  author          User      @relation(name: "Author", fields: [user], references: [id])
+}
+
+model Comment {
+  Video   Video? @relation(fields: [videoId], references: [id])
+  videoId Int?
+}
