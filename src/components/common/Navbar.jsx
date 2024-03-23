@@ -28,14 +28,13 @@ export default function Navbar() {
         {/* Logo and Hamburger */}
         <div className={`justify-center gap-5 items-center flex`}>
           <IconHover Icon={NavIcons.RxHamburgerMenu} handler={() => { setShowSeachBar(!showSeachBar) }} />
-          <div className="cursor-pointer select-none flex relative justify-center items-center">
-            <Link href="/">
-              <Image src={NavIcons.ytLogo} alt="youtube-logo" className="h-[35px] w-auto object-contain" />
-            </Link>
+
+          <Link href="/" className="cursor-pointer select-none flex relative justify-center items-center">
+            <Image src={NavIcons.ytLogo} alt="youtube-logo" className="h-[35px] w-auto object-contain" />
             <p className="lg:block hidden font-bold  text-[25px]">
               YouTube
             </p>
-          </div>
+          </Link>
         </div>
 
 
@@ -43,7 +42,6 @@ export default function Navbar() {
         <div className={`sm:flex  justify-center w-full sm:w-[75vw] md:w-[50vw] items-center gap-5 ` + (showSeachBar ? " flex" : " hidden")}>
 
           {/* SearchBar */}
-
           <div className="flex items-center w-full justify-between h-[40px]">
 
             {/* SearchBar */}
