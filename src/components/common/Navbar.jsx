@@ -6,7 +6,8 @@ import { useState } from "react";
 import { useContext } from "react";
 import { Context } from "@/app/context";
 import { NavIcons } from "@/constant/Icons";
-
+import IconHover from "@/components/common/IconHover";
+import Link from "next/link";
 
 export default function Navbar() {
 
@@ -21,17 +22,17 @@ export default function Navbar() {
   return (
 
     <div className="w-full flex justify-center  items-start">
-      <div className="text-white h-[80px] w-full px-5">
+      <div className="text-white flex items-center justify-between py-2 h-[80px] w-full px-5">
 
 
         {/* Logo and Hamburger */}
-        <div className={`justify-center items-center ` + (!showSeachBar ? " flex" : " hidden")}>
-          <div onClick={() => { setShowSideBar(!showSideBar) }} className="p-3  rounded-full transition-all duration-200 ease-in-out hover:bg-[white]/[0.2] cursor-pointer">
-            <NavIcons.RxHamburgerMenu className="text-xl " />
-          </div>
-          <div className="cursor-pointer select-none h-[65px] flex relative justify-center items-center">
-            <Image src={NavIcons.ytLogo} alt="youtube-logo" className="h-full " />
-            <p className="lg:block hidden font-bold absolute text-xl left-16">
+        <div className={`justify-center gap-5 items-center flex`}>
+          <IconHover Icon={NavIcons.RxHamburgerMenu} handler={() => { setShowSeachBar(!showSeachBar) }} />
+          <div className="cursor-pointer select-none flex relative justify-center items-center">
+            <Link href="/">
+              <Image src={NavIcons.ytLogo} alt="youtube-logo" className="h-[35px] w-auto object-contain" />
+            </Link>
+            <p className="lg:block hidden font-bold  text-[25px]">
               YouTube
             </p>
           </div>
@@ -124,7 +125,7 @@ export default function Navbar() {
 
 
       </div>
-    </div>
+    </div >
   );
 }
 

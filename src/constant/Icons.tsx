@@ -1,7 +1,7 @@
 "use client";
 
 import { RxHamburgerMenu } from "react-icons/rx";
-import ytLogo from "/public/yt.png";
+import ytLogo from "/public/logo.png";
 import { AiOutlineSearch, AiOutlineVideoCameraAdd } from "react-icons/ai";
 import { CiBellOn } from "react-icons/ci";
 import { VscAccount } from "react-icons/vsc";
