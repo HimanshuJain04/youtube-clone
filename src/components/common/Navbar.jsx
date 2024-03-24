@@ -21,7 +21,6 @@ export default function Navbar() {
     <div className="w-full flex sticky mb-3 top-0 z-10 bg-black justify-center items-start overflow-hidden">
       <div className="text-white flex items-center justify-between pt-2 pb-5 h-[60px] w-full px-5">
 
-
         {/* Logo and Hamburger */}
         <div className={`justify-center gap-5 items-center flex`}>
           <IconHover Icon={NavIcons.RxHamburgerMenu} handler={() => { setShowSideBar(!showSideBar) }} />
