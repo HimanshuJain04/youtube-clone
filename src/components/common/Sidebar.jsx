@@ -4,35 +4,49 @@ import React from "react";
 import { categories } from "@/constant/Sidebar";
 import { useContext } from "react";
 import { Context } from "@/app/context";
+import Link from "next/link";
+
 
 function SideBar() {
+
     const { category, setCategory, showSideBar } = useContext(Context);
 
     return (
-        <div className={`overflow-y-auto text-white  z-10 top-[60px]  fixed scroll-smooth  h-full bg-black px-2 pb-10 scrollbar-none transition-all duration-200 ease-in-out hover:scrollbar-thin scrollbar-track-transparent scrollbar-thumb-[white]/[0.5] ` + (showSideBar ? " w-[230px] block" : " w-[100px] md:block hidden")}>
-            {
-                categories.map((set, index) => (
+        <div className={`relative bg-black flex justify-start items-center text-white h-screen
+         ${showSideBar ? " w-[250px] block " : " w-[80px]  md:block hidden"}`}>
 
-                    <div key={index} className={`border-b-2 border-[white]/[0.3] py-5 ` + (showSideBar ? " " : (index < 1 ? " " : " hidden"))}>
-                        {set.map((item) => (
-                            <div
-                                onClick={() => {
-                                    setCategory(item.name);
-                                }}
-                                key={item.name}
-                                className={`flex  select-none  px-2 justify-start  transition-all duration-150 ease-in-out py-2 cursor-pointer hover:bg-[white]/[0.15] rounded-lg ` + (category === item.name ? " bg-[white]/[0.15] " : " ") + (showSideBar ? "  text-[15px] flex-row items-start gap-5" : " my-5 text-xs flex-col items-center gap-1")}
-                            >
-                                <div className="font-bold text-2xl">{item.icon}</div>
-                                <p className=" ">{item.name}</p>
-                            </div>
-                        ))}
-                    </div>
-                ))}
-            <div className={`py-10 flex-col justify-start items-center font-bold ` + (showSideBar ? " text-lg" : " text-sm")}>
-                <p className="pb-5">Created By Himanshu jain</p>
-                <p className="">Contact : 9630695842</p>
-            </div>
-        </div>
+            <div className={`overflow-y-auto h-[calc(100vh-80px)] ${showSideBar ? "px-3 w-[250px] " : "px-2 w-[80px] "}  top-14  left-0  z-[8] fixed scroll-smooth bg-black transition-all duration-200 ease-in-out`}>
+                {
+                    categories.map((set, index) => (
+
+                        <div key={index + Date.now()} className={`border-b-2 border-[white]/[0.3] pt-3 pb-5 ` + (showSideBar ? " " : (index < 1 ? " " : " hidden"))}>
+                            {set.map((item) => (
+                                <>
+                                    <Link href={item?.path}
+                                        onClick={() => {
+                                            setCategory(item.name);
+                                        }}
+                                        key={item.name + index + item.path}
+                                        className={`flex  select-none justify-start  transition-all duration-150 ease-in-out cursor-pointer hover:bg-[white]/[0.15] rounded-xl ` + (
+                                            category === item.name ? " bg-[white]/[0.15] " : " ") + (showSideBar ? "font-normal py-2 px-3 text-base flex-row items-start gap-5" :
+                                                "text-[10px] flex-col px-1 mb-2 py-5 items-center gap-1"
+                                            )}
+                                    >
+                                        <div className="font-bold text-2xl">{item.icon}</div>
+                                        <p>{item.name}</p>
+                                    </Link>
+                                </>
+
+                            ))}
+                        </div>
+                    ))
+                }
+
+                <div className={`py-10 flex-col justify-start items-center font-bold ` + (showSideBar ? " text-lg" : " text-sm")}>
+                    <p className="pb-5 text-center">Himanshu jain</p>
+                </div>
+            </div >
+        </div >
     );
 }
 
