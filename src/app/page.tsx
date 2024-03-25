@@ -3,14 +3,15 @@ import HomeCard from "@/components/cards/HomeCard";
 import Sidebar from "@/components/common/Sidebar";
 
 export default async function Home() {
-  // const { userId }: { userId: string | null } = auth();
-  // const user = await currentUser();
+  
+  const { userId }: { userId: string | null } = auth();
+  const user = await currentUser();
 
-  // if (!userId || !user) {
-  //   return <>You are not logged in</>;
-  // }
+  if (!userId || !user) {
+    return <>You are not logged in</>;
+  }
 
-  const list = [1, 1, 1, 1, 11, 1];
+  const list = [1, 1, 1, 1, 11, 1, 1, 1, 1, 1, 1];
 
   return (
     <div className="w-full gap-5 flex relative min-h-screen bg-black">
