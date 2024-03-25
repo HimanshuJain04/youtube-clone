@@ -3,7 +3,7 @@
 import client from "@/db"
 import { auth, currentUser } from "@clerk/nextjs";
 
-async function getUserDetails() {
+export async function getUserDetails() {
     try {
         const { userId }: { userId: string | null } = auth();
         const user = await currentUser();

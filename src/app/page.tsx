@@ -1,4 +1,4 @@
-import HomeCard from "@/components/cards/HomeCard";
+import HomeCard from "@/components/cards/CardVideoFlexCol";
 import Sidebar from "@/components/common/Sidebar";
 
 export default function Home() {
@@ -10,7 +10,7 @@ export default function Home() {
         <Sidebar />
       </div>
 
-      <div className="w-full flex flex-wrap justify-start items-start gap-5">
+      <div className="w-full flex flex-wrap justify-start items-start gap-y-10 gap-x-5">
         {list.map((item, index) => (
           <HomeCard key={index} />
         ))}

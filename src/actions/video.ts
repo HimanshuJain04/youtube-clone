@@ -1,31 +1,36 @@
-
 "use server";
+
 import client from "@/db";
 import { uploadFileToCloudinary } from "@/utils/uploadFileToCloudinary";
 import { FileIntoBuffer } from "@/utils/FileIntoBuffer";
 import { currentUser } from "@clerk/nextjs";
+import { formToJSON } from "axios";
 
-interface requestType {
-    description: String
-    title: String
-    isAgeRestricted: Boolean
-    tags: String[]
-    thumbnailFile: File
-    videoFile: File
-}
+// interface requestType {
+//     description: String
+//     title: String
+//     isAgeRestricted: Boolean
+//     tags: String[]
+//     thumbnailFile: Blob;
+//     videoFile: Blob;
+// }
 
-async function createVideo(body: requestType) {
+export async function createVideo(body: any) {
     try {
 
-        const user = await currentUser();
+        console.log(body)
+        const { title, description, isAgeRestricted, tags, thumbnailFile, videoFile } = formToJSON(body);
+
+        console.log(formToJSON(body))
+        console.log(thumbnailFile)
+
+        // const user = await currentUser();
 
         // const file = body.get("file") as File;
 
         // const buffer = await FileIntoBuffer(file);
 
         // const response = await uploadFileToCloudinary(buffer);
-
-        console.log(body);
 
         // return NextResponse.json(
         //     {
@@ -38,10 +43,10 @@ async function createVideo(body: requestType) {
         //     }
         // );
 
-        return true;
+        return body;
 
     } catch (error: any) {
-        console.log(error)
+        throw new Error("Failed to create video: " + error.message);
         // return NextResponse.json(
         //     {
         //         success: false,
@@ -53,8 +58,6 @@ async function createVideo(body: requestType) {
         //         status: 501
         //     }
         // );
-
-        return null;
     }
 
 
