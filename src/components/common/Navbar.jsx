@@ -8,12 +8,15 @@ import { Context } from "@/app/context";
 import { NavIcons } from "@/constant/Icons";
 import IconHover from "@/components/common/IconHover";
 import Link from "next/link";
+import { useRouter } from 'next/navigation';
+
 
 export default function Navbar() {
 
   const [showSeachBar, setShowSeachBar] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const { setShowSideBar, showSideBar } = useContext(Context);
+  const { push } = useRouter();
 
 
   return (
@@ -91,11 +94,11 @@ export default function Navbar() {
         {/* CreateVideo ,Notification and Profile  */}
         <div className=" md:flex hidden justify-center text-2xl items-center gap-2">
           {/* Create */}
-          <IconHover Icon={NavIcons.AiOutlineVideoCameraAdd} handler={() => { console.log("Create") }} />
+          <IconHover Icon={NavIcons.AiOutlineVideoCameraAdd} handler={() => push("/video/create")} />
           {/* Bell */}
-          <IconHover Icon={NavIcons.FaRegBell} handler={() => { console.log("Bell") }} />
+          <IconHover Icon={NavIcons.FaRegBell} handler={() => push("/notifications")} />
           {/* Profile */}
-          <IconHover Icon={NavIcons.VscAccount} handler={() => { console.log("Profile") }} />
+          <IconHover Icon={NavIcons.VscAccount} handler={() => push("/profile")} />
         </div>
       </div>
     </div >

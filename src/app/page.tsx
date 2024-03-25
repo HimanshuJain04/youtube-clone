@@ -1,16 +1,7 @@
-import { auth, currentUser } from "@clerk/nextjs";
 import HomeCard from "@/components/cards/HomeCard";
 import Sidebar from "@/components/common/Sidebar";
 
-export default async function Home() {
-  
-  const { userId }: { userId: string | null } = auth();
-  const user = await currentUser();
-
-  if (!userId || !user) {
-    return <>You are not logged in</>;
-  }
-
+export default function Home() {
   const list = [1, 1, 1, 1, 11, 1, 1, 1, 1, 1, 1];
 
   return (
