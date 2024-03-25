@@ -17,48 +17,63 @@ import { formToJSON } from "axios";
 
 export async function createVideo(body: any) {
     try {
-
-        console.log(body)
         const { title, description, isAgeRestricted, tags, thumbnailFile, videoFile } = formToJSON(body);
 
-        console.log(formToJSON(body))
-        console.log(thumbnailFile)
+        if (!title || !description || !tags || !thumbnailFile || !videoFile) {
+            throw new Error("All fields are required");
+        }
 
-        // const user = await currentUser();
+        const user = await currentUser();
 
-        // const file = body.get("file") as File;
+        if (!user) {
+            throw new Error("User not found, Try again later");
+        }
 
-        // const buffer = await FileIntoBuffer(file);
+        const thumbnailBuffer = await FileIntoBuffer(thumbnailFile);
+        const videoBuffer = await FileIntoBuffer(videoFile);
 
-        // const response = await uploadFileToCloudinary(buffer);
+        const thumbnailRes = await uploadFileToCloudinary(thumbnailBuffer);
+        const videoRes = await uploadFileToCloudinary(videoBuffer);
 
-        // return NextResponse.json(
-        //     {
-        //         success: true,
-        //         message: "Server successfully create video",
-        //         data: response
-        //     },
-        //     {
-        //         status: 201
-        //     }
-        // );
+        const allTags = tags.split(",");
 
-        return body;
+        const createdVideo = await client.video.create(
+            {
+                data: {
+                    title,
+                    description,
+                    url: videoRes?.secure_url,
+                    thumbnail: thumbnailRes?.secure_url,
+                    isAgeRestricted: isAgeRestricted === "true" ? true : false,
+                    tags: allTags,
+                    userId: 1,
+                    duration: videoRes.duration,
+                }
+            }
+        );
+
+        if (!createdVideo) {
+            throw new Error("Server is failed to created video, Try again later");
+        }
+
+        console.log("Created: ", createdVideo);
+
+        return createdVideo;
 
     } catch (error: any) {
-        throw new Error("Failed to create video: " + error.message);
-        // return NextResponse.json(
-        //     {
-        //         success: false,
-        //         message: "Server failed to create video, try again later",
-        //         error: error,
-        //         data: null
-        //     },
-        //     {
-        //         status: 501
-        //     }
-        // );
+        console.log(error)
+        throw new Error("Server failed to create video", error);
     }
-
-
 }
+
+
+// return NextResponse.json(
+//     {
+//         success: true,
+//         message: "Server successfully create video",
+//         data: response
+//     },
+//     {
+//         status: 201
+//     }
+// );
