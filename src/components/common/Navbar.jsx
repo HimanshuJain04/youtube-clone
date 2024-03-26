@@ -1,14 +1,17 @@
 "use client"
 
 import Image from "next/image"
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { useContext } from "react";
 import { Context } from "@/app/context";
 import { NavIcons } from "@/constant/Icons";
 import IconHover from "@/components/common/IconHover";
+import Button from "@/components/Button";
 import Link from "next/link";
 import { useRouter } from 'next/navigation';
+import { UserButton } from "@clerk/nextjs"
+import {  SignInButton, SignUpButton,} from "@clerk/nextjs";
 
 
 export default function Navbar() {
@@ -17,8 +20,7 @@ export default function Navbar() {
   const [inputValue, setInputValue] = useState("");
   const { setShowSideBar, showSideBar } = useContext(Context);
   const { push } = useRouter();
-
-
+ 
   return (
 
     <div className="w-full flex sticky mb-3 top-0 z-10 bg-black justify-center items-start overflow-hidden">
@@ -98,7 +100,11 @@ export default function Navbar() {
           {/* Bell */}
           <IconHover Icon={NavIcons.FaRegBell} handler={() => push("/notifications")} />
           {/* Profile */}
-          <IconHover Icon={NavIcons.VscAccount} handler={() => push("/profile")} />
+          {/* <IconHover Icon={NavIcons.VscAccount} handler={() => push("/profile")} /> */}
+          <UserButton afterSignOutUrl="/" />
+          {/* <Button text={"Sign-in"} path={"/sign-in"} /> */}
+          <SignInButton/>
+          <SignUpButton/>
         </div>
       </div>
     </div >
