@@ -59,7 +59,7 @@ export async function createVideo(body: any) {
                     thumbnail: thumbnailRes?.secure_url,
                     isAgeRestricted: isAgeRestricted === "true" ? true : false,
                     tags: allTags,
-                    userId: parseInt(userId),
+                    userId: userId,
                     duration: videoRes.duration,
                 }
             }
@@ -91,7 +91,7 @@ export async function getHomeVideos() {
                     thumbnail: true,
                     createdAt: true, // Only include once
                     url: true,
-                    views: true
+                    viewsCount: true
                 }
             }
         );

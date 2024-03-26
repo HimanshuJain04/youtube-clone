@@ -11,21 +11,26 @@ datasource db {
 }
 
 model User {
-  id             String            @id @default(cuid())
-  email          String            @unique
-  userName       String            @unique
-  name           String?
-  password       String?
-  profileImage   String?
-  coverImage     String?
-  description    String?
-  createdAt      DateTime          @default(now())
-  updatedAt      DateTime          @updatedAt
-  videos         Video[]
-  playlists      Playlist[]
-  history        viewsOnVideo[]
-  likedVideos    likesOnVideo[]
-  dislikedVideos dislikesOnVideo[]
+  id                        String            @id @default(cuid())
+  email                     String            @unique
+  userName                  String            @unique
+  name                      String?
+  password                  String?
+  profileImage              String?
+  coverImage                String?
+  description               String?
+  createdAt                 DateTime          @default(now())
+  updatedAt                 DateTime          @updatedAt
+  isVerified                Boolean           @default(false)
+  forgotPasswordToken       String
+  verifyToken               String
+  verifyTokenExpiry         DateTime
+  forgotPasswordTokenExpiry DateTime
+  videos                    Video[]
+  playlists                 Playlist[]
+  history                   viewsOnVideo[]
+  likedVideos               likesOnVideo[]
+  dislikedVideos            dislikesOnVideo[]
 }
 
 model Video {
@@ -41,8 +46,11 @@ model Video {
   updatedAt       DateTime          @updatedAt
   tags            String[]          @default([])
   user            User              @relation(fields: [userId], references: [id])
+  viewsCount      Int               @default(0)
+  likesCount      Int               @default(0)
+  dislikesCount   Int               @default(0)
   playlists       PlaylistVideo[]
-  views           viewsOnVideo[]
+  viewsArray      viewsOnVideo[]
   likes           likesOnVideo[]
   dislikes        dislikesOnVideo[]
 }
