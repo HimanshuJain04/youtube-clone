@@ -10,8 +10,8 @@ import IconHover from "@/components/common/IconHover";
 import Button from "@/components/Button";
 import Link from "next/link";
 import { useRouter } from 'next/navigation';
+import { useUser } from "@clerk/nextjs";
 import { UserButton } from "@clerk/nextjs"
-import {  SignInButton, SignUpButton,} from "@clerk/nextjs";
 
 
 export default function Navbar() {
@@ -20,9 +20,10 @@ export default function Navbar() {
   const [inputValue, setInputValue] = useState("");
   const { setShowSideBar, showSideBar } = useContext(Context);
   const { push } = useRouter();
- 
-  return (
+  const { isSignedIn } = useUser();
 
+
+  return (
     <div className="w-full flex sticky mb-3 top-0 z-10 bg-black justify-center items-start overflow-hidden">
       <div className="text-white flex items-center justify-between pt-2 pb-5 h-[60px] w-full px-5">
 
@@ -101,12 +102,19 @@ export default function Navbar() {
           <IconHover Icon={NavIcons.FaRegBell} handler={() => push("/notifications")} />
           {/* Profile */}
           {/* <IconHover Icon={NavIcons.VscAccount} handler={() => push("/profile")} /> */}
-          <UserButton afterSignOutUrl="/" />
-          {/* <Button text={"Sign-in"} path={"/sign-in"} /> */}
-          <SignInButton/>
-          <SignUpButton/>
+
+          {
+            !isSignedIn ?
+              <>
+                <Button text={"Sign-in"} path={"/sign-in"} />
+              </> : (
+                <>
+                  <UserButton afterSignOutUrl="/" />
+                </>
+              )
+          }
         </div>
       </div>
-    </div >
+    </div>
   );
 }
