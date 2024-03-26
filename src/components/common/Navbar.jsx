@@ -10,8 +10,6 @@ import IconHover from "@/components/common/IconHover";
 import Button from "@/components/Button";
 import Link from "next/link";
 import { useRouter } from 'next/navigation';
-import { useUser } from "@clerk/nextjs";
-import { UserButton } from "@clerk/nextjs"
 
 
 export default function Navbar() {
@@ -20,7 +18,8 @@ export default function Navbar() {
   const [inputValue, setInputValue] = useState("");
   const { setShowSideBar, showSideBar } = useContext(Context);
   const { push } = useRouter();
-  const { isSignedIn } = useUser();
+
+  const { user } = useContext(Context)
 
 
   return (
@@ -104,12 +103,12 @@ export default function Navbar() {
           {/* <IconHover Icon={NavIcons.VscAccount} handler={() => push("/profile")} /> */}
 
           {
-            !isSignedIn ?
+            !user ?
               <>
-                <Button text={"Sign-in"} path={"/sign-in"} />
+                <Button text={"Sign-in"} path={"/auth/sign-in"} />
               </> : (
                 <>
-                  <UserButton afterSignOutUrl="/" />
+                  <div className="text-white text-sm"> {user.email}</div>
                 </>
               )
           }

@@ -69,6 +69,8 @@ export async function createVideo(body: any) {
             throw new Error("Server is failed to created video, Try again later");
         }
 
+        console.log("created: ", createdVideo)
+
         return createdVideo;
 
     } catch (error: any) {

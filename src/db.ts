@@ -13,3 +13,7 @@ const prisma = globalThis.prisma ?? prismaClientSingleton();
 export default prisma;
 
 if (process.env.NODE_ENV !== "production") globalThis.prisma = prisma;
+
+// npx prisma migrate dev --name Initialize the schema
+// psql -h localhost -d postgres -U postgres
+// npx prisma generate
