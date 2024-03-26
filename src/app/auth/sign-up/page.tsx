@@ -11,7 +11,8 @@ export default function SignupPage() {
   const [user, setUser] = useState({
     email: "",
     password: "",
-    username: "",
+    userName: "",
+    name: "",
   });
 
   const [loading, setLoading] = useState(false);
@@ -23,13 +24,13 @@ export default function SignupPage() {
     });
   }
 
-  async function signup() {
+  async function signupHandler() {
     try {
       setLoading(true);
 
-      const response = await axios.post("/api/user/signup", user);
-      console.log(response.data);
-      router.push("/login");
+      const response = await axios.post("/api/auth/signup", user);
+      console.log(response);
+      router.push("/auth/sign-in");
     } catch (err: any) {
       console.log("signup error : ", err.message);
       toast.error(err.message);
@@ -39,26 +40,35 @@ export default function SignupPage() {
   }
 
   return (
-    <div className=" flex w-full justify-center items-center">
+    <div className=" flex w-full justify-center min-h-[calc(100vh-100px)] items-center">
       {loading ? (
-        <div>Loading.....</div>
+        <div className="text-white">Loading.....</div>
       ) : (
-        <div className="flex w-10/12 bg-[white]/[0.1] py-20 rounded-md flex-col mt-20 justify-start items-center gap-8">
-          <h2 className="font-semibold text-4xl">Signup</h2>
-          <hr />
+        <div className="flex text-white bg-[white]/[0.09] px-10 py-5 gap-7 rounded-md flex-col justify-start items-center">
+          <h2 className="font-bold text-4xl uppercase">Signup</h2>
 
+          {/* name */}
+          <div className="flex flex-col gap-1">
+            <input
+              className="outline-none border-b-2 bg-transparent  w-[300px] py-1  font-semibold"
+              required
+              id="name"
+              name="name"
+              type="text"
+              value={user.name}
+              onChange={changeHandler}
+              placeholder="Enter your name"
+            />
+          </div>
           {/* username */}
           <div className="flex flex-col gap-1">
-            <label htmlFor="username" className="font-semibold">
-              Username
-            </label>
             <input
-              className="outline-none w-[300px] p-2 rounded-md font-semibold text-[black]/[0.6]"
+              className="outline-none border-b-2 bg-transparent  w-[300px] py-1  font-semibold"
               required
-              id="username"
-              name="username"
+              id="userName"
+              name="userName"
               type="text"
-              value={user.username}
+              value={user.userName}
               onChange={changeHandler}
               placeholder="Enter your username"
             />
@@ -66,11 +76,8 @@ export default function SignupPage() {
 
           {/* email */}
           <div className="flex flex-col gap-1">
-            <label htmlFor="email" className="font-semibold">
-              Email Address
-            </label>
             <input
-              className="outline-none p-2  w-[300px] rounded-md font-semibold text-[black]/[0.6]"
+              className="outline-none border-b-2 bg-transparent  w-[300px] py-1  font-semibold"
               required
               id="email"
               name="email"
@@ -83,11 +90,8 @@ export default function SignupPage() {
 
           {/* password */}
           <div className="flex flex-col gap-1">
-            <label htmlFor="password" className="font-semibold">
-              Password
-            </label>
             <input
-              className="outline-none  w-[300px] p-2 rounded-md font-semibold text-[black]/[0.6]"
+              className="outline-none border-b-2 bg-transparent  w-[300px] py-1  font-semibold"
               required
               id="password"
               name="password"
@@ -99,22 +103,25 @@ export default function SignupPage() {
           </div>
 
           {/* button */}
-          <div>
+          <div className="mt-5 w-full">
             <button
-              className=" bg-blue-600 hover:font-semibold text-white rounded-md py-2 px-10"
-              onClick={signup}
+              className=" bg-blue-600 border-2 transition-all duration-300 ease-in-out border-blue-600 hover:bg-transparent w-full font-semibold text-white rounded-md py-2 px-10"
+              onClick={signupHandler}
             >
               Signup
             </button>
           </div>
 
           {/* link for login page */}
-          <Link
-            className="text-blue-500 text-sm focus:underline "
-            href="/login"
-          >
-            Visit login page
-          </Link>
+          <div className="flex justify-center mt-5 items-center w-full flex-col gap-2">
+            <p>Account already exist</p>
+            <Link
+              className="text-blue-500 text-sm font-semibold hover:underline"
+              href="/auth/sign-in"
+            >
+              Login
+            </Link>
+          </div>
         </div>
       )}
     </div>

@@ -1,6 +1,7 @@
 import nodemailer from "nodemailer";
-// import User from "@/models/";
 import bcrypt from "bcrypt";
+import client from "@/db";
+
 
 export async function sendEmail({ email, emailType, userId }) {
     try {

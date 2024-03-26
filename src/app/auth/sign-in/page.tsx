@@ -6,14 +6,14 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 export default function SigninPage() {
+  const router = useRouter();
+
   const [user, setUser] = useState({
-    email: "",
+    userNameOrEmail: "",
     password: "",
   });
 
   const [loading, setLoading] = useState(false);
-
-  const router = useRouter();
 
   function changeHandler(e: any) {
     setUser({
@@ -22,13 +22,13 @@ export default function SigninPage() {
     });
   }
 
-  async function login() {
+  async function signinHandler() {
     try {
       setLoading(true);
 
-      const response = await axios.post("/api/user/login", user);
+      const response = await axios.post("/api/user/signin", user);
       console.log(response.data);
-      router.push("/profile");
+      router.push("/");
     } catch (err: any) {
       console.log("signup error : ", err.message);
       toast.error(err.message);
@@ -38,38 +38,31 @@ export default function SigninPage() {
   }
 
   return (
-    <div className=" flex w-full justify-center items-center">
+    <div className=" flex w-full justify-center min-h-[calc(100vh-100px)] items-center">
       {loading ? (
-        <div>Loading...</div>
+        <div>Loading.....</div>
       ) : (
-        <div className="flex w-10/12 bg-[white]/[0.1] py-20 rounded-md flex-col mt-20 justify-start items-center gap-8">
-          <h2 className="font-semibold text-4xl">Login</h2>
-          <hr />
+        <div className="flex text-white bg-[white]/[0.09] px-10 py-5 gap-7 rounded-md flex-col justify-start items-center">
+          <h2 className="font-bold text-4xl uppercase">Login</h2>
 
-          {/* email */}
+          {/* name */}
           <div className="flex flex-col gap-1">
-            <label htmlFor="email" className="font-semibold">
-              Email Address
-            </label>
             <input
-              className="outline-none p-2  w-[300px] rounded-md font-semibold text-[black]/[0.6]"
+              className="outline-none border-b-2 bg-transparent  w-[300px] py-1  font-semibold"
               required
-              id="email"
-              name="email"
-              type="email"
-              value={user.email}
+              id="userNameOrEmail"
+              name="userNameOrEmail"
+              type="text"
+              value={user.userNameOrEmail}
               onChange={changeHandler}
-              placeholder="Enter your email address"
+              placeholder="Enter your username or email"
             />
           </div>
 
           {/* password */}
           <div className="flex flex-col gap-1">
-            <label htmlFor="password" className="font-semibold">
-              Password
-            </label>
             <input
-              className="outline-none  w-[300px] p-2 rounded-md font-semibold text-[black]/[0.6]"
+              className="outline-none border-b-2 bg-transparent  w-[300px] py-1  font-semibold"
               required
               id="password"
               name="password"
@@ -81,22 +74,25 @@ export default function SigninPage() {
           </div>
 
           {/* button */}
-          <div>
+          <div className="mt-5 w-full">
             <button
-              className=" bg-blue-600 hover:font-semibold text-white rounded-md py-2 px-10"
-              onClick={login}
+              className=" bg-blue-600 border-2 transition-all duration-300 ease-in-out border-blue-600 hover:bg-transparent w-full font-semibold text-white rounded-md py-2 px-10"
+              onClick={signinHandler}
             >
               Login
             </button>
           </div>
 
-          {/* link for singup page */}
-          <Link
-            className="text-blue-500 text-sm focus:underline "
-            href="/signup"
-          >
-            Visit signup page
-          </Link>
+          {/* link for login page */}
+          <div className="flex justify-center mt-5 items-center w-full flex-col gap-2">
+            <p>Create account</p>
+            <Link
+              className="text-blue-500 text-sm font-semibold hover:underline"
+              href="/auth/sign-up"
+            >
+              Signup
+            </Link>
+          </div>
         </div>
       )}
     </div>

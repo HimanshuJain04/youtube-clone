@@ -22,10 +22,10 @@ model User {
   createdAt                 DateTime          @default(now())
   updatedAt                 DateTime          @updatedAt
   isVerified                Boolean           @default(false)
-  forgotPasswordToken       String
-  verifyToken               String
-  verifyTokenExpiry         DateTime
-  forgotPasswordTokenExpiry DateTime
+  forgotPasswordToken       String?
+  verifyToken               String?
+  verifyTokenExpiry         DateTime?
+  forgotPasswordTokenExpiry DateTime?
   videos                    Video[]
   playlists                 Playlist[]
   history                   viewsOnVideo[]
