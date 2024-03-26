@@ -7,13 +7,11 @@ const page = () => {
     const obj = {
       name: "himanshu jain",
       email: "amanjain9551@gmail.com",
-      passsword: "himanshuJain",
+      password: "himanshuJain",
       userName: "Himanshu Jain",
     };
 
     const res = await signup(obj);
-
-    console.log(res);
   }
 
   return (

@@ -3,8 +3,8 @@
 import client from "@/db";
 import { uploadFileToCloudinary } from "@/utils/uploadFileToCloudinary";
 import { FileIntoBuffer } from "@/utils/FileIntoBuffer";
-import { currentUser } from "@clerk/nextjs";
 import { formToJSON } from "axios";
+
 
 // interface requestType {
 //     description: String
@@ -15,17 +15,30 @@ import { formToJSON } from "axios";
 //     videoFile: Blob;
 // }
 
+
+// return NextResponse.json(
+//     {
+//         success: true,
+//         message: "Server successfully create video",
+//         data: response
+//     },
+//     {
+//         status: 201
+//     }
+// );
+
+
+
 export async function createVideo(body: any) {
     try {
-        const { title, description, isAgeRestricted, tags, thumbnailFile, videoFile } = formToJSON(body);
+        const { title, description, isAgeRestricted, userId, tags, thumbnailFile, videoFile
+        } = formToJSON(body);
 
         if (!title || !description || !tags || !thumbnailFile || !videoFile) {
             throw new Error("All fields are required");
         }
 
-        const user = await currentUser();
-
-        if (!user) {
+        if (!userId) {
             throw new Error("User not found, Try again later");
         }
 
@@ -46,7 +59,7 @@ export async function createVideo(body: any) {
                     thumbnail: thumbnailRes?.secure_url,
                     isAgeRestricted: isAgeRestricted === "true" ? true : false,
                     tags: allTags,
-                    userId: 1,
+                    userId: parseInt(userId),
                     duration: videoRes.duration,
                 }
             }
@@ -55,8 +68,6 @@ export async function createVideo(body: any) {
         if (!createdVideo) {
             throw new Error("Server is failed to created video, Try again later");
         }
-
-        console.log("Created: ", createdVideo);
 
         return createdVideo;
 
@@ -67,13 +78,30 @@ export async function createVideo(body: any) {
 }
 
 
-// return NextResponse.json(
-//     {
-//         success: true,
-//         message: "Server successfully create video",
-//         data: response
-//     },
-//     {
-//         status: 201
-//     }
-// );
+export async function getHomeVideos() {
+    try {
+        const allVideo = client.video.findMany(
+            {
+                select: {
+                    id: true,
+                    title: true,
+                    duration: true,
+                    thumbnail: true,
+                    createdAt: true, // Only include once
+                    url: true,
+                    views: true
+                }
+            }
+        );
+
+
+        return allVideo;
+
+    } catch (error: any) {
+        console.log(error)
+        throw new Error("Server failed to create video", error);
+    }
+}
+
+
+

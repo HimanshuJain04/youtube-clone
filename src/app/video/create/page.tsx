@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { createVideo } from "@/actions/video";
 import { CovertIntoFormData } from "@/utils/FormDataConvertor";
+import { Context } from "@/app/context";
 
 interface FileData {
   lastModified: number;
@@ -26,6 +27,8 @@ interface FileData {
 export default function CreatVideo() {
   const { register, handleSubmit } = useForm();
 
+  const { user } = useContext(Context);
+
   const [formValues, setFormValues] = useState({
     title: "",
     description: "",
@@ -43,17 +46,11 @@ export default function CreatVideo() {
     }));
   };
 
-  const handleTagsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-    setFormValues((prevValues) => ({
-      ...prevValues,
-      tags: value.split(",").map((tag) => tag.trim()),
-    }));
-  };
-
   const onSubmit = async () => {
     try {
       const fd = CovertIntoFormData(formValues);
+
+      fd.append("userId", user.id);
       const result = await createVideo(fd);
       console.log("Video created! ", result);
     } catch (error) {
@@ -119,8 +116,8 @@ export default function CreatVideo() {
           <input
             type="text"
             name="tags"
-            value={formValues.tags.join(", ")}
-            onChange={handleTagsChange}
+            value={formValues.tags}
+            onChange={handleChange}
             placeholder="Tags"
             className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500 bg-gray-900 text-white"
           />

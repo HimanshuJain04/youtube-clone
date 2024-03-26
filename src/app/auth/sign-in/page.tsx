@@ -1,13 +1,28 @@
 "use client";
 
-import React from "react";
+import { signin } from "@/actions/auth";
+import { Context } from "@/app/context";
+import React, { useContext } from "react";
 
-const page = () => {
+const Page = () => {
+  const { setUser } = useContext(Context);
+
+  async function signinHandler() {
+    const obj = {
+      userNameOrEmail: "amanjain9551@gmail.com",
+      password: "himanshuJain",
+    };
+    const res = await signin(obj);
+    setUser(res);
+  }
+
   return (
     <div>
-      <button>Login</button>
+      <button onClick={signinHandler} className="text-white">
+        Login
+      </button>
     </div>
   );
 };
 
-export default page;
+export default Page;

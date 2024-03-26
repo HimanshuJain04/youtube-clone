@@ -5,10 +5,7 @@ import client from "@/db";
 export async function signup(userData) {
 
     try {
-
         const { name, userName, email, password } = userData;
-        console.log(userData)
-
         if (!name || !userName || !email || !password) {
             return false;
         }
@@ -29,7 +26,41 @@ export async function signup(userData) {
         return true;
 
     } catch (error) {
-        console.log("Error: ", error)
+        console.log("Error when signup user: ", error)
         return false;
+    }
+}
+
+
+export async function signin(userData) {
+
+    try {
+        const { userNameOrEmail, password } = userData;
+        if (!userNameOrEmail || !password) {
+            return null;
+        }
+
+
+        let whereCondition;
+
+        if (userNameOrEmail.includes("@gmail.com")) {
+            whereCondition = {
+                email: userNameOrEmail
+            };
+        } else {
+            whereCondition = {
+                userName: userNameOrEmail
+            };
+        }
+
+        const existedUser = await client.user.findUnique({
+            where: whereCondition,
+        });
+
+        return existedUser;
+
+    } catch (error) {
+        console.log("Error when signup user: ", error);
+        return null;
     }
 }

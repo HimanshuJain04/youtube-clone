@@ -1,8 +1,25 @@
+"use client";
+
+import { getHomeVideos } from "@/actions/video";
 import HomeCard from "@/components/cards/CardVideoFlexCol";
 import Sidebar from "@/components/common/Sidebar";
+import { useEffect, useState } from "react";
 
 export default function Home() {
   const list = [1, 1, 1, 1, 11, 1, 1, 1, 1, 1, 1];
+  const [videos, setVideos] = useState([]);
+
+  async function getVideos() {
+    const response = await getHomeVideos();
+
+    console.log(response);
+
+    setVideos([...videos, response]);
+  }
+
+  useEffect(() => {
+    getVideos();
+  }, []);
 
   return (
     <div className="w-full gap-5 flex relative min-h-screen bg-black">
