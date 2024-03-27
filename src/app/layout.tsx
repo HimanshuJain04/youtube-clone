@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { AppContext } from "@/app/context";
+import { Toaster } from "react-hot-toast";
 import "./globals.css";
 import Navbar from "@/components/common/Navbar";
 
@@ -22,6 +23,7 @@ export default function RootLayout({
             <>{children}</>
           </div>
         </AppContext>
+        <Toaster />
       </body>
     </html>
   );

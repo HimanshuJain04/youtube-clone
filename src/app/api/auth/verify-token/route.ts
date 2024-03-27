@@ -1,54 +1,70 @@
-import User from "@/models/userSchema";
-import { dbConnection } from "@/dbConfig/dbConfig";
 import { NextRequest, NextResponse } from "next/server";
+import client from '@/db';
 
-dbConnection();
+export async function PATCH(req: NextRequest) {
 
-export async function POST(req: NextRequest) {
     try {
+        const body = await req.json();
+        const { verificationToken, userId } = body;
 
-        const reqBody = await req.json();
-        const { token } = reqBody;
-
-        const user = await User.findOne(
-            {
-                verifyToken: token,
-                verifyTokenExpiry: { $gte: Date.now() }
+        const existingUser = await client.user.findFirst({
+            where: {
+                id: userId
             }
-        );
+        });
 
-        if (!user) {
-            return NextResponse.json(
-                {
-                    message: "Invalid Token",
-                    success: false,
-                },
-                { status: 400 }
-            )
+        console.log("existingUser: ", existingUser);
+
+        if (!existingUser) {
+            return NextResponse.json({
+                message: "User not found, please sign up",
+                success: false,
+                data: null
+            }, {
+                status: 404
+            });
         }
 
-        user.isVerified = true;
-        user.verifyToken = undefined;
-        user.verifyTokenExpiry = undefined;
+        const isTokenCorrect = existingUser.verifyToken === verificationToken;
 
-        await user.save();
+        if (!isTokenCorrect) {
+            return NextResponse.json({
+                message: "Token is not correct",
+                success: false,
+                data: null
+            }, {
+                status: 401
+            });
+        }
 
-        return NextResponse.json(
-            {
-                message: "Verification Successfully",
-                success: true,
+        // Update user's verification status
+        await client.user.update({
+            where: {
+                id: userId
             },
-            { status: 200 }
-        )
+            data: {
+                isVerified: true
+            }
+        });
+
+        return NextResponse.json({
+            message: "Verification successful",
+            success: true,
+            data: null
+        }, {
+            status: 200
+        });
 
     } catch (err: any) {
-        return NextResponse.json(
-            {
-                error: err.message
-            },
-            { status: 500 }
-        )
+        console.error("Error verifying token:", err);
+
+        return NextResponse.json({
+            error: err.message,
+            message: "Server failed to verify token, please try again",
+            success: false,
+            data: null
+        }, {
+            status: 500
+        });
     }
 }
-
-

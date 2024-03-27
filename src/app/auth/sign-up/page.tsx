@@ -41,8 +41,8 @@ export default function SignupPage() {
       router.push("/auth/sign-in");
     } catch (err: any) {
       toast.error("Signup failed!");
-      toast.error(err?.respose?.data?.message);
-      console.log("signup error : ", err);
+      toast.error(err?.response?.data?.message);
+      console.log("signup error : ", err?.response?.data);
     } finally {
       setLoading(false);
     }

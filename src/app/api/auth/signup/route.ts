@@ -74,9 +74,11 @@ export async function POST(request: NextRequest) {
             })
         }
 
-        const url = `${process.env.BASE_URL}/verify-email/${newUser.id}/${verificationToken}`;
+        const url = `${process.env.BASE_URL}/auth/verify-email/${newUser.id}/${verificationToken}`;
 
         const mailRes = await sendEmail(email, url);
+
+        console.log("mailres: ", mailRes)
 
         if (!mailRes) {
             return NextResponse.json(

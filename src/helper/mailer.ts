@@ -3,27 +3,33 @@ import nodemailer from "nodemailer";
 export async function sendEmail(email: string, url: string) {
     try {
 
-        const transport = nodemailer.createTransport({
-            host: "sandbox.smtp.mailtrap.io",
-            port: 2525,
-            auth: {
-                user: "2f7947f03fd168",
-                pass: "b91e9a58d5d53e"
+        //true for 465 and false for 587
+        const transporter = nodemailer.createTransport(
+            {
+                host: "smtp.gmail.com",
+                port: 465,
+                secure: true,
+                auth: {
+                    user: process.env.MAIL_USER,
+                    pass: process.env.MAIL_PASS,
+                },
             }
-        });
+        );
 
         const options = {
             from: "bgmibot500@gmail.com",
             to: email,
             subject: "Verify Email",
-            html: `<p> Click <a href=${url} >here</a> </p>`
-        }
+            html: `<p> Click <a href="${url}">here</a> </p>`
+        };
 
-        const mailRes = await transport.sendMail(options);
+        const mailRes = await transporter.sendMail(options);
 
         return mailRes;
 
-    } catch (err: any) {
-        throw new Error(err.message);
+    } catch (err) {
+        // Better to log the error rather than throwing it
+        console.error("Error sending email:", err);
+        throw new Error("Failed to send email. Please try again later.");
     }
 }
