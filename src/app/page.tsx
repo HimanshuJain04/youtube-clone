@@ -12,7 +12,6 @@ export default function Home() {
   async function getVideos() {
     try {
       const response = await getHomeVideos();
-      console.log(response);
       setVideos(response);
     } catch (error) {
       console.log("Error: ", error);

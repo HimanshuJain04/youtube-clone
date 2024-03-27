@@ -4,12 +4,15 @@ import { usePathname } from "next/navigation";
 import axios from "axios";
 import Image from "next/image";
 import { videoIcons } from "@/constant/Icons";
-import { BiDislike } from "react-icons/bi";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { getTime, getViews } from "@/utils/videoUtils";
 
 export default function Watch() {
   const videoId = usePathname().split("/").at(-1);
   const [videoData, setVideoData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   async function getVideos() {
     try {
@@ -19,6 +22,7 @@ export default function Watch() {
       setVideoData(res.data.data);
     } catch (error) {
       console.log("Error : ", error);
+      router.push("/something-went-wrong");
     } finally {
       setLoading(false);
     }
@@ -33,7 +37,7 @@ export default function Watch() {
       {loading ? (
         <>loading...</>
       ) : (
-        <div className="w-11/12 py-5 flex justify-normal min-h-screen items-start">
+        <div className="w-11/12 pt-5 pb-10 flex justify-normal min-h-screen items-start">
           {/* video part */}
           <div className="w-[65vw]">
             {/* video */}
@@ -86,23 +90,66 @@ export default function Watch() {
                 </div>
 
                 {/* likes | dislikes | etc */}
-                <div className="">
+                <div className="flex justify-center items-center gap-5">
                   {/* like | dislike */}
-                  <div className="text-white flex justify-center text-2xl items-center py-2 px-5 rounded-full bg-white/[0.2]">
+                  <div className="text-white flex justify-center text-2xl items-center rounded-full bg-white/[0.2]">
                     {/* like */}
-                    <div className="flex border-r-2 border-white/[0.5] justify-center items-center">
+                    <div className="flex border-r-2  transition-all duration-200 ease-in-out py-[8px] px-4 gap-2 cursor-pointer rounded-l-full hover:bg-white/[0.25] border-white/[0.5] justify-center items-center">
                       <videoIcons.BiLike />
-                      <p>{videoData?.likesCount}</p>
+                      <p className="text-base">
+                        {videoData?.likesCount > 0 && videoData?.likesCount}
+                      </p>
                     </div>
                     {/* dislike */}
-                    <div>
+                    <div className="flex px-4 hover:bg-white/[0.25] transition-all duration-200 ease-in-out cursor-pointer py-[8px] rounded-r-full  justify-center items-center">
                       <videoIcons.BiDislike />
                     </div>
                   </div>
                   {/* share */}
-                  <div></div>
+                  <div className="text-white flex justify-center items-center gap-2 rounded-full cursor-pointer hover:bg-white/[0.25] transition-all duration-200 ease-in-out text-xl py-2 px-4 bg-white/[0.2]">
+                    <videoIcons.FaShare />
+                    <p className="text-base">Share</p>
+                  </div>
                   {/* dots */}
-                  <div></div>
+                  <div className="p-3 bg-white/[0.2] rounded-full hover:bg-white/[0.25] transition-all duration-200 ease-in-out text-2xl cursor-pointer">
+                    <videoIcons.HiDotsHorizontal />
+                  </div>
+                </div>
+              </div>
+
+              {/* description */}
+              <div className="w-full bg-white/[0.15] gap-1 flex-col mt-2 flex justify-normal items-start rounded-lg p-3">
+                {/* views |  timeline | tags */}
+                <div className="flex gap-5">
+                  {/* view */}
+                  <span className="text-white flex justify-center items-center gap-1 font-semibold">
+                    <p>{getViews(videoData?.viewsCount)}</p>
+                    <p>views</p>
+                  </span>
+
+                  {/* time */}
+                  <span className="text-white font-semibold flex justify-center items-center gap-1">
+                    <p>{getTime(videoData?.createdAt)}</p>
+                    <p>ago</p>
+                  </span>
+                </div>
+
+                {/* tags */}
+                <span className="text-blue-400 flex gap-2 font-semibold">
+                  {videoData?.tags?.map((tag, index) => (
+                    <Link
+                      href={`/search?value=${tag}`}
+                      key={tag + index}
+                      className="hover:underline"
+                    >
+                      <p>#{tag}</p>
+                    </Link>
+                  ))}
+                </span>
+
+                {/* description */}
+                <div>
+                  <p>{videoData?.description}</p>
                 </div>
               </div>
             </div>

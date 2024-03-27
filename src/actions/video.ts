@@ -89,13 +89,20 @@ export async function getHomeVideos() {
                     title: true,
                     duration: true,
                     thumbnail: true,
-                    createdAt: true, // Only include once
+                    createdAt: true,
                     url: true,
-                    viewsCount: true
+                    viewsCount: true,
+                    user: {
+                        select: {
+                            id: true,
+                            profileImage: true,
+                            userName: true,
+                            name: true,
+                        }
+                    }
                 }
             }
         );
-
 
         return allVideo;
 
