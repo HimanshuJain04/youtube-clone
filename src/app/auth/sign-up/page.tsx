@@ -14,7 +14,7 @@ export default function SignupPage() {
     if (user) {
       router.push("/");
     }
-  }, []);
+  }, [user]);
 
   const [formData, setFormData] = useState({
     email: "",

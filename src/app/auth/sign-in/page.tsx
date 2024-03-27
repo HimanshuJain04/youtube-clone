@@ -14,7 +14,7 @@ export default function SigninPage() {
     if (user) {
       router.push("/");
     }
-  }, [user]);
+  }, []);
 
   const [formData, setFormData] = useState({
     userNameOrEmail: "",

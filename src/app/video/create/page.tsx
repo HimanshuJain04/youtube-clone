@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { createVideo } from "@/actions/video";
 import { CovertIntoFormData } from "@/utils/FormDataConvertor";
 import { Context } from "@/app/context";
+import { useRouter } from "next/navigation";
 
 interface FileData {
   lastModified: number;
@@ -15,17 +16,9 @@ interface FileData {
   webkitRelativePath: string;
 }
 
-// interface FormValuesTypes {
-//   description: string;
-//   title: string;
-//   isAgeRestricted: boolean;
-//   tags: string[];
-//   thumbnailFile: Blob;
-//   videoFile: Blob;
-// }
-
 export default function CreatVideo() {
   const { register, handleSubmit } = useForm();
+  const router = useRouter();
 
   const { user } = useContext(Context);
 
@@ -57,6 +50,12 @@ export default function CreatVideo() {
       console.log("Something went wrong! ", error);
     }
   };
+
+  useEffect(() => {
+    if (!user) {
+      router.push("/auth/sign-in");
+    }
+  }, []);
 
   return (
     <div className="min-h-screen bg-black flex justify-center items-center">
