@@ -8,13 +8,13 @@ import { Context } from "@/app/context";
 
 export default function SigninPage() {
   const router = useRouter();
-  const { user } = useContext(Context);
+  const { user, setUser } = useContext(Context);
 
   useEffect(() => {
     if (user) {
       router.push("/");
     }
-  }, []);
+  }, [user]);
 
   const [formData, setFormData] = useState({
     userNameOrEmail: "",
@@ -36,7 +36,7 @@ export default function SigninPage() {
 
       const response = await axios.post("/api/auth/signin", formData);
       toast.success("Login successfully!");
-      console.log(response);
+      setUser(response.data.data);
       router.push("/");
     } catch (err: any) {
       toast.error("Login failed!");
@@ -58,7 +58,7 @@ export default function SigninPage() {
           {/* email or username */}
           <div className="flex flex-col gap-1">
             <input
-              className="outline-none border-b-2 bg-transparent  w-[300px] py-1  font-semibold"
+              className="outline-none border-b-2 px-2 bg-transparent  w-[300px] py-1  font-semibold"
               required
               id="userNameOrEmail"
               name="userNameOrEmail"
@@ -72,7 +72,7 @@ export default function SigninPage() {
           {/* password */}
           <div className="flex flex-col gap-1">
             <input
-              className="outline-none border-b-2 bg-transparent  w-[300px] py-1  font-semibold"
+              className="outline-none border-b-2 px-2 bg-transparent  w-[300px] py-1  font-semibold"
               required
               id="password"
               name="password"

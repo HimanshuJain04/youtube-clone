@@ -4,22 +4,21 @@ import bcrypt from "bcrypt";
 import { serialize } from 'cookie';
 import jwt from "jsonwebtoken";
 
+export async function POST(request: NextRequest) {
 
-export async function POST(request: NextRequest, response: NextResponse) {
     try {
 
         const reqBody = await request.json();
         const { userNameOrEmail, password } = reqBody;
 
         if (!userNameOrEmail || !password) {
-            return NextResponse.json(
-                {
-                    success: false,
-                    message: "All fields are required",
-                    data: null
-                }, {
+            return NextResponse.json({
+                success: false,
+                message: "All fields are required",
+                data: null
+            }, {
                 status: 404
-            })
+            });
         }
 
         let whereCondition;
@@ -39,31 +38,28 @@ export async function POST(request: NextRequest, response: NextResponse) {
         });
 
         if (!existedUser) {
-
-            return NextResponse.json(
-                {
-                    success: false,
-                    message: "User not found, please signup",
-                    data: null
-                }, {
+            return NextResponse.json({
+                success: false,
+                message: "User not found, please signup",
+                data: null
+            }, {
                 status: 404
-            })
+            });
         }
 
         const passCheck = await bcrypt.compare(password, existedUser.password);
 
         if (!passCheck) {
-            return NextResponse.json(
-                {
-                    success: false,
-                    message: "Password is not correct",
-                    data: null
-                }, {
+            return NextResponse.json({
+                success: false,
+                message: "Password is not correct",
+                data: null
+            }, {
                 status: 401
-            })
+            });
         }
 
-        // create jwt token
+        // Create JWT token
         const tokenData = {
             id: existedUser.id,
             email: existedUser.email,
@@ -72,26 +68,15 @@ export async function POST(request: NextRequest, response: NextResponse) {
             profileImage: existedUser.profileImage,
         };
 
-        console.log("env: ", process.env.JSON_WEB_TOKEN_SECRET)
-
-        const cookieValue = serialize(
-            'YOUTUBE_TOKEN',
+        const token = await jwt.sign(
             tokenData,
+            process.env.JSON_WEB_TOKEN_SECRET,
             {
-                httpOnly: true,
-                secure: process.env.NODE_ENV !== 'development', // 'secure' should be true in production
-                expires: new Date(Date.now() + 3600000), // Adjust the expiry time as needed
-                path: '/', // Path for which the cookie is valid
-                sameSite: 'strict', // Configure sameSite attribute as needed
+                expiresIn: "1h"
             }
         );
 
-        // Set the cookie in the response header
-        response.setHeader('Set-Cookie', cookieValue);
-
-        console.log("cookie set")
-
-        return NextResponse.json(
+        const response = NextResponse.json(
             {
                 success: true,
                 message: "Sign in successfully",
@@ -103,15 +88,25 @@ export async function POST(request: NextRequest, response: NextResponse) {
         );
 
 
-
-    } catch (err: any) {
-        return NextResponse.json(
+        response.cookies.set(
+            "YOUTUBE_TOKEN",
+            token,
             {
-                success: false,
-                message: "Server failed to sign in user, try again later",
-                error: err.message,
-                data: null,
-            }, {
+                httpOnly: true,
+                secure: true,
+            }
+        );
+
+        return response;
+
+        return
+    } catch (err: any) {
+        return NextResponse.json({
+            success: false,
+            message: "Server failed to sign in user, try again later",
+            error: err.message,
+            data: null,
+        }, {
             status: 501
         });
     }

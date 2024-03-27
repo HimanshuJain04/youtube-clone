@@ -21,6 +21,8 @@ export default function Navbar() {
 
   const { user } = useContext(Context)
 
+  console.log(user)
+
 
   return (
     <div className="w-full flex sticky mb-3 top-0 z-10 bg-black justify-center items-start overflow-hidden">
@@ -108,7 +110,15 @@ export default function Navbar() {
                 <Button text={"Sign-in"} path={"/auth/sign-in"} />
               </> : (
                 <>
-                  <div className="text-white text-sm"> {user.email}</div>
+                  <div className="text-sm w-[40px] h-[40px] cursor-pointer rounded-full overflow-hidden">
+                    <Image
+                      src={user.profileImage}
+                      width={40}
+                      height={40}
+                      className="rounded-full object-contain"
+                      alt="User-profile"
+                    />
+                  </div>
                 </>
               )
           }

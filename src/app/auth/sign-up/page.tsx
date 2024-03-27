@@ -59,7 +59,7 @@ export default function SignupPage() {
           {/* name */}
           <div className="flex flex-col gap-1">
             <input
-              className="outline-none border-b-2 bg-transparent  w-[300px] py-1  font-semibold"
+              className="outline-none px-2 border-b-2 bg-transparent  w-[300px] py-1  font-semibold"
               required
               id="name"
               name="name"
@@ -72,7 +72,7 @@ export default function SignupPage() {
           {/* username */}
           <div className="flex flex-col gap-1">
             <input
-              className="outline-none border-b-2 bg-transparent  w-[300px] py-1  font-semibold"
+              className="outline-none px-2 border-b-2 bg-transparent  w-[300px] py-1  font-semibold"
               required
               id="userName"
               name="userName"
@@ -86,7 +86,7 @@ export default function SignupPage() {
           {/* email */}
           <div className="flex flex-col gap-1">
             <input
-              className="outline-none border-b-2 bg-transparent  w-[300px] py-1  font-semibold"
+              className="outline-none px-2 border-b-2 bg-transparent  w-[300px] py-1  font-semibold"
               required
               id="email"
               name="email"
@@ -100,7 +100,7 @@ export default function SignupPage() {
           {/* password */}
           <div className="flex flex-col gap-1">
             <input
-              className="outline-none border-b-2 bg-transparent  w-[300px] py-1  font-semibold"
+              className="outline-none px-2 border-b-2 bg-transparent  w-[300px] py-1  font-semibold"
               required
               id="password"
               name="password"

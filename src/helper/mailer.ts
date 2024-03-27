@@ -10,10 +10,10 @@ export async function sendEmail({ email, emailType, userId }) {
 
         if (emailType === "VERIFY") {
 
-            const user = await client.user.update(
-                
-            );
+            const user = await client.user
 
+
+            
         } else if (emailType === "RESET") {
             const user = await User.findByIdAndUpdate(
                 userId,
