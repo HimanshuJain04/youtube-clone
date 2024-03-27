@@ -10,6 +10,17 @@ export async function POST(request: NextRequest) {
         const reqBody = await request.json();
         const { userName, email, password, name } = reqBody;
 
+        if (!userName || !email || !password || !name) {
+            return NextResponse.json(
+                {
+                    success: false,
+                    message: "All fields are required",
+                    data: null
+                }, {
+                status: 404
+            })
+        }
+
         const existedUser = await client.user.findFirst(
             {
                 where: {
@@ -33,6 +44,8 @@ export async function POST(request: NextRequest) {
         const salt = await bcrypt.genSalt(10);
         const hashedPass = await bcrypt.hash(password, salt);
 
+        const imageUrl = `https://ui-avatars.com/api/?name=${name}`
+
         const newUser = await client.user.create(
             {
                 data: {
@@ -40,6 +53,7 @@ export async function POST(request: NextRequest) {
                     email,
                     password: hashedPass,
                     userName,
+                    profileImage: imageUrl
                 }
             }
         );
@@ -51,15 +65,13 @@ export async function POST(request: NextRequest) {
                     message: "New user not signup!",
                     data: null
                 }, {
-                status: 400
+                status: 500
             })
         }
 
-        console.log("user: ", newUser);
-
-        await sendEmail({
-            email, emailType: "VERIFY", userId: newUser.id
-        });
+        // await sendEmail({
+        //     email, emailType: "VERIFY", userId: newUser.id
+        // });
 
         return NextResponse.json(
             {

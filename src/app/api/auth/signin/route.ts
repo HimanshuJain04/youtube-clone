@@ -1,66 +1,118 @@
-import { dbConnection } from "@/dbConfig/dbConfig";
+import client from "@/db";
 import { NextResponse, NextRequest } from "next/server";
-import User from "../../../../models/userSchema";
 import bcrypt from "bcrypt";
+import { serialize } from 'cookie';
 import jwt from "jsonwebtoken";
 
-dbConnection();
 
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest, response: NextResponse) {
     try {
 
         const reqBody = await request.json();
-        const { email, password } = reqBody;
+        const { userNameOrEmail, password } = reqBody;
 
-        const user = await User.findOne({ email });
-
-        if (!user) {
-            return NextResponse.json({
-                error: "User not found,please signup",
-                success: false
-            }, { status: 400 })
+        if (!userNameOrEmail || !password) {
+            return NextResponse.json(
+                {
+                    success: false,
+                    message: "All fields are required",
+                    data: null
+                }, {
+                status: 404
+            })
         }
 
-        const passCheck = await bcrypt.compare(password, user.password);
+        let whereCondition;
+
+        if (userNameOrEmail.includes("@gmail.com")) {
+            whereCondition = {
+                email: userNameOrEmail
+            };
+        } else {
+            whereCondition = {
+                userName: userNameOrEmail
+            };
+        }
+
+        const existedUser = await client.user.findUnique({
+            where: whereCondition,
+        });
+
+        if (!existedUser) {
+
+            return NextResponse.json(
+                {
+                    success: false,
+                    message: "User not found, please signup",
+                    data: null
+                }, {
+                status: 404
+            })
+        }
+
+        const passCheck = await bcrypt.compare(password, existedUser.password);
 
         if (!passCheck) {
-            return NextResponse.json({
-                error: "Password does not match",
-                success: false
-            }, { status: 400 })
+            return NextResponse.json(
+                {
+                    success: false,
+                    message: "Password is not correct",
+                    data: null
+                }, {
+                status: 401
+            })
         }
 
         // create jwt token
-
         const tokenData = {
-            id: user._id,
-            email: user.email,
-            username: user.username
+            id: existedUser.id,
+            email: existedUser.email,
+            userName: existedUser.userName,
+            name: existedUser.name,
+            profileImage: existedUser.profileImage,
         };
 
-        const token = await jwt.sign(tokenData, process.env.JWT_SECRET, { expiresIn: "1h" });
+        console.log("env: ", process.env.JSON_WEB_TOKEN_SECRET)
 
-        const response = NextResponse.json(
+        const cookieValue = serialize(
+            'YOUTUBE_TOKEN',
+            tokenData,
             {
-                message: "Login Successfully",
-                data: user,
+                httpOnly: true,
+                secure: process.env.NODE_ENV !== 'development', // 'secure' should be true in production
+                expires: new Date(Date.now() + 3600000), // Adjust the expiry time as needed
+                path: '/', // Path for which the cookie is valid
+                sameSite: 'strict', // Configure sameSite attribute as needed
+            }
+        );
+
+        // Set the cookie in the response header
+        response.setHeader('Set-Cookie', cookieValue);
+
+        console.log("cookie set")
+
+        return NextResponse.json(
+            {
+                success: true,
+                message: "Sign in successfully",
+                data: existedUser,
             },
-            { status: 200 }
-        )
+            {
+                status: 200
+            }
+        );
 
-        response.cookies.set("token", token, {
-            httpOnly: true,
-        })
 
-        return response;
 
     } catch (err: any) {
         return NextResponse.json(
             {
+                success: false,
+                message: "Server failed to sign in user, try again later",
                 error: err.message,
-                success: false
-            },
-            { status: 500 }
-        )
+                data: null,
+            }, {
+            status: 501
+        });
     }
 }

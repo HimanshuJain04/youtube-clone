@@ -1,14 +1,22 @@
 "use client";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { Context } from "@/app/context";
 
 export default function SigninPage() {
   const router = useRouter();
+  const { user } = useContext(Context);
 
-  const [user, setUser] = useState({
+  useEffect(() => {
+    if (user) {
+      router.push("/");
+    }
+  }, []);
+
+  const [formData, setFormData] = useState({
     userNameOrEmail: "",
     password: "",
   });
@@ -16,8 +24,8 @@ export default function SigninPage() {
   const [loading, setLoading] = useState(false);
 
   function changeHandler(e: any) {
-    setUser({
-      ...user,
+    setFormData({
+      ...formData,
       [e.target.name]: e.target.value,
     });
   }
@@ -26,12 +34,14 @@ export default function SigninPage() {
     try {
       setLoading(true);
 
-      const response = await axios.post("/api/user/signin", user);
-      console.log(response.data);
+      const response = await axios.post("/api/auth/signin", formData);
+      toast.success("Login successfully!");
+      console.log(response);
       router.push("/");
     } catch (err: any) {
-      console.log("signup error : ", err.message);
-      toast.error(err.message);
+      toast.error("Login failed!");
+      toast.error(err?.respose?.data?.message);
+      console.log("Login error : ", err);
     } finally {
       setLoading(false);
     }
@@ -40,12 +50,12 @@ export default function SigninPage() {
   return (
     <div className=" flex w-full justify-center min-h-[calc(100vh-100px)] items-center">
       {loading ? (
-        <div>Loading.....</div>
+        <div className="text-white">Loading.....</div>
       ) : (
         <div className="flex text-white bg-[white]/[0.09] px-10 py-5 gap-7 rounded-md flex-col justify-start items-center">
           <h2 className="font-bold text-4xl uppercase">Login</h2>
 
-          {/* name */}
+          {/* email or username */}
           <div className="flex flex-col gap-1">
             <input
               className="outline-none border-b-2 bg-transparent  w-[300px] py-1  font-semibold"
@@ -53,7 +63,7 @@ export default function SigninPage() {
               id="userNameOrEmail"
               name="userNameOrEmail"
               type="text"
-              value={user.userNameOrEmail}
+              value={formData.userNameOrEmail}
               onChange={changeHandler}
               placeholder="Enter your username or email"
             />
@@ -67,7 +77,7 @@ export default function SigninPage() {
               id="password"
               name="password"
               type="password"
-              value={user.password}
+              value={formData.password}
               onChange={changeHandler}
               placeholder="Enter your password"
             />

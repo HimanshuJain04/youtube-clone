@@ -1,14 +1,22 @@
 "use client";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { Context } from "@/app/context";
 import toast from "react-hot-toast";
 
 export default function SignupPage() {
   const router = useRouter();
+  const { user } = useContext(Context);
 
-  const [user, setUser] = useState({
+  useEffect(() => {
+    if (user) {
+      router.push("/");
+    }
+  }, []);
+
+  const [formData, setFormData] = useState({
     email: "",
     password: "",
     userName: "",
@@ -18,8 +26,8 @@ export default function SignupPage() {
   const [loading, setLoading] = useState(false);
 
   function changeHandler(e: any) {
-    setUser({
-      ...user,
+    setFormData({
+      ...formData,
       [e.target.name]: e.target.value,
     });
   }
@@ -28,12 +36,13 @@ export default function SignupPage() {
     try {
       setLoading(true);
 
-      const response = await axios.post("/api/auth/signup", user);
-      console.log(response);
+      const response = await axios.post("/api/auth/signup", formData);
+      toast.success("Signup successfully!");
       router.push("/auth/sign-in");
     } catch (err: any) {
-      console.log("signup error : ", err.message);
-      toast.error(err.message);
+      toast.error("Signup failed!");
+      toast.error(err?.respose?.data?.message);
+      console.log("signup error : ", err);
     } finally {
       setLoading(false);
     }
@@ -55,7 +64,7 @@ export default function SignupPage() {
               id="name"
               name="name"
               type="text"
-              value={user.name}
+              value={formData.name}
               onChange={changeHandler}
               placeholder="Enter your name"
             />
@@ -68,7 +77,7 @@ export default function SignupPage() {
               id="userName"
               name="userName"
               type="text"
-              value={user.userName}
+              value={formData.userName}
               onChange={changeHandler}
               placeholder="Enter your username"
             />
@@ -82,7 +91,7 @@ export default function SignupPage() {
               id="email"
               name="email"
               type="email"
-              value={user.email}
+              value={formData.email}
               onChange={changeHandler}
               placeholder="Enter your email address"
             />
@@ -96,7 +105,7 @@ export default function SignupPage() {
               id="password"
               name="password"
               type="password"
-              value={user.password}
+              value={formData.password}
               onChange={changeHandler}
               placeholder="Enter your password"
             />

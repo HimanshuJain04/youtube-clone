@@ -1,25 +1,22 @@
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
+import type { NextRequest, NextResponse } from 'next/server';
 
 export function middleware(request: NextRequest) {
+    console.log("middlerware")
 
-    const path = request.nextUrl.pathname;
+    // const path = request.nextUrl.pathname;
 
-    const isPublic = path === "/login" || path === "/signup";
+    // const isPublic = path === "/login" || path === "/signup";
 
-    const token = request.cookies.get('token')?.value || "";
+    // const token = request.cookies.get('token')?.value || "";
 
-    if (token && isPublic) {
-        return NextResponse.redirect(new URL('/profile', request.nextUrl));
-    }
+    // if (token && isPublic) {
+    //     return NextResponse.redirect(new URL('/profile', request.nextUrl));
+    // }
 
 
-    if (!token && !isPublic) {
-        return NextResponse.redirect(new URL('/login', request.nextUrl));
-    }
-
-    
-
+    // if (!token && !isPublic) {
+    //     return NextResponse.redirect(new URL('/login', request.nextUrl));
+    // }
 
 }
 
