@@ -47,6 +47,16 @@ export async function POST(request: NextRequest) {
             });
         }
 
+        if (existedUser && !existedUser.isVerified) {
+            return NextResponse.json({
+                success: false,
+                message: "Email is not verified, please verify your email",
+                data: null
+            }, {
+                status: 401
+            });
+        }
+
         const passCheck = await bcrypt.compare(password, existedUser.password);
 
         if (!passCheck) {
@@ -99,7 +109,6 @@ export async function POST(request: NextRequest) {
 
         return response;
 
-        return
     } catch (err: any) {
         return NextResponse.json({
             success: false,

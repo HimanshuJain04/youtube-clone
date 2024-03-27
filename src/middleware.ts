@@ -1,26 +1,29 @@
 import type { NextRequest, NextResponse } from 'next/server';
+import jwt from 'jsonwebtoken';
 
-export function middleware(request: NextRequest) {
-    console.log("middlerware")
+export async function middleware(request: NextRequest, next: () => void) {
+    try {
+        // Fetch token from cookies
+        const token = request.cookies.get('YOUTUBE_TOKEN')?.value || "";
 
-    // const path = request.nextUrl.pathname;
+        if (!token) {
+            return;
+        }
 
-    // const isPublic = path === "/login" || path === "/signup";
+        const decodedToken = await jwt.verify(token, process.env.JSON_WEB_TOKEN_SECRET!);
 
-    // const token = request.cookies.get('token')?.value || "";
+        if (!decodedToken) {
+            return;
+        }
 
-    // if (token && isPublic) {
-    //     return NextResponse.redirect(new URL('/profile', request.nextUrl));
-    // }
+        console.log("Decoded token:", decodedToken);
 
-
-    // if (!token && !isPublic) {
-    //     return NextResponse.redirect(new URL('/login', request.nextUrl));
-    // }
-
+        next();
+    } catch (error) {
+        console.error("Error verifying token:", error);
+        return; // Token verification failed, return or handle the error accordingly
+    }
 }
-
-
 
 export const config = {
     matcher: [
