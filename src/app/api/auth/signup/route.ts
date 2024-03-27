@@ -2,6 +2,7 @@ import client from "@/db";
 import { NextResponse, NextRequest } from "next/server";
 import bcrypt from "bcrypt";
 import { sendEmail } from "@/helper/mailer";
+import { generateToken } from "@/helper/generateToken";
 
 
 export async function POST(request: NextRequest) {
@@ -44,7 +45,9 @@ export async function POST(request: NextRequest) {
         const salt = await bcrypt.genSalt(10);
         const hashedPass = await bcrypt.hash(password, salt);
 
-        const imageUrl = `https://ui-avatars.com/api/?name=${name}`
+        const imageUrl = `https://ui-avatars.com/api/?name=${name}`;
+
+        const verificationToken = await generateToken(email);
 
         const newUser = await client.user.create(
             {
@@ -53,7 +56,9 @@ export async function POST(request: NextRequest) {
                     email,
                     password: hashedPass,
                     userName,
-                    profileImage: imageUrl
+                    profileImage: imageUrl,
+                    verifyToken: verificationToken,
+                    verifyTokenExpiry: new Date(Date.now() + (5 * 60 * 1000))
                 }
             }
         );
@@ -69,9 +74,20 @@ export async function POST(request: NextRequest) {
             })
         }
 
-        await sendEmail({
-            email, emailType: "VERIFY", userId: newUser.id
-        });
+        const url = `${process.env.BASE_URL}/verify-email/${newUser.id}/${verificationToken}`;
+
+        const mailRes = await sendEmail(email, url);
+
+        if (!mailRes) {
+            return NextResponse.json(
+                {
+                    success: false,
+                    message: "Server failed to send verification mail, try again later",
+                    data: null
+                },
+                { status: 500 }
+            )
+        }
 
         return NextResponse.json(
             {
