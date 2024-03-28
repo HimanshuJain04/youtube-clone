@@ -21,7 +21,7 @@ function HomeCard({ video }) {
       />
       <div className="flex gap-3 cursor-pointer justify-start items-start mt-3">
         {/* Channel Logo */}
-        <Link href={`/@${video?.user.userName}`}>
+        <Link href={`/channel/@${video?.user.userName}`}>
           <div className="mt-1 w-[40px] rounded-full shrink-0 h-[40px]">
             <Image
               alt="channel-logo"
@@ -43,7 +43,7 @@ function HomeCard({ video }) {
 
           <div className="flex gap-0 w-full justify-start items-start flex-col">
             {/* Channel Name */}
-            <Link href={`/@${video?.user.userName}`}>
+            <Link href={`/channel/@${video?.user.userName}`}>
               <p className="sm:text-[15px] text-[13px] hover:text-white transition-all duration-150 ease-in-out  text-[white]/[0.8]">
                 {video?.user?.name}
               </p>

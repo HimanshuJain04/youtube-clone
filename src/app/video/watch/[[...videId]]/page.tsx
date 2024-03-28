@@ -89,7 +89,7 @@ export default function Watch() {
                 <div className="flex justify-center items-center gap-2">
                   {/* channel image */}
                   <Link
-                    href={`/@${videoData?.user?.userName}`}
+                    href={`/channel/@${videoData?.user?.userName}`}
                     className="w-12 h-12 cursor-pointer rounded-full overflow-auto"
                   >
                     <Image
@@ -103,7 +103,7 @@ export default function Watch() {
                   {/* channel | subscriber */}
                   <div className="flex flex-col items-start">
                     <Link
-                      href={`/@${videoData?.user?.userName}`}
+                      href={`/channel/@${videoData?.user?.userName}`}
                       className=" font-semibold cursor-pointer text-lg"
                     >
                       {videoData?.user?.name}
