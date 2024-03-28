@@ -6,7 +6,14 @@ export const subscribeUnsubscribeHandler = async (channelId: string, userId: str
     try {
 
         // check user is already subscribed to channel or not
-        const isSubscribed = true;
+        const isSubscribed = await client.user.findUnique(
+            {
+                where: { id: userId },
+                include: { subscribesTo: { where: { id: channelId } } }
+            }
+        );
+
+        console.log("isSubscribed: ", isSubscribed)
 
         if (!isSubscribed) {
             // Subscribe the user to the channel
@@ -17,6 +24,7 @@ export const subscribeUnsubscribeHandler = async (channelId: string, userId: str
                     subscribesToCount: { increment: 1 }
                 }
             });
+
             // Update the channel's subscriber count
             await client.user.update({
                 where: { id: channelId },
@@ -36,6 +44,7 @@ export const subscribeUnsubscribeHandler = async (channelId: string, userId: str
                     subscribesToCount: { decrement: 1 }
                 }
             });
+
             // Update the channel's subscriber count
             await client.user.update({
                 where: { id: channelId },
@@ -45,6 +54,7 @@ export const subscribeUnsubscribeHandler = async (channelId: string, userId: str
                 }
             });
         }
+
         return true;
 
     } catch (error) {

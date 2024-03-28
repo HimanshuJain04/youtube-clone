@@ -88,7 +88,10 @@ export default function Watch() {
                 {/* channel */}
                 <div className="flex justify-center items-center gap-2">
                   {/* channel image */}
-                  <div className="w-12 h-12 rounded-full overflow-auto">
+                  <Link
+                    href={`/@${videoData?.user?.userName}`}
+                    className="w-12 h-12 cursor-pointer rounded-full overflow-auto"
+                  >
                     <Image
                       width={48}
                       src={videoData?.user?.profileImage}
@@ -96,12 +99,15 @@ export default function Watch() {
                       className="rounded-full object-cover"
                       alt="channel"
                     />
-                  </div>
+                  </Link>
                   {/* channel | subscriber */}
                   <div className="flex flex-col items-start">
-                    <p className=" font-semibold text-lg">
+                    <Link
+                      href={`/@${videoData?.user?.userName}`}
+                      className=" font-semibold cursor-pointer text-lg"
+                    >
                       {videoData?.user?.name}
-                    </p>
+                    </Link>
                     <div className="flex gap-2 text-sm text-white/[0.7]">
                       <span>{videoData?.user?.subscribersCount}</span>
                       <span>subscribers</span>

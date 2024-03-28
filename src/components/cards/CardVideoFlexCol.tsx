@@ -21,22 +21,18 @@ function HomeCard({ video }) {
       />
       <div className="flex gap-3 cursor-pointer justify-start items-start mt-3">
         {/* Channel Logo */}
-        <div
-          onClick={() => {
-            router.push(`/channel/username=${video?.user?.username}`);
-          }}
-          className="mt-1 w-[40px] rounded-full shrink-0 h-[40px]"
-        >
-          <Image
-            alt="channel-logo"
-            loading="lazy"
-            width={40}
-            height={40}
-            className="h-full w-full shrink-0 object-cover rounded-full"
-            src={video?.user?.profileImage}
-          />
-        </div>
-
+        <Link href={`/@${video?.user.userName}`}>
+          <div className="mt-1 w-[40px] rounded-full shrink-0 h-[40px]">
+            <Image
+              alt="channel-logo"
+              loading="lazy"
+              width={40}
+              height={40}
+              className="h-full w-full shrink-0 object-cover rounded-full"
+              src={video?.user?.profileImage}
+            />
+          </div>
+        </Link>
         {/* Video Related Data */}
         <div className="flex gap-1 flex-col w-[(calc(100%-40px))]">
           {/* Title of video */}
@@ -47,14 +43,11 @@ function HomeCard({ video }) {
 
           <div className="flex gap-0 w-full justify-start items-start flex-col">
             {/* Channel Name */}
-            <p
-              onClick={() => {
-                router.push(`/channel/username=${video?.user?.username}`);
-              }}
-              className="sm:text-[15px] text-[13px] hover:text-white transition-all duration-150 ease-in-out  text-[white]/[0.8]"
-            >
-              {video?.user?.name}
-            </p>
+            <Link href={`/@${video?.user.userName}`}>
+              <p className="sm:text-[15px] text-[13px] hover:text-white transition-all duration-150 ease-in-out  text-[white]/[0.8]">
+                {video?.user?.name}
+              </p>
+            </Link>
 
             {/* View And Time */}
             <div className="flex justify-start items-center gap-1 text-[white]/[0.7] text-[13px] sm:text-[15px] ">
