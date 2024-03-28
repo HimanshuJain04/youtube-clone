@@ -18,7 +18,6 @@ export default function Watch() {
     try {
       setLoading(true);
       const res = await axios.get(`/api/video?videoId=${videoId}`);
-      console.log(res.data.data);
       setVideoData(res.data.data);
     } catch (error) {
       console.log("Error : ", error);

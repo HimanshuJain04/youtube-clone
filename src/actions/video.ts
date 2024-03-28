@@ -80,37 +80,7 @@ export async function createVideo(body: any) {
 }
 
 
-export async function getHomeVideos() {
-    try {
-        const allVideo = client.video.findMany(
-            {
-                select: {
-                    id: true,
-                    title: true,
-                    duration: true,
-                    thumbnail: true,
-                    createdAt: true,
-                    url: true,
-                    viewsCount: true,
-                    user: {
-                        select: {
-                            id: true,
-                            profileImage: true,
-                            userName: true,
-                            name: true,
-                        }
-                    }
-                }
-            }
-        );
 
-        return allVideo;
-
-    } catch (error: any) {
-        console.log(error)
-        throw new Error("Server failed to create video", error);
-    }
-}
 
 
 

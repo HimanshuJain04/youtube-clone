@@ -13,13 +13,26 @@ export async function GET(req: NextRequest) {
                 where: {
                     id: videoId
                 },
-                include: {
-                    user: true
+                select: {
+                    id: true,
+                    title: true,
+                    createdAt: true,
+                    url: true,
+                    description: true,
+                    viewsCount: true,
+                    tags: true,
+                    likesCount: true,
+                    user: {
+                        select: {
+                            id: true,
+                            profileImage: true,
+                            userName: true,
+                            name: true,
+                        }
+                    }
                 }
             }
         );
-
-        console.log("videoData:   ", videoData)
 
         return NextResponse.json(
             {

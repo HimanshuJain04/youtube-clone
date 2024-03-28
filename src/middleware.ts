@@ -1,4 +1,4 @@
-import type { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
 
 export async function middleware(request: NextRequest, next: () => void) {
@@ -10,13 +10,13 @@ export async function middleware(request: NextRequest, next: () => void) {
             return;
         }
 
-        const decodedToken = await jwt.verify(token, process.env.JSON_WEB_TOKEN_SECRET!);
+        console.log("hih")
+        // Manually verify the JWT token without using crypto module
+        const decodedToken = jwt.verify(token, process.env.JSON_WEB_TOKEN_SECRET, {
+            algorithms: ['HS256'], // Specify the algorithm used for signing the token
+        });
 
-        if (!decodedToken) {
-            return;
-        }
-
-        console.log("Decoded token:", decodedToken);
+        console.log("decode: ", decodedToken);
 
         next();
     } catch (error) {

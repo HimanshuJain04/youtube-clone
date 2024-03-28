@@ -15,14 +15,12 @@ const VideoCard = (props: videoCardProps) => {
   let timer: any;
 
   const handleMouseEnter = () => {
-    console.log("enter");
     timer = setTimeout(() => {
       setShowVideo(true);
     }, 2000);
   };
 
   const handleMouseLeave = () => {
-    console.log("eave");
     clearTimeout(timer);
     setShowVideo(false);
   };
@@ -31,7 +29,7 @@ const VideoCard = (props: videoCardProps) => {
     <>
       {/* Image || Video */}
       <div
-        className="relative sm:h-[225px] overflow-hidden bg-red-100 w-full h-[150px] cursor-pointer"
+        className="relative sm:h-[250px] overflow-hidden w-full h-[150px] cursor-pointer"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
@@ -55,7 +53,7 @@ const VideoCard = (props: videoCardProps) => {
                 alt="thumbnail"
                 width={380}
                 height={250}
-                className="rounded-md transition-opacity duration-[2000] ease-in-out  w-full h-full"
+                className="rounded-2xl transition-opacity duration-[2000] ease-in-out  w-full h-full"
                 src={imageUrl}
               />
             </>
