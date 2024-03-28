@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import axios from "axios";
 import Image from "next/image";
@@ -7,12 +7,17 @@ import { videoIcons } from "@/constant/Icons";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { getTime, getViews } from "@/utils/videoUtils";
+import { likedPost, dislikedPost } from "@/actions/like";
+import { Context } from "@/app/context";
+import toast from "react-hot-toast";
+import { subscribeUnsubscribeHandler } from "../../../../actions/channel";
 
 export default function Watch() {
   const videoId = usePathname().split("/").at(-1);
   const [videoData, setVideoData] = useState(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
+  const { user } = useContext(Context);
 
   async function getVideos() {
     try {
@@ -24,6 +29,29 @@ export default function Watch() {
       router.push("/something-went-wrong");
     } finally {
       setLoading(false);
+    }
+  }
+
+  async function likeHandler() {
+    if (await likedPost(videoId!, "clu9efnl700023k9sklzjfjp7")) {
+      toast.success("liked Success");
+    }
+  }
+
+  async function dislikeHandler() {
+    if (await dislikedPost(videoId!, "clu9efnl700023k9sklzjfjp7")) {
+      toast.success("disliked Success");
+    }
+  }
+
+  async function subscribeButtonHandler() {
+    if (
+      await subscribeUnsubscribeHandler(
+        "clu9efnl700023k9sklzjfjp7",
+        "clu9efnl700023k9sklzjfjp7"
+      )
+    ) {
+      toast.success("channel subscribe Success");
     }
   }
 
@@ -75,13 +103,13 @@ export default function Watch() {
                       {videoData?.user?.name}
                     </p>
                     <div className="flex gap-2 text-sm text-white/[0.7]">
-                      <span>{videoData?.user?.userName}</span>
+                      <span>{videoData?.user?.subscribersCount}</span>
                       <span>subscribers</span>
                     </div>
                   </div>
 
                   {/* button */}
-                  <div>
+                  <div onClick={subscribeButtonHandler}>
                     <button className="px-5 py-2 bg-white text-black rounded-full font-semibold">
                       Subscribe
                     </button>
@@ -93,14 +121,20 @@ export default function Watch() {
                   {/* like | dislike */}
                   <div className="text-white flex justify-center text-2xl items-center rounded-full bg-white/[0.2]">
                     {/* like */}
-                    <div className="flex border-r-2  transition-all duration-200 ease-in-out py-[8px] px-4 gap-2 cursor-pointer rounded-l-full hover:bg-white/[0.25] border-white/[0.5] justify-center items-center">
+                    <div
+                      onClick={likeHandler}
+                      className="flex border-r-2  transition-all duration-200 ease-in-out py-[8px] px-4 gap-2 cursor-pointer rounded-l-full hover:bg-white/[0.25] border-white/[0.5] justify-center items-center"
+                    >
                       <videoIcons.BiLike />
                       <p className="text-base">
                         {videoData?.likesCount > 0 && videoData?.likesCount}
                       </p>
                     </div>
                     {/* dislike */}
-                    <div className="flex px-4 hover:bg-white/[0.25] transition-all duration-200 ease-in-out cursor-pointer py-[8px] rounded-r-full  justify-center items-center">
+                    <div
+                      onClick={dislikeHandler}
+                      className="flex px-4 hover:bg-white/[0.25] transition-all duration-200 ease-in-out cursor-pointer py-[8px] rounded-r-full  justify-center items-center"
+                    >
                       <videoIcons.BiDislike />
                     </div>
                   </div>

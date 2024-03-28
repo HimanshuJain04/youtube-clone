@@ -28,6 +28,7 @@ export async function GET(req: NextRequest) {
                             profileImage: true,
                             userName: true,
                             name: true,
+                            subscribersCount: true
                         }
                     }
                 }

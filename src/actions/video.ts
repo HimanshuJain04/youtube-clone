@@ -6,29 +6,6 @@ import { FileIntoBuffer } from "@/utils/FileIntoBuffer";
 import { formToJSON } from "axios";
 
 
-// interface requestType {
-//     description: String
-//     title: String
-//     isAgeRestricted: Boolean
-//     tags: String[]
-//     thumbnailFile: Blob;
-//     videoFile: Blob;
-// }
-
-
-// return NextResponse.json(
-//     {
-//         success: true,
-//         message: "Server successfully create video",
-//         data: response
-//     },
-//     {
-//         status: 201
-//     }
-// );
-
-
-
 export async function createVideo(body: any) {
     try {
         const { title, description, isAgeRestricted, userId, tags, thumbnailFile, videoFile
