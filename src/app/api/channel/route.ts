@@ -9,6 +9,18 @@ export async function GET(req: NextRequest) {
     try {
         const userName = req.nextUrl.searchParams.get("username");
 
+        if (!userName) {
+            return NextResponse.json(
+                {
+                    message: "Fetched channel failed",
+                    data: null,
+                    success: false
+                },
+                {
+                    status: 400
+                }
+            );
+        }
 
         const userData = await client.user.findFirst(
             {
@@ -16,6 +28,7 @@ export async function GET(req: NextRequest) {
                     userName
                 },
                 select: {
+                    id: true,
                     name: true,
                     userName: true,
                     description: true,
@@ -28,7 +41,7 @@ export async function GET(req: NextRequest) {
 
         return NextResponse.json(
             {
-                message: "Get video successfully",
+                message: "Fetched channel successfully",
                 data: userData,
                 success: true
             },
@@ -44,7 +57,7 @@ export async function GET(req: NextRequest) {
             {
                 error: err.message,
                 success: false,
-                message: "Server failed to get video, try again later",
+                message: "Server failed to fetched channel, try again later",
                 data: null
             },
             {

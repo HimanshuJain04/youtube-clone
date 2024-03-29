@@ -3,7 +3,7 @@ import { subscribeUnsubscribeHandler } from "@/actions/channel";
 import { Context } from "@/app/context";
 import React, { useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { IoIosNotifications } from "react-icons/io";
+import { MdOutlineNotificationsActive } from "react-icons/md";
 
 async function subscribeButtonHandler(
   channelId: string,
@@ -41,16 +41,14 @@ const SubscribeButton = ({ channelId }: any) => {
       }
     >
       <button
-        className={`px-5 py-2 rounded-full border-2 font-semibold ${
-          isSubscribed
-            ? "bg-black text-white border-white/[0.7] "
-            : "bg-white text-black border-black "
+        className={`px-5 py-2 rounded-full  font-semibold ${
+          isSubscribed ? "bg-white/[0.2] text-white  " : "bg-white text-black  "
         }`}
       >
         {isSubscribed ? (
           <span className="text-white flex justify-center items-center gap-1">
+            <MdOutlineNotificationsActive className="text-2xl" />
             <p>Subscribed</p>
-            <IoIosNotifications className="text-2xl" />
           </span>
         ) : (
           <p>Subscribe</p>

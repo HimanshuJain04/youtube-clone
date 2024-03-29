@@ -24,17 +24,12 @@ const Page = () => {
   return (
     <div className="min-h-screen w-full flex justify-center items-start">
       {data && (
-        <div className="w-11/12 flex flex-col gap-5 justify-start items-start">
+        <div className="w-10/12 flex flex-col gap-5 justify-start items-start">
           {/* cover image */}
-          <div className="w-full bg-white/[0.1] rounded-3xl h-[260px]">
-            {data.coverImage && (
-              <Image
-                alt="Cover-profile"
-                height={300}
-                className=""
-                src={data?.coverImage}
-                width={100}
-              />
+
+          <div className="w-full bg-white/[0.15] rounded-3xl h-[200px]">
+            {data?.coverImage && (
+              <Image alt="Cover-profile" src={data?.coverImage} layout="fill" />
             )}
           </div>
 
@@ -54,7 +49,7 @@ const Page = () => {
             </div>
 
             {/* details */}
-            <div className="flex gap-3 flex-col">
+            <div className="flex gap-3 justify-start items-start flex-col">
               {/* name */}
               <div>
                 <p className="text-5xl font-bold text-white">{data.name}</p>
@@ -79,9 +74,9 @@ const Page = () => {
                 </span>
               </div>
               {/* description or additional details */}
-              <div className="text-white/[0.7]">{data?.description}njjnv</div>
+              <div className="text-white/[0.7]">{data?.description}</div>
 
-              <SubscribeButton />
+              <SubscribeButton channelId={data?.id} />
             </div>
           </div>
 
