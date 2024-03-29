@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import axios from "axios";
+import SubscribeButton from "@/components/buttons/SubscribeButton";
 
 const Page = () => {
   const [data, setData] = useState(null);
@@ -51,6 +52,7 @@ const Page = () => {
                 />
               )}
             </div>
+
             {/* details */}
             <div className="flex gap-3 flex-col">
               {/* name */}
@@ -79,9 +81,7 @@ const Page = () => {
               {/* description or additional details */}
               <div className="text-white/[0.7]">{data?.description}njjnv</div>
 
-              <div className="bg-white">
-                <button>Subscribe</button>
-              </div>
+              <SubscribeButton />
             </div>
           </div>
 
