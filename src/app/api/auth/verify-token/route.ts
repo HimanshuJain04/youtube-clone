@@ -25,6 +25,17 @@ export async function PATCH(req: NextRequest) {
             });
         }
 
+        if (existingUser.verifyTokenExpiry < Date.now()) {
+            return NextResponse.json({
+                message: "Link is expired, Try again",
+                success: false,
+                data: null
+            }, {
+                status: 401
+            });
+        }
+
+
         const isTokenCorrect = existingUser.verifyToken === verificationToken;
 
         if (!isTokenCorrect) {
@@ -43,7 +54,9 @@ export async function PATCH(req: NextRequest) {
                 id: userId
             },
             data: {
-                isVerified: true
+                isVerified: true,
+                verifyToken: null,
+                verifyTokenExpiry: null
             }
         });
 

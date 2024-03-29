@@ -17,13 +17,12 @@ export default function VerifyTokenPage() {
     try {
       setLoading(true);
       const res = await axios.patch("/api/auth/verify-token", data);
-      console.log(res);
       setIsVerified(true);
       toast.success("Email Verified!");
-    } catch (err) {
-      toast.error("Email Verification Failed");
+    } catch (err: any) {
+      toast.error(err.response.data.message);
+      toast.error("Email Verification Failed"); 
       setIsVerified(false);
-      console.log(err);
     } finally {
       setLoading(false);
     }

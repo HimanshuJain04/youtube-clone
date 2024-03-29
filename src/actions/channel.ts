@@ -42,8 +42,6 @@ export const subscribeUnsubscribeHandler = async (channelId: string, userId: str
                 }
             );
 
-            console.log("updatedUser: ", updatedUser)
-
             // Update the channel's subscriber count
             const updatedChannel = await client.user.update({
                 where: { id: channelId },
@@ -57,8 +55,6 @@ export const subscribeUnsubscribeHandler = async (channelId: string, userId: str
                     name: true,
                 }
             });
-
-            console.log("updatedChannel: ", updatedChannel);
 
         } else {
 

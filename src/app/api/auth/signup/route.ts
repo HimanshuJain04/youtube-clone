@@ -77,8 +77,6 @@ export async function POST(request: NextRequest) {
 
         const mailRes = await sendEmail(email, url);
 
-        console.log("mailres: ", mailRes)
-
         if (!mailRes) {
             return NextResponse.json(
                 {
