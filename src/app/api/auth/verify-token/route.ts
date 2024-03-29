@@ -7,13 +7,13 @@ export async function PATCH(req: NextRequest) {
         const body = await req.json();
         const { verificationToken, userId } = body;
 
-        const existingUser = await client.user.findFirst({
-            where: {
-                id: userId
+        const existingUser = await client.user.findFirst(
+            {
+                where: {
+                    id: userId
+                }
             }
-        });
-
-        console.log("existingUser: ", existingUser);
+        );
 
         if (!existingUser) {
             return NextResponse.json({

@@ -73,8 +73,7 @@ export async function POST(request: NextRequest) {
                 status: 500
             })
         }
-
-        const url = `${process.env.BASE_URL}/auth/verify-email/${newUser.id}/${verificationToken}`;
+        const url = `${process.env.BASE_URL}/auth/verify-email?userId=${newUser.id}&token=${verificationToken}`;
 
         const mailRes = await sendEmail(email, url);
 

@@ -4,5 +4,4 @@ const nextConfig = {
         domains: ['ui-avatars.com', "res.cloudinary.com"],
     }
 };
-
 export default nextConfig;

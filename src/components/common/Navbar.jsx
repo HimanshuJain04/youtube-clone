@@ -7,7 +7,7 @@ import { useContext } from "react";
 import { Context } from "@/app/context";
 import { NavIcons } from "@/constant/Icons";
 import IconHover from "@/components/common/IconHover";
-import Button from "@/components/Button";
+import Button from "@/components/buttons/Button";
 import Link from "next/link";
 import { useRouter } from 'next/navigation';
 

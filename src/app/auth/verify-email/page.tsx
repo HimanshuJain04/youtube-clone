@@ -3,12 +3,15 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 
 export default function VerifyTokenPage() {
   const [isVerified, setIsVerified] = useState(false);
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState(null);
+
+  const searchParams = useSearchParams();
 
   async function verifyToken() {
     try {
@@ -27,12 +30,9 @@ export default function VerifyTokenPage() {
   }
 
   useEffect(() => {
-    const token = window.location.pathname.split("/").at(-1);
-    const id = window.location.pathname.split("/").at(-2);
-
     setData({
-      verificationToken: token,
-      userId: id,
+      verificationToken: searchParams.get("token"),
+      userId: searchParams.get("userId"),
     });
   }, []);
 

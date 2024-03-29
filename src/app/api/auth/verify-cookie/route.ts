@@ -1,22 +1,15 @@
-import { dbConnection } from "@/dbConfig/dbConfig";
-import { getDatafromToken } from "@/helpers/getDataFromToken";
-import User from "@/models/userSchema";
+import { verifyTokenCookie } from "@/helper/verifyToken";
 import { NextRequest, NextResponse } from "next/server";
-
-dbConnection();
 
 export async function GET(req: NextRequest) {
     try {
 
-        const userId: any = await getDatafromToken(req);
-
-        const user = await User.findById(userId)
-            .select("-password");
+        const userPayload: any = await verifyTokenCookie(req);
 
         return NextResponse.json(
             {
                 message: "User Data fetch successfully",
-                data: user,
+                data: userPayload,
                 success: true
 
             },
@@ -27,8 +20,8 @@ export async function GET(req: NextRequest) {
         return NextResponse.json(
             {
                 message: "Something went wrong",
-                error: error.message
-
+                error: error.message,
+                data: null
             },
             { status: 500 }
         )

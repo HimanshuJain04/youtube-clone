@@ -6,12 +6,15 @@ export const subscribeUnsubscribeHandler = async (channelId: string, userId: str
     try {
 
         // check user is already subscribed to channel or not
-        const isSubscribed = await client.user.findUnique(
-            {
-                where: { id: userId },
-                include: { subscribesTo: { where: { id: channelId } } }
-            }
-        );
+
+        // const isSubscribed = await client.user.findUnique(
+        //     {
+        //         where: { id: userId },
+        //         include: { subscribesTo: { where: { id: channelId } } }
+        //     }
+        // );
+
+        const isSubscribed = false;
 
         console.log("isSubscribed: ", isSubscribed)
 

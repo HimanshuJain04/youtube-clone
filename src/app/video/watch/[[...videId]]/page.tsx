@@ -11,6 +11,7 @@ import { likedPost, dislikedPost } from "@/actions/like";
 import { Context } from "@/app/context";
 import toast from "react-hot-toast";
 import { subscribeUnsubscribeHandler } from "../../../../actions/channel";
+import SubscribeButton from "@/components/buttons/SubscribeButton";
 
 export default function Watch() {
   const videoId = usePathname().split("/").at(-1);
@@ -41,17 +42,6 @@ export default function Watch() {
   async function dislikeHandler() {
     if (await dislikedPost(videoId!, "clu9efnl700023k9sklzjfjp7")) {
       toast.success("disliked Success");
-    }
-  }
-
-  async function subscribeButtonHandler() {
-    if (
-      await subscribeUnsubscribeHandler(
-        "clu9efnl700023k9sklzjfjp7",
-        "clu9efnl700023k9sklzjfjp7"
-      )
-    ) {
-      toast.success("channel subscribe Success");
     }
   }
 
@@ -114,12 +104,7 @@ export default function Watch() {
                     </div>
                   </div>
 
-                  {/* button */}
-                  <div onClick={subscribeButtonHandler}>
-                    <button className="px-5 py-2 bg-white text-black rounded-full font-semibold">
-                      Subscribe
-                    </button>
-                  </div>
+                  <SubscribeButton channelId={videoData?.user?.id} />
                 </div>
 
                 {/* likes | dislikes | etc */}

@@ -33,9 +33,24 @@ export async function POST(request: NextRequest) {
             };
         }
 
-        const existedUser = await client.user.findUnique({
-            where: whereCondition,
-        });
+        const existedUser = await client.user.findUnique(
+            {
+                where: whereCondition,
+                select: {
+                    id: true,
+                    subscribesTo: true,
+                    userName: true,
+                    name: true,
+                    email: true,
+                    profileImage: true,
+                    likedVideos: true,
+                    dislikedVideos: true,
+                    playlists: true,
+                    isVerified: true,
+                    password: true,
+                }
+            },
+        );
 
         if (!existedUser) {
             return NextResponse.json({
@@ -80,7 +95,7 @@ export async function POST(request: NextRequest) {
 
         const token = await jwt.sign(
             tokenData,
-            process.env.JSON_WEB_TOKEN_SECRET,
+            process.env.JSON_WEB_TOKEN_SECRET!,
             {
                 expiresIn: "1h"
             }
@@ -99,11 +114,11 @@ export async function POST(request: NextRequest) {
 
 
         response.cookies.set(
-            "YOUTUBE_TOKEN",
-            token,
+            "YOUTUBE_TOKEN",           // Cookie name
+            token,                     // JWT token to be stored in the cookie
             {
-                httpOnly: true,
-                secure: true,
+                httpOnly: true,        // Cookie accessible only via HTTP(S) requests, not JavaScript
+                secure: true           // Cookie transmitted only over HTTPS
             }
         );
 
