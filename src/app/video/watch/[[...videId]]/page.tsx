@@ -13,14 +13,17 @@ import LikeButtons from "@/components/buttons/LikeButtons";
 export default function Watch() {
   const videoId = usePathname().split("/").at(-1);
   const [videoData, setVideoData] = useState(null);
+  const [subscribers, setSubscribers] = useState(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
   async function getVideos() {
     try {
       setLoading(true);
-      const res = await axios.get(`/api/video?videoId=${videoId}`);
-      setVideoData(res.data.data);
+      const { data } = await axios.get(`/api/video?videoId=${videoId}`);
+      console.log("data: ", data);
+      setVideoData(data.data);
+      setSubscribers(data.data?.user?.subscribersCount);
     } catch (error) {
       console.log("Error : ", error);
       router.push("/something-went-wrong");
@@ -84,12 +87,15 @@ export default function Watch() {
                         {videoData?.user?.name}
                       </Link>
                       <div className="flex gap-2 text-sm text-white/[0.7]">
-                        <span>{videoData?.user?.subscribersCount}</span>
+                        <span>{subscribers}</span>
                         <span>subscribers</span>
                       </div>
                     </div>
 
-                    <SubscribeButton channelId={videoData?.user?.id} />
+                    <SubscribeButton
+                      setSubscribers={setSubscribers}
+                      channelId={videoData?.user?.id}
+                    />
                   </div>
 
                   {/* likes | dislikes | etc */}

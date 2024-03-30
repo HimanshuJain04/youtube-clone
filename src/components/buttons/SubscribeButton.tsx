@@ -5,24 +5,7 @@ import React, { useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { MdOutlineNotificationsActive } from "react-icons/md";
 
-async function subscribeButtonHandler(
-  channelId: string,
-  userId: string,
-  setIsSubscribed: any
-) {
-  const data = await subscribeUnsubscribeHandler(channelId, userId);
-  if (!data) {
-    toast.error("Something went wrong");
-    return;
-  }
-
-  setIsSubscribed(data.status);
-  toast.success(
-    data.status ? "Subscribe successfull" : "Unsubscribe successfull"
-  );
-}
-
-const SubscribeButton = ({ channelId }: any) => {
+const SubscribeButton = ({ channelId, setSubscribers }: any) => {
   const { user } = useContext(Context);
   const [isSubscribed, setIsSubscribed] = useState(false);
 
@@ -34,12 +17,22 @@ const SubscribeButton = ({ channelId }: any) => {
     setIsSubscribed(isPresent);
   }, [user, channelId]);
 
+  async function subscribeButtonHandler() {
+    const data = await subscribeUnsubscribeHandler(channelId, user.id);
+    if (!data) {
+      toast.error("Something went wrong");
+      return;
+    } else {
+      setIsSubscribed(data.status);
+      toast.success(
+        data.status ? "Subscribe successfull" : "Unsubscribe successfull"
+      );
+      setSubscribers(data.channelSubscribers?.subscribersCount);
+    }
+  }
+
   return (
-    <div
-      onClick={() =>
-        subscribeButtonHandler(channelId, user.id, setIsSubscribed)
-      }
-    >
+    <div onClick={subscribeButtonHandler}>
       <button
         className={`px-5 py-2 rounded-full  font-semibold ${
           isSubscribed ? "bg-white/[0.2] text-white  " : "bg-white text-black  "

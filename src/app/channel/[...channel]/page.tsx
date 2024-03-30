@@ -7,6 +7,7 @@ import SubscribeButton from "@/components/buttons/SubscribeButton";
 
 const Page = () => {
   const [data, setData] = useState(null);
+  const [subscribers, setSubscribers] = useState(null);
 
   useEffect(() => {
     async function getChannelDetails() {
@@ -14,8 +15,9 @@ const Page = () => {
         .split("/")
         .at(-1)
         ?.replace("@", "");
-      const res = await axios.get(`/api/channel?username=${username}`);
-      setData(res.data.data);
+      const { data } = await axios.get(`/api/channel?username=${username}`);
+      setData(data.data);
+      setSubscribers(data.data.subscribersCount);
     }
 
     getChannelDetails();
@@ -27,9 +29,9 @@ const Page = () => {
         <div className="w-10/12 flex flex-col gap-5 justify-start items-start">
           {/* cover image */}
 
-          <div className="w-full bg-white/[0.15] rounded-3xl h-[200px]">
-            {data?.coverImage && (
-              <Image alt="Cover-profile" src={data?.coverImage} layout="fill" />
+          <div className="w-full bg-white/[0.15]  relative rounded-3xl h-[200px]">
+            {data.coverImage && (
+              <Image alt="Cover-profile" src={data.coverImage} layout="fill" />
             )}
           </div>
 
@@ -62,7 +64,7 @@ const Page = () => {
                 <div className="h-[3px] w-[3px] rounded-full bg-white/[0.5]"></div>
 
                 <span className="flex gap-1">
-                  <p>{data.subscribersCount}</p>
+                  <p>{subscribers}</p>
                   <p>subscribers</p>
                 </span>
 
@@ -76,7 +78,10 @@ const Page = () => {
               {/* description or additional details */}
               <div className="text-white/[0.7]">{data?.description}</div>
 
-              <SubscribeButton channelId={data?.id} />
+              <SubscribeButton
+                setSubscribers={setSubscribers}
+                channelId={data?.id}
+              />
             </div>
           </div>
 
@@ -87,5 +92,4 @@ const Page = () => {
     </div>
   );
 };
-
 export default Page;

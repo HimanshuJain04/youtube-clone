@@ -21,32 +21,22 @@ export const subscribeUnsubscribeHandler = async (channelId: string, userId: str
 
         if (!isSubscribed) {
             // Subscribe the user to the channel
-            const updatedUser = await client.user.update(
+            await client.user.update(
                 {
                     where: { id: userId },
                     data: {
                         subscribesTo: { connect: { id: channelId } },
                         subscribesToCount: { increment: 1 }
-                    },
-                    select: {
-                        subscribesTo: true,
-                        subscribesToCount: true,
-                        name: true,
                     }
                 }
             );
 
             // Update the channel's subscriber count
-            const updatedChannel = await client.user.update({
+            await client.user.update({
                 where: { id: channelId },
                 data: {
                     subscribers: { connect: { id: userId } },
                     subscribersCount: { increment: 1 }
-                },
-                select: {
-                    subscribers: true,
-                    subscribersCount: true,
-                    name: true,
                 }
             });
 
@@ -71,8 +61,20 @@ export const subscribeUnsubscribeHandler = async (channelId: string, userId: str
             });
         }
 
+        const channelSubscribers = await client.user.findFirst(
+            {
+                where: {
+                    id: channelId
+                },
+                select: {
+                    subscribersCount: true
+                }
+            }
+        )
+
         return {
-            status: !isSubscribed
+            status: !isSubscribed,
+            channelSubscribers
         };
 
     } catch (error) {
