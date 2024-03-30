@@ -21,7 +21,6 @@ export default function Watch() {
     try {
       setLoading(true);
       const { data } = await axios.get(`/api/video?videoId=${videoId}`);
-      console.log("data: ", data);
       setVideoData(data.data);
       setSubscribers(data.data?.user?.subscribersCount);
     } catch (error) {

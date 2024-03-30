@@ -7,8 +7,6 @@ import toast from "react-hot-toast";
 const LikeButtons = ({ videoId, likesCount }: any) => {
   const { user }: any = useContext(Context);
 
-  console.log(user);
-
   const [totalLikes, setTotalLikes] = useState(likesCount);
   const [isDisliked, setIsDisliked] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
@@ -21,6 +19,7 @@ const LikeButtons = ({ videoId, likesCount }: any) => {
     } else {
       console.log("res: ", res);
       setIsLiked(res.status);
+      setIsDisliked(false);
       toast.success(res.status ? "Liked" : "Unliked");
       setTotalLikes(res.likeCount?.likesCount);
     }
@@ -32,8 +31,9 @@ const LikeButtons = ({ videoId, likesCount }: any) => {
     if (!res) {
       toast.error("Dislike Handler Failed");
     } else {
-      console.log("res: ", res);
       setIsDisliked(res.status);
+      setTotalLikes(res.likeCount?.likesCount);
+      setIsLiked(false);
       toast.success(res.status ? "Disliked" : "Undisliked");
     }
   }

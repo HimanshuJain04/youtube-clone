@@ -6,6 +6,7 @@ import { createVideo } from "@/actions/video";
 import { CovertIntoFormData } from "@/utils/FormDataConvertor";
 import { Context } from "@/app/context";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 interface FileData {
   lastModified: number;
@@ -45,8 +46,9 @@ export default function CreatVideo() {
 
       fd.append("userId", user.id);
       const result = await createVideo(fd);
-      console.log("Video created! ", result);
+      toast.success("Video Uploaded Successfully!");
     } catch (error) {
+      toast.error("Video Upload Failed !");
       console.log("Something went wrong! ", error);
     }
   };
