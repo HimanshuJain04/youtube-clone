@@ -4,15 +4,13 @@ import client from "@/db";
 
 
 
-
 export const viewsHandler = async (postId: string, userId: string) => {
     try {
 
-
         // if the user is loggedIn then push the user into viewsOnVideo DB
 
+        // userId, that means user is loggedIn
         if (userId) {
-            // userId, that means user is loggedIn
 
             // check user is already watched video or not
             const isAlreadyWatched = await client.viewsOnVideo.findFirst(
@@ -23,12 +21,21 @@ export const viewsHandler = async (postId: string, userId: string) => {
                     }
 
                 }
-            )
+            );
 
             // if not then create new entry in db
+            if (!isAlreadyWatched) {
 
+                const enrty = await client.viewsOnVideo.create(
+                    {
+                        data: {
+                            video: { connect: { id: postId } },
+                            user: { connect: { id: userId } },
+                        }
+                    }
+                );
+            }
         }
-
 
         // Increase the count on video
         const viewsCount = await client.video.update(
@@ -44,8 +51,6 @@ export const viewsHandler = async (postId: string, userId: string) => {
                 }
             }
         );
-
-        console.log("viewCount: ", viewsCount);
 
         return {
             viewsCount

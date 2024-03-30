@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import axios from "axios";
 import Image from "next/image";
@@ -9,25 +9,45 @@ import Link from "next/link";
 import { getTime, getViews } from "@/utils/videoUtils";
 import SubscribeButton from "@/components/buttons/SubscribeButton";
 import LikeButtons from "@/components/buttons/LikeButtons";
+import { Context } from "@/app/context";
+import { viewsHandler } from "@/actions/views";
 
 export default function Watch() {
   const videoId = usePathname().split("/").at(-1);
   const [videoData, setVideoData] = useState(null);
-  const [subscribers, setSubscribers] = useState(null);
+  const [subscribers, setSubscribers] = useState(0);
+  const [views, setViews] = useState(0);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
+  const { user } = useContext(Context);
 
   async function getVideos() {
     try {
       setLoading(true);
       const { data } = await axios.get(`/api/video?videoId=${videoId}`);
       setVideoData(data.data);
+      setViews(data.data.viewsCount);
       setSubscribers(data.data?.user?.subscribersCount);
+
+      setTimeout(increaseViews, 5000);
     } catch (error) {
       console.log("Error : ", error);
       router.push("/something-went-wrong");
     } finally {
       setLoading(false);
+    }
+  }
+
+  async function increaseViews() {
+    try {
+      console.log("caliing");
+      const res = await viewsHandler(videoId!, user?.id);
+      if (!res) {
+        return;
+      }
+      setViews(res.viewsCount.viewsCount);
+    } catch (error) {
+      console.log("Views Error: ", error);
     }
   }
 
@@ -38,7 +58,7 @@ export default function Watch() {
   return (
     <div className="min-h-screen justify-center flex items-center text-white w-full">
       {loading ? (
-        <>loading...</>
+        <>.........loading............</>
       ) : (
         videoData && (
           <div className="w-11/12 pt-5 pb-10 flex justify-normal min-h-screen items-start">
@@ -110,7 +130,7 @@ export default function Watch() {
                   <div className="flex gap-5">
                     {/* view */}
                     <span className="text-white flex justify-center items-center gap-1 font-semibold">
-                      <p>{getViews(videoData?.viewsCount)}</p>
+                      <p>{getViews(views!)}</p>
                       <p>views</p>
                     </span>
 

@@ -33,7 +33,7 @@ const VideoCard = (props: videoCardProps) => {
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        <div className="w-full h-full">
+        <div className="w-full h-full relative">
           {showVideo ? (
             <>
               <video
@@ -52,15 +52,16 @@ const VideoCard = (props: videoCardProps) => {
                 loading="lazy"
                 alt="thumbnail"
                 layout="fill"
+                sizes="(max-width: 100%), (max-width: 100%)"
                 className="rounded-2xl transition-opacity duration-[2000] ease-in-out  w-full h-full"
                 src={imageUrl}
               />
             </>
           )}
         </div>
-        <span className="absolute right-2 px-1 font-semibold rounded-md text-sm bg-black bottom-3">
+        <div className="absolute right-2 px-1 font-semibold rounded-md text-sm bg-black bottom-3">
           {getDuration(duration)}
-        </span>
+        </div>
       </div>
     </>
   );

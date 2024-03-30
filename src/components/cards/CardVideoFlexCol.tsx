@@ -61,14 +61,14 @@ function HomeCard({ video }: any) {
               {/* View And Time */}
               <div className="flex justify-start items-center gap-1 text-[white]/[0.7] text-[13px] sm:text-[15px] ">
                 {/* Views */}
-                <p>
+                <div>
                   <span>{getViews(video?.viewsCount)}</span> views
-                </p>
+                </div>
                 <p className="text-center bg-[white]/[0.7] h-[2px] w-[2px] rounded-full"></p>
                 {/* Time */}
-                <p>
+                <div>
                   <span>{getTime(video?.createdAt)}</span> ago
-                </p>
+                </div>
               </div>
             </div>
           </div>
