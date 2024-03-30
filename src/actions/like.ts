@@ -5,78 +5,111 @@ import client from "@/db";
 
 // Check if the user has already liked the video
 const isAlreadyLiked = async (postId: string, userId: string) => {
-    return await client.likesOnVideo.findFirst({
-        where: {
-            videoId: postId,
-            userId: userId
-        }
-    });
+
+    try {
+
+        return await client.likesOnVideo.findFirst({
+            where: {
+                videoId: postId,
+                userId: userId
+            }
+        });
+
+    } catch (error) {
+        console.log("Error isAlreadyLiked: ", error);
+        throw new Error("isAlreadyLiked crashed");
+    }
+
 }
 
 
 // Check if the user has already disliked the video
 const isAlreadyDisliked = async (postId: string, userId: string) => {
-    return await client.dislikesOnVideo.findFirst({
-        where: {
-            videoId: postId,
-            userId: userId
-        }
-    });
+    try {
+
+        return await client.dislikesOnVideo.findFirst({
+            where: {
+                videoId: postId,
+                userId: userId
+            }
+        });
+
+    } catch (error) {
+        console.log("Error isAlreadyDisliked: ", error);
+        throw new Error("isAlreadyDisliked crashed");
+    }
 }
 
 
 // Remove the like from db
 const removeLike = async (postId: string, userId: string) => {
-    // remove like
-    await client.likesOnVideo.delete({
-        where: {
-            videoId_userId: {
-                videoId: postId,
-                userId: userId
+    try {
+        // remove like
+        const res = await client.likesOnVideo.delete({
+            where: {
+                videoId_userId: {
+                    videoId: postId,
+                    userId: userId
+                }
             }
-        }
-    });
+        });
 
-    // Decrease the likesCount of the video
-    await client.video.update({
-        where: { id: postId },
-        data: { likesCount: { decrement: 1 } }
-    });
+        // Decrease the likesCount of the video
+        await client.video.update({
+            where: { id: postId },
+            data: { likesCount: { decrement: 1 } }
+        });
+
+        return true;
+
+    } catch (error) {
+        console.log("Error removeLike: ", error);
+        throw new Error("ERROR : removeLike: ");
+    }
 }
 
 
 // Remove the dislike from db
 const removeDislike = async (postId: string, userId: string) => {
-    // remove dislike
-    await client.dislikesOnVideo.delete({
-        where: {
-            videoId_userId: {
-                videoId: postId,
-                userId: userId
+    try {
+        // remove dislike
+        const res = await client.dislikesOnVideo.delete({
+            where: {
+                videoId_userId: {
+                    videoId: postId,
+                    userId: userId
+                }
             }
-        }
-    });
+        });
 
-    // decrement the dislikesCount of the video
-    await client.video.update({
-        where: { id: postId },
-        data: { likesCount: { decrement: 1 } }
-    });
+        // decrement the dislikesCount of the video
+        await client.video.update({
+            where: { id: postId },
+            data: { dislikesCount: { decrement: 1 } }
+        });
+
+        return true;
+
+    } catch (error) {
+        console.log("Error removeDislike: ", error);
+        throw new Error("ERROR : removeDislike: ");
+    }
+
 }
 
 
 
-
-export const likedPost = async (postId: string, userId: string) => {
+export const likedPostHandler = async (postId: string, userId: string) => {
     try {
 
-        if (await isAlreadyLiked(postId, userId)) {
+        const isLiked = await isAlreadyLiked(postId, userId)
+
+        if (isLiked) {
             // If the user has already liked the video, unlike it
-            await removeLike(postId, userId)
+            await removeLike(postId, userId);
 
         } else {
             // If the user hasn't liked the video, then we will check user dislike post or not
-
             if (await isAlreadyDisliked(postId, userId)) {
                 // user already dislike the video| post so un-dislike the post then like it
 
@@ -92,15 +125,31 @@ export const likedPost = async (postId: string, userId: string) => {
                 }
             });
 
+
             // Increment the likesCount of the video
             await client.video.update({
                 where: { id: postId },
                 data: { likesCount: { increment: 1 } }
             });
+
         }
 
+        const likeCount = await client.video.findFirst(
+            {
+                where: {
+                    id: postId
+                },
+                select: {
+                    likesCount: true,
+                    dislikesCount: true
+                }
+            }
+        )
 
-        return true;
+        return {
+            status: !isLiked,
+            likeCount
+        };
 
     } catch (error) {
 
@@ -110,16 +159,16 @@ export const likedPost = async (postId: string, userId: string) => {
 }
 
 
-
-export const dislikedPost = async (postId: string, userId: string) => {
+export const dislikedPostHandler = async (postId: string, userId: string) => {
     try {
 
+        const isDisliked = await isAlreadyDisliked(postId, userId);
 
-        if (await isAlreadyDisliked(postId, userId)) {
+        if (isDisliked) {
             // If the user has already disliked the video, undislike it
 
             // removal dilike
-            removeDislike(postId, userId)
+            await removeDislike(postId, userId)
 
         } else {
 
@@ -147,12 +196,26 @@ export const dislikedPost = async (postId: string, userId: string) => {
             });
         }
 
-        return true;
+        const likeCount = await client.video.findFirst(
+            {
+                where: {
+                    id: postId
+                },
+                select: {
+                    likesCount: true,
+                    dislikesCount: true
+                }
+            }
+        );
+
+        return {
+            status: !isDisliked,
+            likeCount
+        };
 
     } catch (error) {
 
         return false;
-
     }
 }
 
