@@ -36,7 +36,7 @@ export default async function Home() {
   const videos = await getHomeVideos();
 
   return (
-    <div className="w-full gap-5 flex relative min-h-screen bg-black">
+    <div className="w-full gap-5 flex relative min-h-[calc(100vh-100px)] bg-black">
       <div>
         <Sidebar />
       </div>
