@@ -70,6 +70,8 @@ export async function fetchUserVideos(channelId: string) {
                 select: {
                     id: true,
                     title: true,
+                    duration: true,
+                    thumbnail: true,
                     createdAt: true,
                     url: true,
                     viewsCount: true,
@@ -79,12 +81,11 @@ export async function fetchUserVideos(channelId: string) {
                             profileImage: true,
                             userName: true,
                             name: true,
-                        }
-                    }
-                }
+                        },
+                    },
+                },
             }
         );
-
         return allVideos;
 
     } catch (error) {

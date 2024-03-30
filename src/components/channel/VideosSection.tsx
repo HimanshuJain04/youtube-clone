@@ -1,23 +1,38 @@
-import React, { useState } from "react";
-import Videos from "@/components/channel/Videos";
+import React, { useEffect, useState } from "react";
+import { fetchUserVideos } from "@/actions/video";
+import CardVideoFlexCol from "@/components/cards/CardVideoFlexCol";
 
 const menu = [
   {
     title: "Home",
+    func: fetchUserVideos,
   },
   {
     title: "Videos",
+    func: fetchUserVideos,
   },
   {
     title: "Live",
+    func: fetchUserVideos,
   },
   {
     title: "Playlists",
+    func: fetchUserVideos,
   },
 ];
 
 const VideosSection = ({ channelId }: any) => {
-  const [option, setOption] = useState(menu[0].title);
+  const [option, setOption] = useState(menu[0]);
+  const [videos, setVideos] = useState(null);
+
+  async function getVideos() {
+    const res = await option.func(channelId);
+    setVideos(res);
+  }
+
+  useEffect(() => {
+    getVideos();
+  }, [option]);
 
   return (
     <div className="w-full">
@@ -27,9 +42,9 @@ const VideosSection = ({ channelId }: any) => {
           {menu.map((item) => (
             <>
               <div
-                onClick={() => setOption(item.title)}
+                onClick={() => setOption(item)}
                 className={` ${
-                  option === item.title
+                  option.title === item.title
                     ? "text-white border-white"
                     : "text-white/[0.5] border-transparent"
                 } font-semibold cursor-pointer transition-all capitalize duration-200 ease-in-out border-b-[3px] pb-2 `}
@@ -41,8 +56,13 @@ const VideosSection = ({ channelId }: any) => {
         </div>
 
         {/* videos */}
-        <div className="w-full">
-          <Videos userId={channelId} />
+        <div className="w-full mt-10 pb-10">
+          <div className="flex flex-wrap gap-5">
+            {videos &&
+              videos?.map((video) => (
+                <CardVideoFlexCol video={video} key={video.id} />
+              ))}
+          </div>
         </div>
       </div>
     </div>
