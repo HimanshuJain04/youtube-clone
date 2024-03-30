@@ -18,7 +18,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <AppContext>
-          <div className="w-full min-h-[calc(100vh-100px)] bg-black">
+          <div className="w-full min-h-screen bg-black">
             <Navbar />
             <>{children}</>
           </div>

@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import axios from "axios";
 import SubscribeButton from "@/components/buttons/SubscribeButton";
+import VideosSection from "@/components/channel/VideosSection";
 
 const Page = () => {
   const [data, setData] = useState(null);
@@ -86,7 +87,7 @@ const Page = () => {
           </div>
 
           {/* videos */}
-          <div></div>
+          <VideosSection channelId={data.id} />
         </div>
       )}
     </div>

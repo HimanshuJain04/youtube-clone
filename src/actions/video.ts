@@ -55,6 +55,46 @@ export async function createVideo(body: any) {
 }
 
 
+export async function fetchUserVideos(channelId: string) {
+    try {
+
+        if (!channelId) {
+            return null;
+        }
+
+        const allVideos = await client.video.findMany(
+            {
+                where: {
+                    userId: channelId
+                },
+                select: {
+                    id: true,
+                    title: true,
+                    createdAt: true,
+                    url: true,
+                    viewsCount: true,
+                    user: {
+                        select: {
+                            id: true,
+                            profileImage: true,
+                            userName: true,
+                            name: true,
+                        }
+                    }
+                }
+            }
+        );
+
+        return allVideos;
+
+    } catch (error) {
+        return null;
+    }
+}
+
+
+
+
 
 
 

@@ -47,6 +47,7 @@ export default function CreatVideo() {
       fd.append("userId", user.id);
       const result = await createVideo(fd);
       toast.success("Video Uploaded Successfully!");
+      router.push("/");
     } catch (error) {
       toast.error("Video Upload Failed !");
       console.log("Something went wrong! ", error);

@@ -33,10 +33,12 @@ async function getHomeVideos() {
 }
 
 export default async function Home() {
-  const videos = await getHomeVideos();
+  const videos = await getHomeVideos().catch(() => {
+    redirect("/something-went-wrong");
+  });
 
   return (
-    <div className="w-full gap-5 flex relative min-h-[calc(100vh-100px)] bg-black">
+    <div className="w-full gap-5 flex relative min-h-screen bg-black">
       <div>
         <Sidebar />
       </div>
