@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import { createVideo } from "@/actions/video";
+import { createVideo, updateVideo } from "@/actions/video";
 import { CovertIntoFormData } from "@/utils/FormDataConvertor";
 import { Context } from "@/app/context";
 import { useRouter } from "next/navigation";
@@ -27,7 +27,12 @@ interface InitialFormValuesProps {
   videoFile: FileData | String;
 }
 
-export default function FormVideo({ InitialFormValues, TYPE }: any) {
+interface Props {
+  InitialFormValues: InitialFormValuesProps;
+  TYPE: String;
+}
+
+export default function FormVideo({ InitialFormValues, TYPE }: Props) {
   const { register, handleSubmit } = useForm();
   const router = useRouter();
 
@@ -59,9 +64,13 @@ export default function FormVideo({ InitialFormValues, TYPE }: any) {
 
       if (TYPE === "CREATE") {
         const result = await createVideo(fd);
-      } else {
-        const result = await createVideo(fd);
+        console.log("result: ", result);
+      } else if (TYPE === "UPDATE") {
+        fd.append("videoId", InitialFormValues.videoId);
+        const result = await updateVideo(fd);
+        console.log("result: ", result);
       }
+      
       toast.success("Video Uploaded Successfully!");
       router.push("/");
     } catch (error) {
