@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useContext, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { createVideo, updateVideo } from "@/actions/video";
 import { CovertIntoFormData } from "@/utils/FormDataConvertor";
@@ -8,6 +8,7 @@ import { Context } from "@/app/context";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { Icons } from "@/constant/Icons";
+import Image from "next/image";
 
 interface FileData {
   lastModified: number;
@@ -23,8 +24,10 @@ interface InitialFormValuesProps {
   description: String;
   isAgeRestricted: Boolean;
   tags: String[];
-  thumbnailFile: FileData | String;
-  videoFile: FileData | String;
+  status: String;
+  videoId?: String;
+  thumbnailFile: FileData | String | MediaSource | Blob;
+  videoFile: FileData | String | File;
 }
 
 interface Props {
@@ -35,6 +38,8 @@ interface Props {
 export default function FormVideo({ InitialFormValues, TYPE }: Props) {
   const { register, handleSubmit } = useForm();
   const router = useRouter();
+  const imageRef = useRef(null);
+  const videoRef = useRef(null);
 
   const { user }: any = useContext(Context);
 
@@ -64,13 +69,12 @@ export default function FormVideo({ InitialFormValues, TYPE }: Props) {
 
       if (TYPE === "CREATE") {
         const result = await createVideo(fd);
-        console.log("result: ", result);
       } else if (TYPE === "UPDATE") {
         fd.append("videoId", InitialFormValues.videoId);
         const result = await updateVideo(fd);
         console.log("result: ", result);
       }
-      
+
       toast.success("Video Uploaded Successfully!");
       router.push("/");
     } catch (error) {
@@ -78,6 +82,12 @@ export default function FormVideo({ InitialFormValues, TYPE }: Props) {
       console.log("Something went wrong! ", error);
     }
   };
+
+  function refHandler(reff: any) {
+    if (reff.current) {
+      reff.current.click();
+    }
+  }
 
   return (
     <div className="p-5 w-[60vw] bg-white/[0.15] rounded-xl">
@@ -88,12 +98,31 @@ export default function FormVideo({ InitialFormValues, TYPE }: Props) {
         {/* media */}
         <div className="flex w-full justify-center gap-5 items-center">
           {/* Thumbnail File */}
-          <div className="w-full h-[250px] cursor-pointer  border-white/[0.3]  rounded-md border-2 flex justify-center items-center">
-            <div className="text-white/[0.5] flex flex-col gap-3 justify-center items-center text-xl font-semibold">
-              <Icons.FaRegImage className="text-5xl" />
-              <p>Drop Thumbnail Here</p>
-            </div>
+          <div
+            onClick={() => refHandler(imageRef)}
+            className="w-full h-[250px] relative cursor-pointer  border-white/[0.3]  rounded-md border-2 flex justify-center items-center"
+          >
+            {formValues.thumbnailFile ? (
+              <>
+                <Image
+                  src={
+                    typeof formValues.thumbnailFile === "string"
+                      ? formValues.thumbnailFile
+                      : URL.createObjectURL(formValues.thumbnailFile)
+                  }
+                  alt="thumbnail"
+                  layout="fill"
+                />
+              </>
+            ) : (
+              <div className="text-white/[0.5] flex flex-col gap-3 justify-center items-center text-xl font-semibold">
+                <Icons.FaRegImage className="text-5xl" />
+                <p>Drop Thumbnail Here</p>
+              </div>
+            )}
+
             <input
+              ref={imageRef}
               type="file"
               name="thumbnailFile"
               hidden
@@ -108,12 +137,34 @@ export default function FormVideo({ InitialFormValues, TYPE }: Props) {
           </div>
 
           {/* Video File */}
-          <div className="w-full h-[250px] border-2 cursor-pointer border-white/[0.3] rounded-md flex justify-center items-center">
-            <div className="text-white/[0.5] flex gap-3 flex-col justify-center items-center text-xl font-semibold">
-              <Icons.FaFileVideo className="text-5xl" />
-              <p>Drop Video Here</p>
-            </div>
+          <div
+            onClick={() => refHandler(videoRef)}
+            className="w-full relative h-[250px] border-2 cursor-pointer border-white/[0.3] rounded-md flex justify-center items-center"
+          >
+            {formValues.videoFile ? (
+              <>
+                <video
+                  autoPlay
+                  muted
+                  controls
+                  src={
+                    typeof formValues.videoFile === "string"
+                      ? formValues.thumbnailFile
+                      : URL.createObjectURL(formValues.videoFile)
+                  }
+                  width={"100%"}
+                  height={"100%"}
+                />
+              </>
+            ) : (
+              <div className="text-white/[0.5] flex gap-3 flex-col justify-center items-center text-xl font-semibold">
+                <Icons.FaFileVideo className="text-5xl" />
+                <p>Drop Video Here</p>
+              </div>
+            )}
+
             <input
+              ref={videoRef}
               type="file"
               name="videoFile"
               id="videoFile"

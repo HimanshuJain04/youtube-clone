@@ -43,7 +43,7 @@ export default async function Home() {
         <Sidebar />
       </div>
 
-      <div className="w-full flex flex-wrap justify-start items-start gap-y-10 gap-x-5">
+      <div className="w-full bg-red-100 flex flex-wrap justify-start items-start gap-y-10 gap-x-5">
         {videos?.length > 0 &&
           videos?.map((video) => <HomeCard key={video?.id} video={video} />)}
       </div>

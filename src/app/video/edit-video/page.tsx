@@ -2,7 +2,7 @@
 
 import FormVideo from "@/components/form/FormVideo";
 
-export default function CreateVideo() {
+export default function UpdateVideo() {
   return (
     <div className="min-h-screen bg-black flex justify-center items-center">
       <FormVideo
@@ -13,6 +13,7 @@ export default function CreateVideo() {
           tags: [],
           thumbnailFile: "",
           videoFile: "",
+          videoId: "",
           status: "",
         }}
         TYPE="CREATE"
