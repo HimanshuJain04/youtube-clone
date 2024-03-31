@@ -26,6 +26,7 @@ function HomeCard({ video }: any) {
           imageUrl={video?.thumbnail}
           videoUrl={video?.url}
           duration={video?.duration}
+          css="w-[400px] h-[240px]"
         />
         {/* details */}
         <div className="flex gap-3 cursor-pointer justify-start items-start mt-3">

@@ -94,7 +94,7 @@ export async function POST(request: NextRequest) {
             tokenData,
             process.env.JSON_WEB_TOKEN_SECRET!,
             {
-                expiresIn: "1h"
+                expiresIn: "24h"
             }
         );
 

@@ -2,8 +2,20 @@ import { getTime, getViews } from "@/utils/videoUtils";
 import React from "react";
 import { Icons } from "@/constant/Icons";
 import VideoCard from "@/components/cards/VideoCard";
+import { deleteVideo } from "@/actions/video";
+import toast from "react-hot-toast";
 
 const MyVideoCard = ({ video }: any) => {
+  async function deleteHandeler() {
+    const res = await deleteVideo(video.id);
+    console.log(res);
+    if (res) {
+      toast.success("Video Deleted!");
+    } else {
+      toast.error("Video Not Delete!");
+    }
+  }
+
   return (
     <div>
       <div className="w-full flex justify-between border-white/[0.2] border-b-2 text-white/[0.8] hover:bg-black/[0.35]  pr-5 pl-2 transition-all py-2 duration-300 ease-in-out font-semibold items-start">
@@ -51,7 +63,10 @@ const MyVideoCard = ({ video }: any) => {
           </button>
 
           {/* delete */}
-          <button className="cursor-pointer p-2 hover:bg-white/[0.2] transition-all duration-200 ease-in-out rounded-full">
+          <button
+            onClick={deleteHandeler}
+            className="cursor-pointer p-2 hover:bg-white/[0.2] transition-all duration-200 ease-in-out rounded-full"
+          >
             <Icons.RiDeleteBin6Line />
           </button>
         </div>

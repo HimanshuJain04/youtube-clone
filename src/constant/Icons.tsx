@@ -20,8 +20,12 @@ import { MdFileDownloadDone } from "react-icons/md";
 
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { FaEdit } from "react-icons/fa";
+import { FaRegImage } from "react-icons/fa6";
+import { FaFileVideo } from "react-icons/fa";
 
 export const Icons = {
+  FaRegImage,
+  FaFileVideo,
   BiLike,
   BiSolidDislike,
   BiSolidLike,

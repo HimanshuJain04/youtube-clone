@@ -1,6 +1,7 @@
 // npx prisma migrate dev --name Initialize the schema
 // psql -h localhost -d postgres -U postgres
 // npx prisma generate
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -43,6 +44,7 @@ model Video {
   duration        Int
   url             String
   description     String
+  status          String
   title           String
   thumbnail       String
   isAgeRestricted Boolean           @default(false)

@@ -55,16 +55,110 @@ export async function createVideo(body: any) {
 }
 
 
-
-
-export async function deleteVideo(videoId: string) {
+export async function updateVideo(body: any) {
     try {
+        const { title, description, isAgeRestricted, userId, tags, thumbnailFile, videoFile, status, videoId } = formToJSON(body);
 
-        if (!videoId) {
-            throw new Error("Video Id is required");
+        if (!title || !description || !tags || !thumbnailFile || !videoFile || !videoId) {
+            throw new Error("All fields are required");
         }
 
+        if (!userId) {
+            throw new Error("User not found, Try again later");
+        }
 
+        const thumbnailBuffer = await FileIntoBuffer(thumbnailFile);
+        const videoBuffer = await FileIntoBuffer(videoFile);
+
+        const thumbnailRes = await uploadFileToCloudinary(thumbnailBuffer);
+        const videoRes = await uploadFileToCloudinary(videoBuffer);
+
+        const allTags = tags.split(",");
+
+        const updatedVideo = await client.video.update(
+            {
+                where: {
+                    id: videoId
+                },
+                data: {
+                    title,
+                    description,
+                    url: videoRes?.secure_url,
+                    thumbnail: thumbnailRes?.secure_url,
+                    isAgeRestricted: isAgeRestricted === "true" ? true : false,
+                    tags: allTags,
+                    userId: userId,
+                    duration: videoRes.duration,
+                }
+            }
+        );
+
+        if (!updatedVideo) {
+            throw new Error("Server is failed to update video, Try again later");
+        }
+
+        return updatedVideo;
+
+    } catch (error: any) {
+        console.log(error)
+        throw new Error("Server failed to update video", error);
+    }
+}
+
+
+export async function deleteVideo(videoId: string, userId: string) {
+    try {
+
+        if (!videoId || userId) {
+            throw new Error("Video Id and User Id is required");
+        }
+
+        // likes
+        await client.likesOnVideo.deleteMany(
+            {
+                where: {
+                    videoId,
+                }
+            }
+        );
+
+        // dislikes
+        await client.dislikesOnVideo.deleteMany(
+            {
+                where: {
+                    videoId,
+                }
+            }
+        );
+
+        // views
+        await client.viewsOnVideo.deleteMany(
+            {
+                where: {
+                    videoId,
+                }
+            }
+        );
+
+
+        // playlist
+        await client.playlistVideo.deleteMany(
+            {
+                where: {
+                    videoId,
+                }
+            }
+        );
+
+
+        // delete video
+        await client.video.delete(
+            {
+                where: {
+                    id: videoId
+                }
+            }
+        );
 
         return true;
 
@@ -73,8 +167,6 @@ export async function deleteVideo(videoId: string) {
         return false;
     }
 }
-
-
 
 
 export async function fetchUserVideos(channelId: string) {
