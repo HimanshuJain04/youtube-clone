@@ -4,6 +4,7 @@ import { Icons } from "@/constant/Icons";
 import VideoCard from "@/components/cards/VideoCard";
 import { deleteVideo } from "@/actions/video";
 import toast from "react-hot-toast";
+import Link from "next/link";
 
 const MyVideoCard = ({ video }: any) => {
   async function deleteHandeler() {
@@ -58,9 +59,12 @@ const MyVideoCard = ({ video }: any) => {
             <p>{getViews(video.likesCount)}</p>
           </div>
           {/* edit */}
-          <button className="cursor-pointer p-2 hover:bg-white/[0.2] rounded-full transition-all duration-200 ease-in-out">
+          <Link
+            href={`/video/edit-video?videoId=${video.id}`}
+            className="cursor-pointer p-2 hover:bg-white/[0.2] rounded-full transition-all duration-200 ease-in-out"
+          >
             <Icons.FaEdit />
-          </button>
+          </Link>
 
           {/* delete */}
           <button

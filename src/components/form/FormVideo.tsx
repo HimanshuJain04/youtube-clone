@@ -27,7 +27,7 @@ interface InitialFormValuesProps {
   status: String;
   videoId?: String;
   thumbnailFile: FileData | String | MediaSource | Blob;
-  videoFile: FileData | String | File;
+  videoFile: FileData | String | File | MediaSource | Blob;
 }
 
 interface Props {
@@ -149,7 +149,7 @@ export default function FormVideo({ InitialFormValues, TYPE }: Props) {
                   controls
                   src={
                     typeof formValues.videoFile === "string"
-                      ? formValues.thumbnailFile
+                      ? formValues.videoFile
                       : URL.createObjectURL(formValues.videoFile)
                   }
                   width={"100%"}
@@ -276,9 +276,9 @@ export default function FormVideo({ InitialFormValues, TYPE }: Props) {
         <div className="w-full">
           <button
             type="submit"
-            className="bg-blue-500 w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="bg-blue-500 capitalize w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           >
-            Submit
+            {TYPE} Video
           </button>
         </div>
       </form>

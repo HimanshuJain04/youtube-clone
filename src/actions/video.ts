@@ -210,6 +210,51 @@ export async function fetchUserVideos(channelId: string) {
 }
 
 
+export async function fetchVideo(videoId: string) {
+    try {
+
+        const videoData = await client.video.findFirst(
+            {
+                where: {
+                    id: videoId
+                },
+                select: {
+                    id: true,
+                    title: true,
+                    createdAt: true,
+                    url: true,
+                    description: true,
+                    viewsCount: true,
+                    tags: true,
+                    isAgeRestricted: true,
+                    thumbnail: true,
+                    likesCount: true,
+                    user: {
+                        select: {
+                            id: true,
+                            profileImage: true,
+                            userName: true,
+                            name: true,
+                            subscribersCount: true
+                        }
+                    }
+                }
+            }
+        );
+
+        return videoData;
+
+    } catch (err: any) {
+
+        console.log("Server failed to get video, try again later: ", err)
+        throw new Error("Server failed to get video, try again later")
+    }
+}
+
+
+
+
+
 
 
 

@@ -4,7 +4,7 @@ import FormVideo from "@/components/form/FormVideo";
 
 export default function CreateVideo() {
   return (
-    <div className="min-h-screen bg-black flex justify-center items-center">
+    <div className="min-h-screen  pb-10 pt-5 bg-black flex justify-center items-center">
       <FormVideo
         InitialFormValues={{
           title: "",

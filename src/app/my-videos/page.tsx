@@ -11,8 +11,8 @@ const menu = [
   "date",
   "Views",
   "likes",
-  "delete",
   "edit",
+  "delete",
 ];
 
 const Page = () => {
@@ -37,7 +37,7 @@ const Page = () => {
   return (
     <div className="w-full flex min-h-screen gap-5 bg-white/[0.1]">
       <SideBar />
-      <div className="w-full flex flex-col gap-10 mt-5">
+      <div className="w-full flex pl-10 flex-col gap-10 mt-5">
         <p className="text-3xl text-white font-semibold">Channel content</p>
         {/* videos */}
         <div>
