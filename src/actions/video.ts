@@ -67,11 +67,19 @@ export async function updateVideo(body: any) {
             throw new Error("User not found, Try again later");
         }
 
-        const thumbnailBuffer = await FileIntoBuffer(thumbnailFile);
-        const videoBuffer = await FileIntoBuffer(videoFile);
+        let videoRes = videoFile;
 
-        const thumbnailRes = await uploadFileToCloudinary(thumbnailBuffer);
-        const videoRes = await uploadFileToCloudinary(videoBuffer);
+        if (typeof videoFile !== "string") {
+            const videoBuffer = await FileIntoBuffer(videoFile);
+            videoRes = await uploadFileToCloudinary(videoBuffer);
+        }
+
+        let thumbnailRes = thumbnailFile;
+
+        if (typeof thumbnailFile !== "string") {
+            const thumbnailBuffer = await FileIntoBuffer(thumbnailFile);
+            thumbnailRes = await uploadFileToCloudinary(thumbnailBuffer);
+        }
 
         const allTags = tags.split(",");
 
