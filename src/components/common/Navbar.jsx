@@ -6,7 +6,7 @@ import { useState } from "react";
 import { useContext } from "react";
 import { Context } from "@/app/context";
 import { Icons } from "@/constant/Icons";
-import { IconHover } from "@/components/common/IconHover";
+import IconHover from "@/components/common/IconHover";
 import Button from "@/components/buttons/Button";
 import Link from "next/link";
 import { useRouter } from 'next/navigation';

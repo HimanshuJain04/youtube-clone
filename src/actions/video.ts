@@ -55,6 +55,28 @@ export async function createVideo(body: any) {
 }
 
 
+
+
+export async function deleteVideo(videoId: string) {
+    try {
+
+        if (!videoId) {
+            throw new Error("Video Id is required");
+        }
+
+        
+
+        return true;
+
+    } catch (error: any) {
+        console.log(error)
+        return false;
+    }
+}
+
+
+
+
 export async function fetchUserVideos(channelId: string) {
     try {
 
