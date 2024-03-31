@@ -5,8 +5,8 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { useContext } from "react";
 import { Context } from "@/app/context";
-import { NavIcons } from "@/constant/Icons";
-import IconHover from "@/components/common/IconHover";
+import { Icons } from "@/constant/Icons";
+import { IconHover } from "@/components/common/IconHover";
 import Button from "@/components/buttons/Button";
 import Link from "next/link";
 import { useRouter } from 'next/navigation';
@@ -27,10 +27,10 @@ export default function Navbar() {
 
         {/* Logo and Hamburger */}
         <div className={`justify-center gap-5 items-center flex`}>
-          <IconHover Icon={NavIcons.RxHamburgerMenu} handler={() => { setShowSideBar(!showSideBar) }} />
+          <IconHover Icon={Icons.RxHamburgerMenu} handler={() => { setShowSideBar(!showSideBar) }} />
 
           <Link href="/" className="cursor-pointer select-none flex relative justify-center items-center">
-            <Image src={NavIcons.ytLogo} alt="youtube-logo" className="h-[25px] w-auto object-contain" />
+            <Image src={Icons.ytLogo} alt="youtube-logo" className="h-[25px] w-auto object-contain" />
             <p className="lg:block hidden font-bold  text-[20px]">
               YouTube
             </p>
@@ -55,7 +55,7 @@ export default function Navbar() {
               {
                 inputValue.length > 0 &&
                 <div className="absolute z-10 right-0 top-[50%] translate-y-[-50%]">
-                  <IconHover Icon={NavIcons.RxCross1} css={"text-md p-2 "} handler={() => { setInputValue("") }} />
+                  <IconHover Icon={Icons.RxCross1} css={"text-md p-2 "} handler={() => { setInputValue("") }} />
                 </div>
 
               }
@@ -66,14 +66,14 @@ export default function Navbar() {
               onClick={() => { console.log(search) }}
               className="sm:flex px-5 h-full border-y-[1px] border-r-[1px] border-white/[0.1] bg-[white]/[0.15] relative cursor-pointer hidden justify-center items-center rounded-r-full"
             >
-              <NavIcons.AiOutlineSearch className="text-2xl" />
+              <Icons.AiOutlineSearch className="text-2xl" />
             </div>
 
           </div>
 
 
           {/* Mic */}
-          <IconHover Icon={NavIcons.BsFillMicFill} css={" bg-white/[0.15] hover:bg-white/[0.2]"} handler={() => { console.log("Mic") }} />
+          <IconHover Icon={Icons.BsFillMicFill} css={" bg-white/[0.15] hover:bg-white/[0.2]"} handler={() => { console.log("Mic") }} />
 
         </div>
 
@@ -87,7 +87,7 @@ export default function Navbar() {
               `hover:bg-[white]/[0.15] p-2 rounded-full ` + (showSeachBar ? " hidden" : " flex")
             }
           >
-            <NavIcons.AiOutlineSearch className="text-2xl " />
+            <Icons.AiOutlineSearch className="text-2xl " />
           </div>
 
         </div>
@@ -95,11 +95,11 @@ export default function Navbar() {
         {/* CreateVideo ,Notification and Profile  */}
         <div className=" md:flex hidden justify-center text-2xl items-center gap-2">
           {/* Create */}
-          <IconHover Icon={NavIcons.AiOutlineVideoCameraAdd} handler={() => push("/video/create")} />
+          <IconHover Icon={Icons.AiOutlineVideoCameraAdd} handler={() => push("/video/create")} />
           {/* Bell */}
-          <IconHover Icon={NavIcons.FaRegBell} handler={() => push("/notifications")} />
+          <IconHover Icon={Icons.FaRegBell} handler={() => push("/notifications")} />
           {/* Profile */}
-          {/* <IconHover Icon={NavIcons.VscAccount} handler={() => push("/profile")} /> */}
+          {/* <IconHover Icon={Icons.VscAccount} handler={() => push("/profile")} /> */}
 
           {
             !user ?

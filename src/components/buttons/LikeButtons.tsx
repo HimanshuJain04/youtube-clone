@@ -1,6 +1,6 @@
 import { dislikedPostHandler, likedPostHandler } from "@/actions/like";
 import { Context } from "@/app/context";
-import { videoIcons } from "@/constant/Icons";
+import { Icons } from "@/constant/Icons";
 import React, { useContext, useState } from "react";
 import toast from "react-hot-toast";
 
@@ -48,7 +48,7 @@ const LikeButtons = ({ videoId, likesCount }: any) => {
             onClick={likeHandler}
             className="flex border-r-2  transition-all duration-200 ease-in-out py-[8px] px-4 gap-2 cursor-pointer rounded-l-full hover:bg-white/[0.25] border-white/[0.5] justify-center items-center"
           >
-            {isLiked ? <videoIcons.BiSolidLike /> : <videoIcons.BiLike />}
+            {isLiked ? <Icons.BiSolidLike /> : <Icons.BiLike />}
             <p className="text-base">{totalLikes > 0 && totalLikes}</p>
           </div>
           {/* dislike */}
@@ -65,12 +65,12 @@ const LikeButtons = ({ videoId, likesCount }: any) => {
         </div>
         {/* share */}
         <div className="text-white flex justify-center items-center gap-2 rounded-full cursor-pointer hover:bg-white/[0.25] transition-all duration-200 ease-in-out text-xl py-2 px-4 bg-white/[0.2]">
-          <videoIcons.FaShare />
+          <Icons.FaShare />
           <p className="text-base">Share</p>
         </div>
         {/* dots */}
         <div className="p-3 bg-white/[0.2] rounded-full hover:bg-white/[0.25] transition-all duration-200 ease-in-out text-2xl cursor-pointer">
-          <videoIcons.HiDotsHorizontal />
+          <Icons.HiDotsHorizontal />
         </div>
       </div>
     </div>

@@ -75,6 +75,8 @@ export async function fetchUserVideos(channelId: string) {
                     createdAt: true,
                     url: true,
                     viewsCount: true,
+                    likesCount: true,
+                    isAgeRestricted: true,
                     user: {
                         select: {
                             id: true,

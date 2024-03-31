@@ -18,7 +18,10 @@ import { FaShare } from "react-icons/fa";
 import { IoMdDownload } from "react-icons/io";
 import { MdFileDownloadDone } from "react-icons/md";
 
-export const videoIcons = {
+import { RiDeleteBin6Line } from "react-icons/ri";
+import { FaEdit } from "react-icons/fa";
+
+export const Icons = {
   BiLike,
   BiSolidDislike,
   BiSolidLike,
@@ -27,9 +30,9 @@ export const videoIcons = {
   MdFileDownloadDone,
   IoMdDownload,
   FaShare,
-};
-export const NavIcons = {
   ytLogo,
+  FaEdit,
+  RiDeleteBin6Line,
   AiOutlineSearch,
   AiOutlineVideoCameraAdd,
   FaRegBell,
