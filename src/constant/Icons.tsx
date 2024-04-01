@@ -23,12 +23,15 @@ import { FaEdit } from "react-icons/fa";
 import { FaRegImage } from "react-icons/fa6";
 import { FaFileVideo } from "react-icons/fa";
 
+import { HiDotsVertical } from "react-icons/hi";
+
 export const Icons = {
   FaRegImage,
   FaFileVideo,
   BiLike,
   BiSolidDislike,
   BiSolidLike,
+  HiDotsVertical,
   HiDotsHorizontal,
   BiDislike,
   MdFileDownloadDone,
