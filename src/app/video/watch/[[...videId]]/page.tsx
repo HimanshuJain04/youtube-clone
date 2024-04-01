@@ -40,7 +40,6 @@ export default function Watch() {
 
   async function increaseViews() {
     try {
-      console.log("caliing");
       const res = await viewsHandler(videoId!, user?.id);
       if (!res) {
         return;

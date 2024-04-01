@@ -265,6 +265,55 @@ export async function fetchUserLikedVideos(userId: string) {
 }
 
 
+
+export async function fetchUserHistoryVideos(userId: string) {
+    try {
+
+        if (!userId) {
+            return null;
+        }
+
+        const allVideos = await client.viewsOnVideo.findMany(
+            {
+                where: {
+                    userId: userId
+                },
+                select: {
+                    video: {
+                        select: {
+                            id: true,
+                            title: true,
+                            duration: true,
+                            thumbnail: true,
+                            createdAt: true,
+                            description: true,
+                            url: true,
+                            viewsCount: true,
+                            likesCount: true,
+                            isAgeRestricted: true,
+                            user: {
+                                select: {
+                                    id: true,
+                                    profileImage: true,
+                                    userName: true,
+                                    name: true,
+                                },
+                            },
+                        },
+                    },
+                },
+            }
+        );
+        
+        return allVideos;
+
+    } catch (error) {
+        return null;
+    }
+}
+
+
+
 export async function fetchVideo(videoId: string) {
     try {
 
