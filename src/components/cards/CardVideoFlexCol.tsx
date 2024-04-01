@@ -105,11 +105,13 @@ function VideoCard({ video, css }: any) {
               ref={optionsRef}
               className="p-2 absolute right-5 z-10 top-5 flex rounded-lg flex-col gap-2 font-semibold bg-[#212020] text-white"
             >
-              <span className="py-2 px-3 hover:bg-white/[0.15] rounded-md">
-                Watch later
+              <span className="py-2 pl-1 pr-5 flex gap-2 items-center hover:bg-white/[0.15] rounded-md">
+                <Icons.MdOutlineWatchLater className="text-2xl" />
+                <p>Watch later</p>
               </span>
-              <span className="py-2 px-3 hover:bg-white/[0.15] rounded-md">
-                Add to playlist
+              <span className="py-2 pl-1 pr-5 flex gap-2 items-center hover:bg-white/[0.15] rounded-md">
+                <Icons.MdPlaylistAdd className="text-2xl" />
+                <p>Add to playlist</p>
               </span>
             </div>
           )}

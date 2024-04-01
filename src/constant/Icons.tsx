@@ -24,10 +24,14 @@ import { FaRegImage } from "react-icons/fa6";
 import { FaFileVideo } from "react-icons/fa";
 
 import { HiDotsVertical } from "react-icons/hi";
+import { MdOutlineWatchLater } from "react-icons/md";
+import { MdPlaylistAdd } from "react-icons/md";
 
 export const Icons = {
   FaRegImage,
   FaFileVideo,
+  MdOutlineWatchLater,
+  MdPlaylistAdd,
   BiLike,
   BiSolidDislike,
   BiSolidLike,
