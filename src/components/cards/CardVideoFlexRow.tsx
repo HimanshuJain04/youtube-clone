@@ -26,7 +26,7 @@ function VideoCard({ video, css }: any) {
         {/* details */}
         <div className="flex gap-1 flex-col overflow-hidden cursor-pointer justify-start items-start mt-3">
           {/* Title of video */}
-          <p className="sm:text-[17px] max-w-full text-sm font-semibold">
+          <p className="sm:text-[19px] max-w-full text-sm font-semibold">
             {`${video.title.substring(0, 100)}..`}
           </p>
 
@@ -68,8 +68,8 @@ function VideoCard({ video, css }: any) {
           </div>
 
           {/* description of video */}
-          <p className="sm:text-[17px] max-w-full text-sm font-semibold">
-            {`${video.descriptiion.substring(0, 200)}..`}
+          <p className="text-[white]/[0.6] mt-2 max-w-full text-[15px]">
+            {`${video?.description?.substring(0, 200)}..`}
           </p>
         </div>
       </div>
