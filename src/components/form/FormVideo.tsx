@@ -68,15 +68,15 @@ export default function FormVideo({ InitialFormValues, TYPE }: Props) {
       fd.append("userId", user.id);
 
       if (TYPE === "CREATE") {
-        const result = await createVideo(fd);
+        await createVideo(fd);
+        toast.success("Video Uploaded Successfully!");
       } else if (TYPE === "UPDATE") {
         fd.append("videoId", InitialFormValues.videoId);
-        const result = await updateVideo(fd);
-        console.log("result: ", result);
+        await updateVideo(fd);
+        toast.success("Video Updated Successfully!");
       }
 
-      toast.success("Video Uploaded Successfully!");
-      router.push("/");
+      router.push("/my-videos");
     } catch (error) {
       toast.error("Video Upload Failed !");
       console.log("Something went wrong! ", error);
@@ -100,7 +100,7 @@ export default function FormVideo({ InitialFormValues, TYPE }: Props) {
           {/* Thumbnail File */}
           <div
             onClick={() => refHandler(imageRef)}
-            className="w-full h-[250px] relative cursor-pointer  border-white/[0.3]  rounded-md border-2 flex justify-center items-center"
+            className="w-full h-[250px] overflow-hidden relative cursor-pointer  border-white/[0.3]  rounded-md border-2 flex justify-center items-center"
           >
             {formValues.thumbnailFile ? (
               <>
@@ -139,7 +139,7 @@ export default function FormVideo({ InitialFormValues, TYPE }: Props) {
           {/* Video File */}
           <div
             onClick={() => refHandler(videoRef)}
-            className="w-full relative h-[250px] border-2 cursor-pointer border-white/[0.3] rounded-md flex justify-center items-center"
+            className="w-full relative h-[250px]  overflow-hidden  border-2 cursor-pointer border-white/[0.3] rounded-md flex justify-center items-center"
           >
             {formValues.videoFile ? (
               <>

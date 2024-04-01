@@ -37,14 +37,14 @@ export const categories = [
   ],
   [
     { name: "Library", icon: <MdOutlineVideoLibrary />, path: "/library" },
-    { name: "History", icon: <GoHistory />, path: "/history" },
+    { name: "History", icon: <GoHistory />, path: "/video/history" },
     { name: "Your videos", icon: <GoVideo />, path: "/my-videos" },
     {
       name: "Watch Later",
       icon: <MdOutlineWatchLater />,
       path: "/watch-later",
     },
-    { name: "Like", icon: <BiLike />, path: "/liked-videos" },
+    { name: "Liked videos", icon: <BiLike />, path: "/video/liked-videos" },
   ],
   [
     { name: "Trending", icon: <BsFire />, path: "/trending" },
