@@ -4,25 +4,19 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { getTime, getViews } from "@/utils/videoUtils";
-import VideoCard from "@/components/cards/VideoCard";
-import { useContext } from "react";
-import { Context } from "@/app/context";
+import VideoThumbnailCard from "@/components/cards/VideoThumbnailCard";
 
-function HomeCard({ video }: any) {
+function VideoCard({ video, css }: any) {
   const router = useRouter();
-  const { showSideBar } = useContext(Context);
-  // TODO : fix small cards
 
   return (
     <Link href={`video/watch/${video.id}`}>
       <div
         className={`flex group flex-col relative  text-white  justify-start items-start
-         overflow-hidden sm:w-[400px] ${
-           showSideBar ? "w-[250px]" : "w-[150px]"
-         }`}
+         overflow-hidden sm:w-[400px] ${css}`}
       >
         {/* video | image */}
-        <VideoCard
+        <VideoThumbnailCard
           imageUrl={video?.thumbnail}
           videoUrl={video?.url}
           duration={video?.duration}
@@ -79,4 +73,4 @@ function HomeCard({ video }: any) {
   );
 }
 
-export default HomeCard;
+export default VideoCard;

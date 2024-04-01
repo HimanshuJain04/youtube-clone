@@ -218,6 +218,51 @@ export async function fetchUserVideos(channelId: string) {
 }
 
 
+export async function fetchUserLikedVideos(userId: string) {
+    try {
+
+        if (!userId) {
+            return null;
+        }
+
+        const allVideos = await client.likesOnVideo.findMany(
+            {
+                where: {
+                    userId: userId
+                },
+                select: {
+                    video: {
+                        select: {
+                            id: true,
+                            title: true,
+                            duration: true,
+                            thumbnail: true,
+                            createdAt: true,
+                            url: true,
+                            viewsCount: true,
+                            likesCount: true,
+                            isAgeRestricted: true,
+                            user: {
+                                select: {
+                                    id: true,
+                                    profileImage: true,
+                                    userName: true,
+                                    name: true,
+                                },
+                            },
+                        },
+                    },
+                },
+            }
+        );
+        return allVideos;
+
+    } catch (error) {
+        return null;
+    }
+}
+
+
 export async function fetchVideo(videoId: string) {
     try {
 
@@ -258,6 +303,8 @@ export async function fetchVideo(videoId: string) {
         throw new Error("Server failed to get video, try again later")
     }
 }
+
+
 
 
 

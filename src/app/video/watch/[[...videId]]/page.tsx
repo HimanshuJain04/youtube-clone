@@ -2,7 +2,6 @@
 
 import React, { useContext, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -11,6 +10,7 @@ import SubscribeButton from "@/components/buttons/SubscribeButton";
 import LikeButtons from "@/components/buttons/LikeButtons";
 import { Context } from "@/app/context";
 import { viewsHandler } from "@/actions/views";
+import { fetchVideo } from "@/actions/video";
 
 export default function Watch() {
   const videoId = usePathname().split("/").at(-1);
@@ -24,10 +24,10 @@ export default function Watch() {
   async function getVideos() {
     try {
       setLoading(true);
-      const { data } = await axios.get(`/api/video?videoId=${videoId}`);
-      setVideoData(data.data);
-      setViews(data.data.viewsCount);
-      setSubscribers(data.data?.user?.subscribersCount);
+      const data: any = await fetchVideo(videoId!);
+      setVideoData(data);
+      setViews(data.viewsCount);
+      setSubscribers(data?.user?.subscribersCount);
 
       setTimeout(increaseViews, 5000);
     } catch (error) {
@@ -52,7 +52,7 @@ export default function Watch() {
   }
 
   useEffect(() => {
-    getVideos();
+    if (videoId) getVideos();
   }, [videoId]);
 
   return (

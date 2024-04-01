@@ -1,7 +1,7 @@
 import { getTime, getViews } from "@/utils/videoUtils";
 import React from "react";
 import { Icons } from "@/constant/Icons";
-import VideoCard from "@/components/cards/VideoCard";
+import VideoCard from "@/components/cards/VideoThumbnailCard";
 import { deleteVideo } from "@/actions/video";
 import toast from "react-hot-toast";
 import Link from "next/link";

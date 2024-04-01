@@ -1,3 +1,4 @@
+"use client";
 import { dislikedPostHandler, likedPostHandler } from "@/actions/like";
 import { Context } from "@/app/context";
 import { Icons } from "@/constant/Icons";
@@ -17,7 +18,6 @@ const LikeButtons = ({ videoId, likesCount }: any) => {
     if (!res) {
       toast.error("Like Handler Failed");
     } else {
-      console.log("res: ", res);
       setIsLiked(res.status);
       setIsDisliked(false);
       toast.success(res.status ? "Liked" : "Unliked");
@@ -49,18 +49,14 @@ const LikeButtons = ({ videoId, likesCount }: any) => {
             className="flex border-r-2  transition-all duration-200 ease-in-out py-[8px] px-4 gap-2 cursor-pointer rounded-l-full hover:bg-white/[0.25] border-white/[0.5] justify-center items-center"
           >
             {isLiked ? <Icons.BiSolidLike /> : <Icons.BiLike />}
-            <p className="text-base">{totalLikes > 0 && totalLikes}</p> 
+            <p className="text-base">{totalLikes > 0 && totalLikes}</p>
           </div>
           {/* dislike */}
           <div
             onClick={dislikeHandler}
             className="flex px-4 hover:bg-white/[0.25] transition-all duration-200 ease-in-out cursor-pointer py-[8px] rounded-r-full  justify-center items-center"
           >
-            {isDisliked ? (
-              <videoIcons.BiSolidDislike />
-            ) : (
-              <videoIcons.BiDislike />
-            )}
+            {isDisliked ? <Icons.BiSolidDislike /> : <Icons.BiDislike />}
           </div>
         </div>
         {/* share */}
