@@ -30,6 +30,7 @@ model User {
   videos                    Video[]
   playlists                 Playlist[]
   history                   viewsOnVideo[]
+  watchLater                WatchLater[]
   likedVideos               likesOnVideo[]
   dislikedVideos            dislikesOnVideo[]
   subscribers               User[]            @relation("UserFollows")
@@ -44,7 +45,8 @@ model Video {
   duration        Int
   url             String
   description     String
-  status          String
+  status          String            @default("Public")
+  category        String?
   title           String
   thumbnail       String
   isAgeRestricted Boolean           @default(false)
@@ -59,12 +61,14 @@ model Video {
   views           viewsOnVideo[]
   likes           likesOnVideo[]
   dislikes        dislikesOnVideo[]
+  watchLaterAddBy WatchLater[]
 }
 
 model Playlist {
   id          String          @id @default(cuid())
   userId      String
   title       String
+  thumbnail   String
   description String?
   createdAt   DateTime        @default(now())
   updatedAt   DateTime        @updatedAt
@@ -96,6 +100,16 @@ model likesOnVideo {
   video   Video    @relation(fields: [videoId], references: [id])
   videoId String
   likedAt DateTime @default(now())
+  user    User     @relation(fields: [userId], references: [id])
+  userId  String
+
+  @@id([videoId, userId])
+}
+
+model WatchLater {
+  video   Video    @relation(fields: [videoId], references: [id])
+  videoId String
+  addedAt DateTime @default(now())
   user    User     @relation(fields: [userId], references: [id])
   userId  String
 
