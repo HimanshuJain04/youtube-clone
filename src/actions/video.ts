@@ -265,7 +265,6 @@ export async function fetchUserLikedVideos(userId: string) {
 }
 
 
-
 export async function fetchUserHistoryVideos(userId: string) {
     try {
 
@@ -304,14 +303,13 @@ export async function fetchUserHistoryVideos(userId: string) {
                 },
             }
         );
-        
+
         return allVideos;
 
     } catch (error) {
         return null;
     }
 }
-
 
 
 export async function fetchVideo(videoId: string) {
@@ -354,6 +352,85 @@ export async function fetchVideo(videoId: string) {
         throw new Error("Server failed to get video, try again later")
     }
 }
+
+export async function fetchUserWatchLater(userId: string) {
+    try {
+
+
+        const allVideos = await client.watchLater.findMany(
+            {
+                where: {
+                    userId
+                }
+            }
+        )
+
+        return allVideos;
+
+    } catch (err: any) {
+
+        console.log("Server failed to removeFromWatchLater, try again later: ", err)
+        throw new Error("Server failed to remove video from watch later, try again later")
+    }
+}
+
+
+export async function addToWatchLater(videoId: string, userId: string) {
+    try {
+
+        if (!videoId || !userId) {
+            return false;
+        }
+
+        await client.watchLater.create(
+            {
+
+                data: {
+                    video: { connect: { id: videoId } },
+                    user: { connect: { id: userId } },
+                }
+            }
+        );
+
+        return true;
+
+    } catch (err: any) {
+
+        console.log("Server failed to addToWatchLater, try again later: ", err)
+        throw new Error("Server failed to add video to watch later, try again later")
+    }
+}
+
+
+export async function removeFromWatchLater(videoId: string, userId: string) {
+    try {
+
+        if (!videoId || !userId) {
+            return false;
+        }
+
+        await client.watchLater.delete(
+            {
+                where: {
+                    videoId_userId: {
+                        videoId: videoId,
+                        userId: userId
+                    }
+                }
+            }
+        );
+
+        return true;
+
+    } catch (err: any) {
+
+        console.log("Server failed to removeFromWatchLater, try again later: ", err)
+        throw new Error("Server failed to remove video from watch later, try again later")
+    }
+}
+
+
+
 
 
 
