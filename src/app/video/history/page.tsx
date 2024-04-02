@@ -20,7 +20,9 @@ const Page = () => {
     }
   }, [user]);
 
-  return <div> {videos && <ShowVideos videos={videos} />}</div>;
+  return (
+    <div> {videos && <ShowVideos Type={"History"} videos={videos} />}</div>
+  );
 };
 
 export default Page;
