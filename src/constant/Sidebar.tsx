@@ -42,7 +42,7 @@ export const categories = [
     {
       name: "Watch Later",
       icon: <MdOutlineWatchLater />,
-      path: "/watch-later",
+      path: "/video/watch-later",
     },
     { name: "Liked videos", icon: <BiLike />, path: "/video/liked-videos" },
   ],

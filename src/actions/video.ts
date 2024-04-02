@@ -356,15 +356,42 @@ export async function fetchVideo(videoId: string) {
 export async function fetchUserWatchLater(userId: string) {
     try {
 
+        if (!userId) {
+            return false;
+        }
+
 
         const allVideos = await client.watchLater.findMany(
             {
                 where: {
-                    userId
-                }
+                    userId: userId
+                },
+                select: {
+                    video: {
+                        select: {
+                            id: true,
+                            title: true,
+                            duration: true,
+                            thumbnail: true,
+                            createdAt: true,
+                            description: true,
+                            url: true,
+                            viewsCount: true,
+                            likesCount: true,
+                            isAgeRestricted: true,
+                            user: {
+                                select: {
+                                    id: true,
+                                    profileImage: true,
+                                    userName: true,
+                                    name: true,
+                                },
+                            },
+                        },
+                    },
+                },
             }
-        )
-
+        );
         return allVideos;
 
     } catch (err: any) {

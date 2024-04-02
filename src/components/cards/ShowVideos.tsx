@@ -2,14 +2,14 @@ import React from "react";
 import SideBar from "@/components/common/Sidebar";
 import Card from "@/components/cards/CardVideoFlexRow";
 
-const ShowVideos = ({ videos }: any) => {
+const ShowVideos = ({ videos, Type }: any) => {
   return (
     <div className="w-full flex gap-5">
       <SideBar />
       <div className="flex flex-col px-20 w-full gap-5 pb-10">
         {videos &&
           videos?.map((video: any) => (
-            <Card video={video?.video} key={video?.video?.id} />
+            <Card Type={Type} video={video?.video} key={video?.video?.id} />
           ))}
       </div>
     </div>
