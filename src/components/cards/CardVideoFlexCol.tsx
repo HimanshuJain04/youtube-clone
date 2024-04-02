@@ -6,32 +6,19 @@ import { useRouter } from "next/navigation";
 import { getTime, getViews } from "@/utils/videoUtils";
 import VideoThumbnailCard from "@/components/cards/VideoThumbnailCard";
 import { Icons } from "@/constant/Icons";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
+import CardOptions from "../buttons/CardOptions";
 
 function VideoCard({ video, css }: any) {
   const router = useRouter();
 
   const [showOptions, setShowOptions] = useState(false);
-  const optionsRef = useRef(null);
 
   const handleOptionsClick = (event: any) => {
     event.preventDefault();
     event.stopPropagation();
     setShowOptions(!showOptions);
   };
-
-  const handleClickOutside = (event: any) => {
-    if (optionsRef.current && !optionsRef.current.contains(event.target)) {
-      setShowOptions(false);
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
 
   return (
     <Link href={`video/watch/${video.id}`}>
@@ -101,19 +88,7 @@ function VideoCard({ video, css }: any) {
           </span>
 
           {showOptions && (
-            <div
-              ref={optionsRef}
-              className="p-2 absolute right-5 z-10 top-5 flex rounded-lg flex-col gap-2 font-semibold bg-[#212020] text-white"
-            >
-              <span className="py-2 pl-1 pr-5 flex gap-2 items-center hover:bg-white/[0.15] rounded-md">
-                <Icons.MdOutlineWatchLater className="text-2xl" />
-                <p>Watch later</p>
-              </span>
-              <span className="py-2 pl-1 pr-5 flex gap-2 items-center hover:bg-white/[0.15] rounded-md">
-                <Icons.MdPlaylistAdd className="text-2xl" />
-                <p>Add to playlist</p>
-              </span>
-            </div>
+            <CardOptions setShowOptions={setShowOptions} videoId={video.id} />
           )}
         </div>
       </div>

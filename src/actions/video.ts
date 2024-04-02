@@ -382,6 +382,19 @@ export async function addToWatchLater(videoId: string, userId: string) {
             return false;
         }
 
+        const isAlreadyExist = await client.watchLater.findFirst(
+            {
+                where: {
+                    userId,
+                    videoId
+                }
+            }
+        )
+
+        if (isAlreadyExist) {
+            return true;
+        }
+
         await client.watchLater.create(
             {
 
