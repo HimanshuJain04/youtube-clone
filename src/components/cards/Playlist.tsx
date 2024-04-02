@@ -1,29 +1,42 @@
 "use client";
 
 import { createPlaylist } from "@/actions/playlist";
+import { Context } from "@/app/context";
 import { Icons } from "@/constant/Icons";
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
-const Playlist = ({ setShowOptions, setShowPlaylists, userId }: any) => {
+const Playlist = ({ setShowOptions, setShowPlaylists }: any) => {
   const [playlistName, setPlaylistName] = useState("");
   const [showForm, setShowForm] = useState(false);
+  const [playlists, setPlaylists] = useState(null);
+  const [addToPlaylist, setAddToPlaylist] = useState(null);
+
+  const { user } = useContext(Context);
 
   async function createPlaylistHandelr() {
-    if (!userId || playlistName.trim().length === 0) {
+    if (!user.id || playlistName.trim().length === 0) {
       toast.error("User or playlist name is missing");
       return;
     }
-    const res = await createPlaylist(playlistName, userId);
-
-    console.log("res");
+    const res = await createPlaylist(playlistName, user.id);
 
     if (res) {
       toast.success("Playlist created!!");
+      setShowForm(false);
+      setPlaylists([...playlists, res]);
     } else {
-      toast.error("Something went wrong!");
+      toast.error("Something went wrong!!");
     }
   }
+
+  useEffect(() => {
+    if (!user) {
+      return;
+    }
+
+    setPlaylists(user.playlists);
+  }, [user]);
 
   return (
     <div>
@@ -50,11 +63,39 @@ const Playlist = ({ setShowOptions, setShowPlaylists, userId }: any) => {
           </div>
 
           {/* playlists */}
-          <div className="w-full"></div>
+          <div className="w-full">
+            {playlists &&
+              playlists?.map((playlist: any) => (
+                <div
+                  onClick={() => {
+                    if (addToPlaylist === playlist.id) {
+                      setAddToPlaylist(null);
+                    } else {
+                      setAddToPlaylist(playlist.id);
+                    }
+                  }}
+                  key={playlist.id}
+                >
+                  <div className="flex justify-between">
+                    <label
+                      htmlFor={playlist.id}
+                      className="text-white font-semibold"
+                    >
+                      {playlist.title}
+                    </label>
+                    <input
+                      id={playlist.id}
+                      checked={addToPlaylist === playlist.id}
+                      type="checkbox"
+                    />
+                  </div>
+                </div>
+              ))}
+          </div>
 
           {/* button */}
           {!showForm && (
-            <div className="w-full flex gap-2 justify-center items-center">
+            <div className="w-full mt-2 flex gap-2 justify-center items-center">
               <button className="w-full py-2 rounded-lg bg-blue-500 font-semibold">
                 Add to playlist
               </button>
@@ -68,7 +109,7 @@ const Playlist = ({ setShowOptions, setShowPlaylists, userId }: any) => {
           )}
 
           {showForm && (
-            <div className="w-full flex flex-col gap-2">
+            <div className="w-full mt-2 flex flex-col gap-2">
               <input
                 value={playlistName}
                 onChange={(e) => setPlaylistName(e.target.value)}

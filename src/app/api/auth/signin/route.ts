@@ -45,9 +45,14 @@ export async function POST(request: NextRequest) {
                     profileImage: true,
                     likedVideos: true,
                     dislikedVideos: true,
-                    playlists: true,
                     isVerified: true,
                     password: true,
+                    playlists: {
+                        select: {
+                            title: true,
+                            id: true,
+                        }
+                    },
                 }
             },
         );
@@ -132,3 +137,5 @@ export async function POST(request: NextRequest) {
         });
     }
 }
+
+

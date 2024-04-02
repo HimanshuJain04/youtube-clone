@@ -21,7 +21,12 @@ export async function GET(req: NextRequest) {
                     profileImage: true,
                     likedVideos: true,
                     dislikedVideos: true,
-                    playlists: true,
+                    playlists: {
+                        select: {
+                            title: true,
+                            id: true,
+                        }
+                    },
                 }
             }
         );

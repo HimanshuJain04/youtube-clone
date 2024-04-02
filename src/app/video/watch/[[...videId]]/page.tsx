@@ -25,7 +25,6 @@ export default function Watch() {
     try {
       setLoading(true);
       const data: any = await fetchVideo(videoId!);
-      console.log(data);
       setVideoData(data);
       setViews(data?.viewsCount);
       setSubscribers(data?.user?.subscribersCount);

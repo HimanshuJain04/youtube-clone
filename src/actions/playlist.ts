@@ -11,7 +11,7 @@ export const createPlaylist = async (title: string, userId: string) => {
             return false;
         }
 
-        await client.playlist.create(
+        const res = await client.playlist.create(
             {
                 data: {
                     title,
@@ -24,7 +24,7 @@ export const createPlaylist = async (title: string, userId: string) => {
             }
         );
 
-        return true;
+        return res;
 
     } catch (error: any) {
         console.log(error)
