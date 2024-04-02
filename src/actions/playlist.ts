@@ -32,9 +32,7 @@ export const createPlaylist = async (title: string, userId: string) => {
     }
 }
 
-
-
-export const addToPlaylist = async (videoId: string, playlistId: string) => {
+export const addVideoToPlaylist = async (videoId: string, playlistId: string) => {
     try {
 
         if (!videoId || !playlistId) {

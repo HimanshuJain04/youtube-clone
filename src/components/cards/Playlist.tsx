@@ -1,18 +1,18 @@
 "use client";
 
-import { createPlaylist } from "@/actions/playlist";
+import { addVideoToPlaylist, createPlaylist } from "@/actions/playlist";
 import { Context } from "@/app/context";
 import { Icons } from "@/constant/Icons";
 import React, { useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
-const Playlist = ({ setShowOptions, setShowPlaylists }: any) => {
+const Playlist = ({ setShowOptions, setShowPlaylists, videoId }: any) => {
   const [playlistName, setPlaylistName] = useState("");
   const [showForm, setShowForm] = useState(false);
   const [playlists, setPlaylists] = useState(null);
   const [addToPlaylist, setAddToPlaylist] = useState(null);
 
-  const { user } = useContext(Context);
+  const { user }: any = useContext(Context);
 
   async function createPlaylistHandelr() {
     if (!user.id || playlistName.trim().length === 0) {
@@ -25,6 +25,22 @@ const Playlist = ({ setShowOptions, setShowPlaylists }: any) => {
       toast.success("Playlist created!!");
       setShowForm(false);
       setPlaylists([...playlists, res]);
+    } else {
+      toast.error("Something went wrong!!");
+    }
+  }
+
+  async function addToPlaylistHandelr() {
+    if (!videoId) return;
+    if (!addToPlaylist) {
+      toast.error("Please select playlist");
+      return;
+    }
+    const res = await addVideoToPlaylist(videoId, addToPlaylist);
+
+    if (res) {
+      toast.success("Video added to playlist!!");
+      setShowOptions(false);
     } else {
       toast.error("Something went wrong!!");
     }
@@ -96,7 +112,10 @@ const Playlist = ({ setShowOptions, setShowPlaylists }: any) => {
           {/* button */}
           {!showForm && (
             <div className="w-full mt-2 flex gap-2 justify-center items-center">
-              <button className="w-full py-2 rounded-lg bg-blue-500 font-semibold">
+              <button
+                onClick={addToPlaylistHandelr}
+                className="w-full py-2 rounded-lg bg-blue-500 font-semibold"
+              >
                 Add to playlist
               </button>
               <button

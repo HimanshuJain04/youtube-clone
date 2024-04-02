@@ -62,9 +62,9 @@ const CardOptions = ({ setShowOptions, videoId }: any) => {
     >
       {showPlaylists && (
         <Playlist
-          userId={user?.id}
           setShowOptions={setShowOptions}
           setShowPlaylists={setShowPlaylists}
+          videoId={videoId}
         />
       )}
 
