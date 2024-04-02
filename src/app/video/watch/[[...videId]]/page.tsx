@@ -9,7 +9,7 @@ import { getTime, getViews } from "@/utils/videoUtils";
 import SubscribeButton from "@/components/buttons/SubscribeButton";
 import LikeButtons from "@/components/buttons/LikeButtons";
 import { Context } from "@/app/context";
-import { viewsHandler } from "@/actions/views";
+import { viewsHandler } from "@/actions/video";
 import { fetchVideo } from "@/actions/video";
 
 export default function Watch() {

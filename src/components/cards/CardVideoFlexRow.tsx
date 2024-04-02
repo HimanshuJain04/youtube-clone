@@ -6,10 +6,11 @@ import { useRouter } from "next/navigation";
 import { getTime, getViews } from "@/utils/videoUtils";
 import VideoThumbnailCard from "@/components/cards/VideoThumbnailCard";
 import { Icons } from "@/constant/Icons";
-import { removeFromWatchLater } from "@/actions/video";
+import { removeFromHistory, removeFromWatchLater } from "@/actions/video";
 import { useContext } from "react";
 import { Context } from "@/app/context";
 import toast from "react-hot-toast";
+import { dislikedPostHandler } from "@/actions/like";
 
 function VideoCard({ video, Type, css }: any) {
   const router = useRouter();
@@ -32,10 +33,10 @@ function VideoCard({ video, Type, css }: any) {
         callingFun = removeFromWatchLater;
         break;
       case "History":
-        callingFun = removeFromWatchLater;
+        callingFun = removeFromHistory;
         break;
       case "Like":
-        callingFun = removeFromWatchLater;
+        callingFun = dislikedPostHandler;
         break;
       default:
         callingFun = null;
