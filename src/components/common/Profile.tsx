@@ -3,9 +3,10 @@ import Image from "next/image";
 import { Context } from "@/app/context";
 import toast from "react-hot-toast";
 import { logout } from "@/actions/auth";
+import axios from "axios";
 
 const Profile = () => {
-  const { user } = useContext(Context);
+  const { user, setUser }: any = useContext(Context);
   const profileRef = useRef(null);
 
   const [showProfile, setShowProfile] = useState(false);
@@ -18,10 +19,12 @@ const Profile = () => {
   }, []);
 
   async function logoutHandler() {
-    const res = await logout();
-    if (res) {
+    try {
+      await axios.get("/api/auth/logout");
+      setUser(null);
       toast.success("Logout Successfully!");
-    } else {
+    } catch (error) {
+      console.log("Error logoutHandler : ", error);
       toast.error("Logout Failed!");
     }
   }

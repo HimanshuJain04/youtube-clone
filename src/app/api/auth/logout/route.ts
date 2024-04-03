@@ -5,15 +5,21 @@ export async function GET() {
         const response = NextResponse.json(
             {
                 message: "Logout successful",
-                success: true
+                success: true,
+                data: null
             },
             { status: 200 }
         )
 
-        response.cookies.set("token", "", {
-            httpOnly: true,
-            expires: new Date(0)
-        });
+        response.cookies.set(
+            "YOUTUBE_TOKEN",
+            "",
+            {
+                httpOnly: true,
+                secure: true,
+                expires: new Date(0) // Set expiration date to a past time
+            }
+        );
 
         return response;
 

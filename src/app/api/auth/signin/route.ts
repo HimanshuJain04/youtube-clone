@@ -99,7 +99,7 @@ export async function POST(request: NextRequest) {
             tokenData,
             process.env.JSON_WEB_TOKEN_SECRET!,
             {
-                expiresIn: "24h"
+                expiresIn: "3d"
             }
         );
 
@@ -114,13 +114,13 @@ export async function POST(request: NextRequest) {
             }
         );
 
-
         response.cookies.set(
             "YOUTUBE_TOKEN",           // Cookie name
             token,                     // JWT token to be stored in the cookie
             {
                 httpOnly: true,        // Cookie accessible only via HTTP(S) requests, not JavaScript
-                secure: true           // Cookie transmitted only over HTTPS
+                secure: true,         // Cookie transmitted only over HTTPS
+                expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000) // Set expiration time for 3 days from now
             }
         );
 
