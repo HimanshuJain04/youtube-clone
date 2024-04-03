@@ -15,6 +15,8 @@ const Profile = () => {
     };
   }, []);
 
+  async function logoutHandler() {}
+
   const handleClickOutside = (event: any) => {
     if (profileRef.current && !profileRef.current?.contains(event.target)) {
       setShowProfile(false);
