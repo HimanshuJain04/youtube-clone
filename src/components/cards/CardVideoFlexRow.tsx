@@ -17,7 +17,7 @@ function VideoCard({ video, Type, css }: any) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const { user } = useContext(Context);
+  const { user }: any = useContext(Context);
 
   const handleOptionsClick = async (event: any) => {
     event.preventDefault();
