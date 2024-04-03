@@ -26,17 +26,21 @@ import { FaFileVideo } from "react-icons/fa";
 import { HiDotsVertical } from "react-icons/hi";
 import { MdOutlineWatchLater } from "react-icons/md";
 import { MdPlaylistAdd } from "react-icons/md";
+import { RiPlayList2Fill } from "react-icons/ri";
+import { MdOutlineVideoLibrary } from "react-icons/md";
 
 export const Icons = {
   FaRegImage,
   FaFileVideo,
   MdOutlineWatchLater,
   MdPlaylistAdd,
+  MdOutlineVideoLibrary,
   BiLike,
   BiSolidDislike,
   BiSolidLike,
   HiDotsVertical,
   HiDotsHorizontal,
+  RiPlayList2Fill,
   BiDislike,
   MdFileDownloadDone,
   IoMdDownload,

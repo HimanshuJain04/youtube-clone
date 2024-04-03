@@ -7,6 +7,18 @@ export async function GET(req: NextRequest) {
 
         const userData: any = await verifyTokenCookie(req);
 
+        if (!userData) {
+            return NextResponse.json(
+                {
+                    message: "User not found",
+                    data: null,
+                },
+                { status: 404 }
+            )
+        }
+
+
+
         const user = await client.user.findFirst(
             {
                 where: {
