@@ -24,6 +24,8 @@ import { BsFillFilePlayFill, BsFire, BsNewspaper } from "react-icons/bs";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { LiaShoppingBagSolid } from "react-icons/lia";
 
+
+
 export const HomeCategory = [
   { name: "Home", icon: <GoHomeFill />, path: "/" },
   { name: "Shorts", icon: <BsFillFilePlayFill />, path: "/shorts" },
@@ -55,6 +57,7 @@ export const settingCategory = [
   { name: " Help", icon: <BiHelpCircle />, path: "/help" },
   { name: "Send Feedback", icon: <GoReport />, path: "/feedback" },
 ];
+
 
 // extras
 
