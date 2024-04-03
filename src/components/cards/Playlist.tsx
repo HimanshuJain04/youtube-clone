@@ -79,7 +79,7 @@ const Playlist = ({ setShowOptions, setShowPlaylists, videoId }: any) => {
           </div>
 
           {/* playlists */}
-          <div className="w-full">
+          <div className="w-full h-[300px] overflow-auto">
             {playlists &&
               playlists?.map((playlist: any) => (
                 <div

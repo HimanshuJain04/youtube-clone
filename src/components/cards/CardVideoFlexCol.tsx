@@ -38,12 +38,13 @@ function VideoCard({ video, css }: any) {
           <div className="flex gap-3 cursor-pointer justify-start items-start">
             {/* Channel Logo */}
             <Link href={`/channel/@${video?.user.userName}`}>
-              <div className="mt-1 w-12 h-12 rounded-full shrink-0 bg-white/[0.2] ">
+              <div className="mt-1 w-12 h-12 relative rounded-full shrink-0 bg-white/[0.2] ">
                 <Image
                   alt="channel"
                   loading="lazy"
-                  width={48}
-                  height={48}
+                  layout="fill"
+                  objectFit="cover"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   className="h-full w-full shrink-0 object-cover rounded-full"
                   src={video?.user?.profileImage}
                 />

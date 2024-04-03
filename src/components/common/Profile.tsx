@@ -40,11 +40,11 @@ const Profile = () => {
       ref={profileRef}
       className="relative"
     >
-      <div className="text-sm w-[40px] h-[40px] cursor-pointer rounded-full overflow-hidden">
+      <div className="text-sm w-[40px] relative h-[40px] cursor-pointer rounded-full overflow-hidden">
         <Image
           src={user?.profileImage}
-          width={40}
-          height={40}
+          layout="fill"
+          objectFit="cover"
           className="rounded-full object-contain"
           alt="User-profile"
         />

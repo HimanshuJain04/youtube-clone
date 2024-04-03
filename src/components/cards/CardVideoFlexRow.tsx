@@ -120,6 +120,8 @@ function VideoCard({ video, Type, css }: any) {
                     alt="channel"
                     loading="lazy"
                     layout="fill"
+                    objectFit="cover"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     src={video?.user?.profileImage}
                   />
                 </div>

@@ -45,12 +45,13 @@ const VideoCard = (props: videoCardProps) => {
             />
           ) : (
             <Image
+              src={imageUrl}
               loading="lazy"
               alt="thumbnail"
               layout="fill"
-              sizes="(max-width: 100%), (max-width: 100%)"
+              objectFit="cover"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               className="rounded-2xl transition-opacity duration-[2000] ease-in-out  w-full h-full"
-              src={imageUrl}
             />
           )}
         </div>

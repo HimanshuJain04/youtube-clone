@@ -611,13 +611,14 @@ export async function fetchSearchedVideos(value: string) {
             return null;
         }
 
+        const searchTerm = `%${value}%`;
+
         const allVideo = await client.video.findMany({
             where: {
-                OR: [
-                    { title: { contains: value, mode: "insensitive" } }, // Case-insensitive search in title
-                    { description: { contains: value, mode: "insensitive" } }, // Case-insensitive search in description
-                    { tags: { has: value } }, // Search in tags array
-                ],
+                title: {
+                    contains: searchTerm,
+                    mode: "insensitive"
+                }
             },
             select: {
                 id: true,
