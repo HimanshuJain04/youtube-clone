@@ -44,7 +44,6 @@ function VideoCard({ video, css }: any) {
                   loading="lazy"
                   layout="fill"
                   objectFit="cover"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   className="h-full w-full shrink-0 object-cover rounded-full"
                   src={video?.user?.profileImage}
                 />

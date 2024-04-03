@@ -50,7 +50,6 @@ const VideoCard = (props: videoCardProps) => {
               alt="thumbnail"
               layout="fill"
               objectFit="cover"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               className="rounded-2xl transition-opacity duration-[2000] ease-in-out  w-full h-full"
             />
           )}

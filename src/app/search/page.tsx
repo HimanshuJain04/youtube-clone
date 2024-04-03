@@ -28,7 +28,7 @@ export default function SearchPage() {
       return;
     }
     getSearchedVideos();
-  }, []);
+  }, [value]);
 
   return (
     <div className="w-full gap-5 flex relative min-h-screen bg-black">
