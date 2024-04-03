@@ -19,8 +19,8 @@ export default function Navbar() {
   const [inputValue, setInputValue] = useState("");
   const { setShowSideBar, showSideBar } = useContext(Context);
   const { push } = useRouter();
+  const { user } = useContext(Context);
 
-  const { user } = useContext(Context)
 
   return (
     <div className="w-full flex sticky mb-3 top-0 z-10 bg-black justify-center items-start ">
@@ -64,7 +64,7 @@ export default function Navbar() {
 
             {/* right side of bar */}
             <div
-              onClick={() => { console.log(search) }}
+              onClick={() => { push(`/search?value=${inputValue}`) }}
               className="sm:flex px-5 h-full border-y-[1px] border-r-[1px] border-white/[0.1] bg-[white]/[0.15] relative cursor-pointer hidden justify-center items-center rounded-r-full"
             >
               <Icons.AiOutlineSearch className="text-2xl" />

@@ -90,6 +90,19 @@ export const addVideoToPlaylist = async (videoId: string, playlistId: string) =>
             return false;
         }
 
+        const isAlredyExists = await client.playlistVideo.findFirst(
+            {
+                where: {
+                    playlistId,
+                    videoId
+                }
+            }
+        )
+
+        if (isAlredyExists) {
+            return true;
+        }
+
         await client.playlistVideo.create(
             {
                 data: {

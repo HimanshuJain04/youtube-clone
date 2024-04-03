@@ -605,6 +605,50 @@ export const viewsHandler = async (postId: string, userId: string) => {
 }
 
 
+export async function fetchSearchedVideos(value: string) {
+    try {
+        if (!value) {
+            return null;
+        }
+
+        const allVideo = await client.video.findMany({
+            where: {
+                OR: [
+                    { title: { contains: value, mode: "insensitive" } }, // Case-insensitive search in title
+                    { description: { contains: value, mode: "insensitive" } }, // Case-insensitive search in description
+                    { tags: { has: value } }, // Search in tags array
+                ],
+            },
+            select: {
+                id: true,
+                title: true,
+                duration: true,
+                thumbnail: true,
+                createdAt: true,
+                url: true,
+                viewsCount: true,
+                user: {
+                    select: {
+                        id: true,
+                        profileImage: true,
+                        userName: true,
+                        name: true,
+                    },
+                },
+            },
+        });
+
+        return allVideo;
+
+    } catch (error: any) {
+
+        console.log("ERROR search action: : ", error);
+        return null;
+
+    }
+}
+
+
 
 
 
