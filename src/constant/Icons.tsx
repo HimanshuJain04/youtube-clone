@@ -29,6 +29,26 @@ import { MdPlaylistAdd } from "react-icons/md";
 import { RiPlayList2Fill } from "react-icons/ri";
 import { MdOutlineVideoLibrary } from "react-icons/md";
 
+import { GoHomeFill, GoHistory, GoVideo, GoReport } from "react-icons/go";
+import { MdOutlinedFlag, MdOutlineSubscriptions } from "react-icons/md";
+import { BiHelpCircle } from "react-icons/bi";
+import { TfiCup } from "react-icons/tfi";
+import { ImYoutube2 } from "react-icons/im";
+import { TbBrandYoutubeKids } from "react-icons/tb";
+import { AiOutlineBulb } from "react-icons/ai";
+import { FiSettings } from "react-icons/fi";
+import { GiHanger } from "react-icons/gi";
+import {
+  SiYoutubegaming,
+  SiYoutubemusic,
+  SiYoutubestudio,
+} from "react-icons/si";
+import { HiSignal } from "react-icons/hi2";
+import { PiMusicNoteBold, PiFilmSlate } from "react-icons/pi";
+import { BsFillFilePlayFill, BsFire, BsNewspaper } from "react-icons/bs";
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { LiaShoppingBagSolid } from "react-icons/lia";
+
 export const Icons = {
   FaRegImage,
   FaFileVideo,
@@ -40,6 +60,12 @@ export const Icons = {
   BiSolidLike,
   HiDotsVertical,
   HiDotsHorizontal,
+  GoHomeFill,
+  GoHistory,
+  GoVideo,
+  GoReport,
+  MdOutlinedFlag,
+  MdOutlineSubscriptions,
   RiPlayList2Fill,
   BiDislike,
   MdFileDownloadDone,
@@ -56,4 +82,23 @@ export const Icons = {
   RxCross1,
   RxHamburgerMenu,
   GiHidden,
+  BiHelpCircle,
+  TfiCup,
+  ImYoutube2,
+  TbBrandYoutubeKids,
+  AiOutlineBulb,
+  FiSettings,
+  GiHanger,
+  SiYoutubegaming,
+  SiYoutubemusic,
+  SiYoutubestudio,
+  HiSignal,
+  PiMusicNoteBold,
+  PiFilmSlate,
+  BsFillFilePlayFill,
+  BsFire,
+  BsNewspaper,
+  IoIosArrowDown,
+  IoIosArrowUp,
+  LiaShoppingBagSolid,
 };

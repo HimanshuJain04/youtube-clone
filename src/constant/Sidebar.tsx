@@ -1,63 +1,70 @@
-"use client";
-
-import { GoHomeFill, GoHistory, GoVideo, GoReport } from "react-icons/go";
-import {
-  MdOutlinedFlag,
-  MdOutlineWatchLater,
-  MdOutlineSubscriptions,
-} from "react-icons/md";
-import { BiLike, BiHelpCircle } from "react-icons/bi";
-import { TfiCup } from "react-icons/tfi";
-import { ImYoutube2 } from "react-icons/im";
-import { TbBrandYoutubeKids } from "react-icons/tb";
-import { AiOutlineBulb } from "react-icons/ai";
-import { FiSettings } from "react-icons/fi";
-import { GiHanger } from "react-icons/gi";
-import {
-  SiYoutubegaming,
-  SiYoutubemusic,
-  SiYoutubestudio,
-} from "react-icons/si";
-import { HiSignal } from "react-icons/hi2";
-import { PiMusicNoteBold, PiFilmSlate } from "react-icons/pi";
-import { BsFillFilePlayFill, BsFire, BsNewspaper } from "react-icons/bs";
-import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-import { LiaShoppingBagSolid } from "react-icons/lia";
-
-
+import { Icons } from "@/constant/Icons";
+import { v4 as uuidv4 } from "uuid";
 
 export const HomeCategory = [
-  { name: "Home", icon: <GoHomeFill />, path: "/" },
-  { name: "Shorts", icon: <BsFillFilePlayFill />, path: "/shorts" },
+  { id: uuidv4(), name: "Home", icon: <Icons.GoHomeFill />, path: "/" },
   {
+    id: uuidv4(),
+    name: "Shorts",
+    icon: <Icons.BsFillFilePlayFill />,
+    path: "/shorts",
+  },
+  {
+    id: uuidv4(),
     name: "Subscriptions",
-    icon: <MdOutlineSubscriptions />,
+    icon: <Icons.MdOutlineSubscriptions />,
     path: "/subscriptions",
   },
 ];
 
 export const videosCategory = [
-  { name: "History", icon: <GoHistory />, path: "/video/history" },
-  { name: "Your videos", icon: <GoVideo />, path: "/my-videos" },
   {
+    id: uuidv4(),
+    name: "History",
+    icon: <Icons.GoHistory />,
+    path: "/video/history",
+  },
+  {
+    id: uuidv4(),
+    name: "Your videos",
+    icon: <Icons.GoVideo />,
+    path: "/my-videos",
+  },
+  {
+    id: uuidv4(),
     name: "Watch Later",
-    icon: <MdOutlineWatchLater />,
+    icon: <Icons.MdOutlineWatchLater />,
     path: "/video/watch-later",
   },
-  { name: "Liked videos", icon: <BiLike />, path: "/video/liked-videos" },
+  {
+    id: uuidv4(),
+    name: "Liked videos",
+    icon: <Icons.BiLike />,
+    path: "/video/liked-videos",
+  },
 ];
 
 export const settingCategory = [
-  { name: "Setting", icon: <FiSettings />, path: "/setting" },
   {
+    id: uuidv4(),
+    name: "Setting",
+    icon: <Icons.FiSettings />,
+    path: "/setting",
+  },
+  {
+    id: uuidv4(),
     name: "Report History",
-    icon: <MdOutlinedFlag />,
+    icon: <Icons.MdOutlinedFlag />,
     path: "/report",
   },
-  { name: " Help", icon: <BiHelpCircle />, path: "/help" },
-  { name: "Send Feedback", icon: <GoReport />, path: "/feedback" },
+  { id: uuidv4(), name: "Help", icon: <Icons.BiHelpCircle />, path: "/help" },
+  {
+    id: uuidv4(),
+    name: "Send Feedback",
+    icon: <Icons.GoReport />,
+    path: "/feedback",
+  },
 ];
-
 
 // extras
 

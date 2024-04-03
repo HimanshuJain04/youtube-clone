@@ -23,14 +23,14 @@ function SideBar() {
                     <div className={`border-b-2 border-[white]/[0.3] pt-3 pb-5 `}>
                         {HomeCategory.map((item, index) => (
 
-                            <SidebarCard key={index} item={item} />
+                            <SidebarCard key={item.id} item={item} />
                         ))}
                     </div>
 
                     <div className={`border-b-2 border-[white]/[0.3] pt-3 pb-5 ${showSideBar ? "block" : "hidden"} `}>
                         {videosCategory.map((item, index) => (
 
-                            <SidebarCard key={index} item={item} />
+                            <SidebarCard key={item.id} item={item} />
                         ))}
 
                         {/* library */}
@@ -72,7 +72,7 @@ function SideBar() {
 
                     <div className={`border-b-2 border-[white]/[0.3] pt-3 pb-5 ${showSideBar ? "block" : "hidden"} `}>
                         {settingCategory.map((item, index) => (
-                            <SidebarCard key={index} item={item} />
+                            <SidebarCard key={item.id} item={item} />
                         ))}
                     </div>
 
