@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Context } from "@/app/context";
 import toast from "react-hot-toast";
-import { logout } from "@/actions/auth";
 import axios from "axios";
 
 const Profile = () => {

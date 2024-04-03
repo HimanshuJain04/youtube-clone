@@ -3,20 +3,23 @@
 import { fetchUserHistoryVideos } from "@/actions/video";
 import { Context } from "@/app/context";
 import ShowVideos from "@/components/cards/ShowVideos";
+import { removeVideoFromObject } from "@/utils/modifiedData";
 import React, { useContext, useEffect, useState } from "react";
 
 const Page = () => {
   const [videos, setVideos] = useState(null);
   const { user } = useContext(Context);
 
-  async function getLikedVideos() {
+  async function getWatchedVideos() {
+    console.log(user);
     const data: any = await fetchUserHistoryVideos(user.id);
-    setVideos(data);
+    const modifiedData = removeVideoFromObject(data);
+    setVideos(modifiedData);
   }
 
   useEffect(() => {
     if (user) {
-      getLikedVideos();
+      getWatchedVideos();
     }
   }, [user]);
 

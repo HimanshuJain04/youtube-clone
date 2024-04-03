@@ -3,6 +3,7 @@
 import { fetchUserLikedVideos } from "@/actions/video";
 import { Context } from "@/app/context";
 import ShowVideos from "@/components/cards/ShowVideos";
+import { removeVideoFromObject } from "@/utils/modifiedData";
 import React, { useContext, useEffect, useState } from "react";
 
 const Page = () => {
@@ -11,7 +12,8 @@ const Page = () => {
 
   async function getLikedVideos() {
     const data: any = await fetchUserLikedVideos(user.id);
-    setVideos(data);
+    const modifiedData = removeVideoFromObject(data);
+    setVideos(modifiedData);
   }
 
   useEffect(() => {
