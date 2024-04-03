@@ -1,7 +1,7 @@
 "use client"
 
 import Image from "next/image"
-import React, { useEffect } from "react";
+import React from "react";
 import { useState } from "react";
 import { useContext } from "react";
 import { Context } from "@/app/context";
@@ -9,6 +9,7 @@ import { Icons } from "@/constant/Icons";
 import IconHover from "@/components/common/IconHover";
 import Button from "@/components/buttons/Button";
 import Link from "next/link";
+import Profile from "@/components/common/Profile";
 import { useRouter } from 'next/navigation';
 
 
@@ -22,7 +23,7 @@ export default function Navbar() {
   const { user } = useContext(Context)
 
   return (
-    <div className="w-full flex sticky mb-3 top-0 z-10 bg-black justify-center items-start overflow-hidden">
+    <div className="w-full flex sticky mb-3 top-0 z-10 bg-black justify-center items-start ">
       <div className="text-white flex items-center justify-between pt-2 pb-5 h-[60px] w-full px-5">
 
         {/* Logo and Hamburger */}
@@ -107,15 +108,7 @@ export default function Navbar() {
                 <Button text={"Sign-in"} path={"/auth/sign-in"} />
               </> : (
                 <>
-                  <div className="text-sm w-[40px] h-[40px] cursor-pointer rounded-full overflow-hidden">
-                    <Image
-                      src={user.profileImage}
-                      width={40}
-                      height={40}
-                      className="rounded-full object-contain"
-                      alt="User-profile"
-                    />
-                  </div>
+                  <Profile />
                 </>
               )
           }

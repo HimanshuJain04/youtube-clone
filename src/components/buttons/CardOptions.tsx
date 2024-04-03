@@ -20,7 +20,7 @@ const CardOptions = ({ setShowOptions, videoId }: any) => {
   }, []);
 
   const handleClickOutside = (event: any) => {
-    if (optionsRef.current && !optionsRef.current.contains(event.target)) {
+    if (optionsRef.current && !optionsRef.current?.contains(event.target)) {
       setShowOptions(false);
     }
   };
