@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Context } from "@/app/context";
+import toast from "react-hot-toast";
+import { logout } from "@/actions/auth";
 
 const Profile = () => {
   const { user } = useContext(Context);
@@ -15,7 +17,14 @@ const Profile = () => {
     };
   }, []);
 
-  async function logoutHandler() {}
+  async function logoutHandler() {
+    const res = await logout();
+    if (res) {
+      toast.success("Logout Successfully!");
+    } else {
+      toast.error("Logout Failed!");
+    }
+  }
 
   const handleClickOutside = (event: any) => {
     if (profileRef.current && !profileRef.current?.contains(event.target)) {
@@ -41,9 +50,12 @@ const Profile = () => {
 
       {showProfile && (
         <div className="w-[150px] font-semibold absolute top-12 right-2 text-lg rounded-xl p-2 z-[10] text-white  bg-[#3a3838]">
-          <div className="px-3 py-1 hover:bg-white/[0.1] rounded-lg cursor-pointer">
+          <button
+            onClick={logoutHandler}
+            className="px-3 py-1 hover:bg-white/[0.1] rounded-lg cursor-pointer"
+          >
             <p>Logout</p>
-          </div>
+          </button>
         </div>
       )}
     </div>
