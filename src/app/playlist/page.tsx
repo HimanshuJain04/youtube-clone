@@ -10,14 +10,12 @@ const Page = () => {
   const serarchParams = useSearchParams();
   const playlistId = serarchParams.get("playlistId");
 
-  const [videos, setVideos] = useState(null);
+  const [allVideos, setAllVideos] = useState(null);
   const { user } = useContext(Context);
 
   async function getPlaylistVideos() {
-    const data: any = await fetchPlaylistVideos(playlistId!);
-
-    console.log("data: ", data);
-    setVideos([]);
+    const { videos }: any = await fetchPlaylistVideos(playlistId!);
+    setAllVideos(videos);
   }
 
   useEffect(() => {
@@ -26,7 +24,9 @@ const Page = () => {
     }
   }, [user, playlistId]);
 
-  return <div> {videos && <ShowVideos Type="Playlist" videos={videos} />}</div>;
+  return (
+    <div> {allVideos && <ShowVideos Type="Playlist" videos={allVideos} />}</div>
+  );
 };
 
 export default Page;

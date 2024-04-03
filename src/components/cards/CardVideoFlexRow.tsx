@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { getTime, getViews } from "@/utils/videoUtils";
 import VideoThumbnailCard from "@/components/cards/VideoThumbnailCard";
 import { Icons } from "@/constant/Icons";
@@ -11,9 +11,11 @@ import { useContext } from "react";
 import { Context } from "@/app/context";
 import toast from "react-hot-toast";
 import { dislikedPostHandler } from "@/actions/like";
+import { removeFromPlaylist } from "@/actions/playlist";
 
 function VideoCard({ video, Type, css }: any) {
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   const { user } = useContext(Context);
 
@@ -27,26 +29,42 @@ function VideoCard({ video, Type, css }: any) {
     }
 
     let callingFun;
+    let Arg1;
+    let Arg2;
 
     switch (Type) {
       case "WatchLater":
         callingFun = removeFromWatchLater;
+        Arg1 = video.id;
+        Arg2 = user.id;
         break;
+
       case "History":
         callingFun = removeFromHistory;
+        Arg1 = video.id;
+        Arg2 = user.id;
         break;
+
       case "Like":
         callingFun = dislikedPostHandler;
+        Arg1 = video.id;
+        Arg2 = user.id;
+        break;
+
+      case "Playlist":
+        callingFun = removeFromPlaylist;
+        Arg1 = video.id;
+        Arg2 = searchParams.get("playlistId");
         break;
       default:
         callingFun = null;
     }
 
-    if (!callingFun) {
+    if (!callingFun || !Arg1 || !Arg2) {
       return;
     }
 
-    const res = await callingFun(video.id, user.id);
+    const res = await callingFun(Arg1, Arg2);
 
     if (res) {
       toast.success("Removed");

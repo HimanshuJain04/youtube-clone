@@ -83,7 +83,6 @@ export const fetchPlaylistVideos = async (playlistId: string) => {
     }
 }
 
-
 export const addVideoToPlaylist = async (videoId: string, playlistId: string) => {
     try {
 
@@ -113,5 +112,32 @@ export const addVideoToPlaylist = async (videoId: string, playlistId: string) =>
     } catch (error: any) {
         console.log(error)
         throw new Error("Server failed to create playlist", error);
+    }
+}
+
+
+export const removeFromPlaylist = async (videoId: string, playlistId: string) => {
+    try {
+
+        if (!videoId || !playlistId) {
+            return false;
+        }
+
+        await client.playlistVideo.delete(
+            {
+                where: {
+                    videoId_playlistId: {
+                        playlistId,
+                        videoId
+                    }
+                }
+            }
+        );
+
+        return true;
+
+    } catch (error: any) {
+        console.log(error)
+        throw new Error("Server failed to delete video from playlist: ", error);
     }
 }
