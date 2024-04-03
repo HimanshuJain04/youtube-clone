@@ -312,6 +312,56 @@ export async function fetchUserHistoryVideos(userId: string) {
 }
 
 
+export async function fetchSubscribedChannelVideos(userId: string) {
+    try {
+
+        if (!userId) return null;
+
+        const videoData = await client.user.findFirst(
+            {
+                where: {
+                    id: userId
+                },
+                select: {
+                    subscribesTo: {
+                        select: {
+                            videos: {
+                                select: {
+                                    id: true,
+                                    title: true,
+                                    duration: true,
+                                    thumbnail: true,
+                                    createdAt: true,
+                                    description: true,
+                                    url: true,
+                                    viewsCount: true,
+                                    likesCount: true,
+                                    isAgeRestricted: true,
+                                    user: {
+                                        select: {
+                                            id: true,
+                                            profileImage: true,
+                                            userName: true,
+                                            name: true,
+                                        },
+                                    },
+                                },
+                            }
+                        }
+                    }
+                }
+            }
+        );
+
+        return videoData;
+
+    } catch (err: any) {
+
+        console.log("Server failed to get subscribed channel videos, try again later: ", err)
+        throw new Error("Server failed to get video, try again later")
+    }
+}
+
 export async function fetchVideo(videoId: string) {
     try {
 
@@ -401,7 +451,6 @@ export async function fetchUserWatchLater(userId: string) {
     }
 }
 
-
 export async function addToWatchLater(videoId: string, userId: string) {
     try {
 
@@ -440,7 +489,6 @@ export async function addToWatchLater(videoId: string, userId: string) {
         throw new Error("Server failed to add video to watch later, try again later")
     }
 }
-
 
 export async function removeFromWatchLater(videoId: string, userId: string) {
     try {
