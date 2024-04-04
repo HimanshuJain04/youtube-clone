@@ -67,11 +67,11 @@ const CommentSection = () => {
         <p>Comments</p>
       </div>
 
-      {/* create comment */}
-      <div className="w-full flex justify-start gap-5 items-start">
-        {/* profile image */}
-        <div className="relative h-12 w-12 shrink-0">
-          {user && (
+      {user && (
+        // create comment
+        <div className="w-full flex justify-start gap-5 items-start">
+          {/* profile image */}
+          <div className="relative h-12 w-12 shrink-0">
             <Image
               src={user?.profileImage}
               objectFit="cover"
@@ -79,28 +79,28 @@ const CommentSection = () => {
               className="rounded-full object-cover"
               alt="user"
             />
-          )}
-        </div>
+          </div>
 
-        {/* input field | button */}
-        <div className="w-full group flex flex-col gap-2 justify-start items-start">
-          <input
-            type="text"
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            placeholder="Add a comment..."
-            className="w-full outline-none bg-black focus-within:border-white/[0.8] transition-all duration-300 ease-in-out border-b-2 border-[white]/[0.3]"
-          />
-          <div className=" justify-end hidden group-focus-within:flex gap-5 w-full items-center">
-            <button
-              onClick={createComments}
-              className="px-5 py-2 rounded-full cursor-pointer font-semibold text-black bg-blue-500 hover:bg-blue-400"
-            >
-              Comment
-            </button>
+          {/* input field | button */}
+          <div className="w-full group flex flex-col gap-2 justify-start items-start">
+            <input
+              type="text"
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              placeholder="Add a comment..."
+              className="w-full outline-none bg-black focus-within:border-white/[0.8] transition-all duration-300 ease-in-out border-b-2 border-[white]/[0.3]"
+            />
+            <div className=" justify-end hidden group-focus-within:flex gap-5 w-full items-center">
+              <button
+                onClick={createComments}
+                className="px-5 py-2 rounded-full cursor-pointer font-semibold text-black bg-blue-500 hover:bg-blue-400"
+              >
+                Comment
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       {/* previos comments */}
       <div className="mt-5 w-full">
