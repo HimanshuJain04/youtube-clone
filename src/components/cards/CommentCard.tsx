@@ -7,6 +7,7 @@ import { Icons } from "@/constant/Icons";
 import { Context } from "@/app/context";
 import toast from "react-hot-toast";
 import { deleteComment } from "@/actions/comment";
+import CommentLikes from "@/components/cards/CommentLikes";
 
 const CommentCard = ({ comment }: any) => {
   const { user }: any = useContext(Context);
@@ -14,7 +15,6 @@ const CommentCard = ({ comment }: any) => {
   async function deleteHandler() {
     try {
       const res = await deleteComment(comment.id);
-
       toast.success("Comment Deleted!!");
     } catch (error) {
       toast.error("Something went wrong!");
@@ -56,6 +56,8 @@ const CommentCard = ({ comment }: any) => {
         <div className="font-medium max-w-[90%]">
           <p>{comment?.content}</p>
         </div>
+
+        <CommentLikes />
       </div>
 
       {user?.id === comment?.user?.id && (
