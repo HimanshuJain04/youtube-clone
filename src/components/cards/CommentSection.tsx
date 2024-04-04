@@ -13,8 +13,6 @@ const CommentSection = () => {
 
   const videoId = window.location.pathname.split("/").at(-1);
 
-  console.log(videoId);
-
   async function getVideoComments() {
     if (!videoId) {
       return;
@@ -46,10 +44,9 @@ const CommentSection = () => {
         userId: user.id,
         content: inputValue,
       });
-
-      console.log("res: ", res);
       toast.success("Comment created");
       setInputValue("");
+      setComments([res, ...comments]);
     } catch (error) {
       console.log("Error createComments: ", error);
       toast.error("Something went wrong!");
@@ -63,7 +60,7 @@ const CommentSection = () => {
   }, [videoId]);
 
   return (
-    <div className="flex flex-col justify-start items-start gap-5">
+    <div className="flex flex-col pb-10 justify-start items-start gap-5">
       {/* comments */}
       <div className="flex font-bold text-2xl gap-2 justify-start items-center">
         <span>{"109"}</span>
@@ -106,10 +103,10 @@ const CommentSection = () => {
       </div>
 
       {/* previos comments */}
-      <div>
+      <div className="mt-5">
         {comments &&
           (comments.length > 0 ? (
-            <div>
+            <div className="flex flex-col gap-8 justify-normal items-start">
               {comments?.map((comment: any) => (
                 <CommentCard comment={comment} key={comment.id} />
               ))}

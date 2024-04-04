@@ -10,7 +10,7 @@ export const createComment = async (body: any) => {
         console.log(userId, content, videoId)
 
         if (!userId || !content || !videoId) {
-            return { message: "All fields are required", data: null }
+            return null;
         }
 
         const createdComment = await client.comment.create(
@@ -27,14 +27,23 @@ export const createComment = async (body: any) => {
                         }
                     },
                     content
+                },
+                select: {
+                    id: true,
+                    content: true,
+                    createdAt: true,
+                    user: {
+                        select: {
+                            profileImage: true,
+                            id: true,
+                            userName: true
+                        }
+                    }
                 }
             }
         );
 
-        return {
-            data: createdComment,
-            message: "Comment created successfull!"
-        };
+        return createdComment;
 
     } catch (error) {
         console.log("Error when creating comment: ", error)
@@ -103,6 +112,18 @@ export const fetchVideoComments = async (videoId: string) => {
             {
                 where: {
                     videoId
+                },
+                select: {
+                    id: true,
+                    content: true,
+                    createdAt: true,
+                    user: {
+                        select: {
+                            profileImage: true,
+                            id: true,
+                            userName: true
+                        }
+                    }
                 }
             }
         );
