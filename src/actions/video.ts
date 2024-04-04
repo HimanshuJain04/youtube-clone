@@ -393,7 +393,6 @@ export async function fetchVideo(videoId: string) {
                 }
             }
         );
-
         return videoData;
 
     } catch (err: any) {

@@ -11,6 +11,7 @@ import LikeButtons from "@/components/buttons/LikeButtons";
 import { Context } from "@/app/context";
 import { viewsHandler } from "@/actions/video";
 import { fetchVideo } from "@/actions/video";
+import CommentSection from "@/components/cards/CommentSection";
 
 export default function Watch() {
   const videoId = usePathname().split("/").at(-1);
@@ -64,7 +65,7 @@ export default function Watch() {
             {/* video part */}
             <div className="w-[65vw]">
               {/* video */}
-              <div className="w-full h-[80vh] overflow-hidden">
+              <div className="w-full max-h-[80vh] overflow-hidden">
                 <video
                   src={videoData?.url}
                   className="w-full object-contain max-h-full"
@@ -119,7 +120,7 @@ export default function Watch() {
                   {/* likes | dislikes | etc */}
                   <LikeButtons
                     videoId={videoId}
-                    likesCount={videoData.likesCount}
+                    likesCount={videoData?.likesCount}
                   />
                 </div>
 
@@ -142,7 +143,7 @@ export default function Watch() {
 
                   {/* tags */}
                   <span className="text-blue-400 flex gap-2 font-semibold">
-                    {videoData?.tags?.map((tag, index) => (
+                    {videoData?.tags?.map((tag: string, index: number) => (
                       <Link
                         href={`/search?value=${tag}`}
                         key={tag + index}
@@ -158,6 +159,11 @@ export default function Watch() {
                     <p>{videoData?.description}</p>
                   </div>
                 </div>
+              </div>
+
+              {/* comment section */}
+              <div className="mt-10">
+                <CommentSection />
               </div>
             </div>
 
