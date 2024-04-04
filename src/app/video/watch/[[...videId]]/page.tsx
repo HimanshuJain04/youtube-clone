@@ -65,10 +65,10 @@ export default function Watch() {
             {/* video part */}
             <div className="w-[65vw]">
               {/* video */}
-              <div className="w-full max-h-[80vh] overflow-hidden">
+              <div className="w-full h-[75vh] overflow-hidden">
                 <video
                   src={videoData?.url}
-                  className="w-full object-contain max-h-full"
+                  className="w-full object-contain max-h-full min-h-[90%]"
                   controls
                 />
               </div>

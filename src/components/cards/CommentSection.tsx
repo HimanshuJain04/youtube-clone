@@ -63,7 +63,7 @@ const CommentSection = () => {
     <div className="flex flex-col pb-10 justify-start items-start gap-5">
       {/* comments */}
       <div className="flex font-bold text-2xl gap-2 justify-start items-center">
-        <span>{"109"}</span>
+        <span>{comments?.length || "No"}</span>
         <p>Comments</p>
       </div>
 
@@ -104,18 +104,13 @@ const CommentSection = () => {
 
       {/* previos comments */}
       <div className="mt-5">
-        {comments &&
-          (comments.length > 0 ? (
-            <div className="flex flex-col gap-8 justify-normal items-start">
-              {comments?.map((comment: any) => (
-                <CommentCard comment={comment} key={comment.id} />
-              ))}
-            </div>
-          ) : (
-            <div className="w-full pt-10 text-2xl text-white font-bold">
-              <p>No comments found</p>
-            </div>
-          ))}
+        {comments && (
+          <div className="flex flex-col gap-8 justify-normal items-start">
+            {comments?.map((comment: any) => (
+              <CommentCard comment={comment} key={comment.id} />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
