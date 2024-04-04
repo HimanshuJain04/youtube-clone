@@ -103,7 +103,7 @@ const CommentSection = () => {
       </div>
 
       {/* previos comments */}
-      <div className="mt-5">
+      <div className="mt-5 w-full">
         {comments && (
           <div className="flex flex-col gap-8 justify-normal items-start">
             {comments?.map((comment: any) => (

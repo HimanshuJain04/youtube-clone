@@ -47,15 +47,13 @@ export const createComment = async (body: any) => {
 
     } catch (error) {
         console.log("Error when creating comment: ", error)
-        return false;
+        throw new Error("Comment can't be created");
     }
 }
 
 // delete
-export const deleteComment = async (body: any) => {
+export const deleteComment = async (commentId: string) => {
     try {
-
-        const { commentId } = body;
 
         if (!commentId) {
             return { message: "All fields are required", data: null }
@@ -88,14 +86,11 @@ export const deleteComment = async (body: any) => {
             }
         );
 
-        return {
-            data: deletedComment,
-            message: "Comment delete successfull!"
-        };
+        return true;
 
     } catch (error) {
         console.log("Error when deleting comment: ", error)
-        return false;
+        throw new Error("Comment can't be deleted");
     }
 }
 
@@ -132,6 +127,6 @@ export const fetchVideoComments = async (videoId: string) => {
 
     } catch (error) {
         console.log("Error when fetching comment: ", error)
-        return false;
+        throw new Error("Comment can't be fetched");
     }
 }
