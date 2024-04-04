@@ -649,16 +649,3 @@ export async function fetchSearchedVideos(value: string) {
 
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
