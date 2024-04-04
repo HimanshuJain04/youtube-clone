@@ -7,6 +7,8 @@ export const createComment = async (body: any) => {
 
         const { userId, content, videoId } = body;
 
+        console.log(userId, content, videoId)
+
         if (!userId || !content || !videoId) {
             return { message: "All fields are required", data: null }
         }
@@ -39,7 +41,6 @@ export const createComment = async (body: any) => {
         return false;
     }
 }
-
 
 // delete
 export const deleteComment = async (body: any) => {
@@ -90,3 +91,26 @@ export const deleteComment = async (body: any) => {
 }
 
 // read
+export const fetchVideoComments = async (videoId: string) => {
+    try {
+
+        if (!videoId) {
+            return null;
+        }
+
+        // delete from comment db
+        const allComments = await client.comment.findMany(
+            {
+                where: {
+                    videoId
+                }
+            }
+        );
+
+        return allComments;
+
+    } catch (error) {
+        console.log("Error when fetching comment: ", error)
+        return false;
+    }
+}
