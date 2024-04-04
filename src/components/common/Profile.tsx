@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Context } from "@/app/context";
 import toast from "react-hot-toast";
 import axios from "axios";
+import { Icons } from "@/constant/Icons";
 
 const Profile = () => {
   const { user, setUser }: any = useContext(Context);
@@ -54,8 +55,9 @@ const Profile = () => {
         <div className="w-[150px] font-semibold absolute top-12 right-2 text-lg rounded-xl p-2 z-[10] text-white  bg-[#3a3838]">
           <button
             onClick={logoutHandler}
-            className="px-3 py-1 hover:bg-white/[0.1] rounded-lg cursor-pointer"
+            className=" w-full flex px-2 py-1 items-center gap-3 hover:bg-white/[0.1] rounded-lg cursor-pointer"
           >
+            <Icons.FiLogOut />
             <p>Logout</p>
           </button>
         </div>

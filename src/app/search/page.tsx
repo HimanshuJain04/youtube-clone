@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { fetchSearchedVideos } from "@/actions/video";
+import ShowVideos from "@/components/cards/ShowVideos";
 
 export default function SearchPage() {
   const searchParams = useSearchParams();
@@ -32,22 +33,14 @@ export default function SearchPage() {
 
   return (
     <div className="w-full gap-5 flex relative min-h-screen bg-black">
-      <div>
-        <Sidebar />
-      </div>
-
-      <div className="w-full bg-black flex flex-wrap justify-start items-start gap-y-10 gap-x-5">
-        {videos &&
-          (videos?.length > 0 ? (
-            videos?.map((video: any) => (
-              <HomeCard key={video?.id} video={video} />
-            ))
-          ) : (
-            <div className="text-white text-2xl font-bold pt-20">
-              <p>No videos found</p>
-            </div>
-          ))}
-      </div>
+      {videos &&
+        (videos?.length > 0 ? (
+          <ShowVideos flag={true} Type="Playlist" videos={videos} />
+        ) : (
+          <div className="text-white text-2xl font-bold pt-20">
+            <p>No videos found</p>
+          </div>
+        ))}
     </div>
   );
 }

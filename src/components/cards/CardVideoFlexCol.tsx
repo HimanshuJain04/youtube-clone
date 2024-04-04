@@ -7,7 +7,7 @@ import { getTime, getViews } from "@/utils/videoUtils";
 import VideoThumbnailCard from "@/components/cards/VideoThumbnailCard";
 import { Icons } from "@/constant/Icons";
 import { useState } from "react";
-import CardOptions from "../buttons/CardOptions";
+import CardOptions from "@/components/buttons/CardOptions";
 
 function VideoCard({ video, css }: any) {
   const router = useRouter();
@@ -41,11 +41,11 @@ function VideoCard({ video, css }: any) {
               <div className="mt-1 w-12 h-12 relative rounded-full shrink-0 bg-white/[0.2] ">
                 <Image
                   alt="channel"
+                  src={video?.user?.profileImage}
                   loading="lazy"
                   layout="fill"
                   objectFit="cover"
                   className="h-full w-full shrink-0 object-cover rounded-full"
-                  src={video?.user?.profileImage}
                 />
               </div>
             </Link>

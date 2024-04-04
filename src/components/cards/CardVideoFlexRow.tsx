@@ -7,19 +7,21 @@ import { getTime, getViews } from "@/utils/videoUtils";
 import VideoThumbnailCard from "@/components/cards/VideoThumbnailCard";
 import { Icons } from "@/constant/Icons";
 import { removeFromHistory, removeFromWatchLater } from "@/actions/video";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Context } from "@/app/context";
 import toast from "react-hot-toast";
 import { dislikedPostHandler } from "@/actions/like";
 import { removeFromPlaylist } from "@/actions/playlist";
+import CardOptions from "@/components/buttons/CardOptions";
 
-function VideoCard({ video, Type, css }: any) {
+function VideoCard({ video, Type, css, flag }: any) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const [showOptions, setShowOptions] = useState(false);
 
   const { user }: any = useContext(Context);
 
-  const handleOptionsClick = async (event: any) => {
+  const handleDeleteClick = async (event: any) => {
     event.preventDefault();
     event.stopPropagation();
 
@@ -73,9 +75,15 @@ function VideoCard({ video, Type, css }: any) {
     }
   };
 
+  const handleOptionsClick = (event: any) => {
+    event.preventDefault();
+    event.stopPropagation();
+    setShowOptions(!showOptions);
+  };
+
   return (
     <Link href={`/video/watch/${video?.id}`}>
-      <div className="w-full group flex justify-between items-start">
+      <div className="w-full relative group flex justify-between items-start">
         <div
           className={`flex group flex-row gap-5 relative  text-white  justify-start items-start
          overflow-hidden w-full ${css}`}
@@ -139,14 +147,30 @@ function VideoCard({ video, Type, css }: any) {
             </p>
           </div>
         </div>
-        <div
-          onClick={handleOptionsClick}
-          className="group-hover:block relative hidden hover:bg-white/[0.15] p-2 rounded-full text-white"
-        >
-          <span className="text-xl ">
-            <Icons.RiDeleteBin6Line />
-          </span>
-        </div>
+
+        {/* hover dots */}
+        {flag ? (
+          <>
+            <span
+              onClick={handleOptionsClick}
+              className="text-white group-hover:block hidden text-xl hover:bg-white/[0.15] p-2  rounded-full"
+            >
+              <Icons.HiDotsVertical />
+            </span>
+            {showOptions && (
+              <CardOptions setShowOptions={setShowOptions} videoId={video.id} />
+            )}
+          </>
+        ) : (
+          <div
+            onClick={handleDeleteClick}
+            className="group-hover:block relative hidden hover:bg-white/[0.15] p-2 rounded-full text-white"
+          >
+            <span className="text-xl ">
+              <Icons.RiDeleteBin6Line />
+            </span>
+          </div>
+        )}
       </div>
     </Link>
   );

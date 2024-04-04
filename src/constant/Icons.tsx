@@ -17,6 +17,7 @@ import { HiDotsHorizontal } from "react-icons/hi";
 import { FaShare } from "react-icons/fa";
 import { IoMdDownload } from "react-icons/io";
 import { MdFileDownloadDone } from "react-icons/md";
+import { FiLogOut } from "react-icons/fi";
 
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { FaEdit } from "react-icons/fa";
@@ -56,6 +57,7 @@ export const Icons = {
   MdPlaylistAdd,
   MdOutlineVideoLibrary,
   BiLike,
+  FiLogOut,
   BiSolidDislike,
   BiSolidLike,
   HiDotsVertical,
