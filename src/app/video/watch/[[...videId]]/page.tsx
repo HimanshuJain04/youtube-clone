@@ -12,6 +12,7 @@ import { Context } from "@/app/context";
 import { viewsHandler } from "@/actions/video";
 import { fetchVideo } from "@/actions/video";
 import CommentSection from "@/components/cards/CommentSection";
+import RecommendedVideos from "@/components/cards/RecommendedVideos";
 
 export default function Watch() {
   const videoId = usePathname().split("/").at(-1);
@@ -61,7 +62,7 @@ export default function Watch() {
         <>.........loading............</>
       ) : (
         videoData && (
-          <div className="w-11/12 pt-5 pb-10 flex justify-normal min-h-screen items-start">
+          <div className="w-11/12 pt-5 pb-10 gap-5 flex justify-normal min-h-screen items-start">
             {/* video part */}
             <div className="w-[65vw]">
               {/* video */}
@@ -168,7 +169,9 @@ export default function Watch() {
             </div>
 
             {/* recommendation */}
-            <div className="w-[30vw] h-screen "></div>
+            <div className="w-[30vw]">
+              <RecommendedVideos videoId={videoId} />
+            </div>
           </div>
         )
       )}

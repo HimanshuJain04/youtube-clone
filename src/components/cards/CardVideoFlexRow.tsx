@@ -86,18 +86,18 @@ function VideoCard({ video, Type, css, flag }: any) {
       <div className="w-full relative group flex justify-between items-start">
         <div
           className={`flex group flex-row gap-5 relative  text-white  justify-start items-start
-         overflow-hidden w-full ${css}`}
+         overflow-hidden w-full`}
         >
           {/* video | image */}
           <VideoThumbnailCard
             imageUrl={video?.thumbnail}
             videoUrl={video?.url}
             duration={video?.duration}
-            css="w-[400px] h-[250px]"
+            css={css}
           />
 
           {/* details */}
-          <div className="flex gap-1 flex-col overflow-hidden cursor-pointer justify-start items-start mt-3">
+          <div className="flex gap-1 pr-4 flex-col overflow-hidden cursor-pointer justify-start items-start mt-3">
             {/* Title of video */}
             <p className="sm:text-[19px] max-w-full text-sm font-semibold">
               {`${video.title.substring(0, 100)}..`}
@@ -147,20 +147,19 @@ function VideoCard({ video, Type, css, flag }: any) {
             </p>
           </div>
         </div>
-
         {/* hover dots */}
         {flag ? (
-          <>
+          <div className="relative ">
             <span
               onClick={handleOptionsClick}
-              className="text-white group-hover:block hidden text-xl hover:bg-white/[0.15] p-2  rounded-full"
+              className="text-white absolute right-0 group-hover:block hidden text-xl hover:bg-white/[0.15] p-2  rounded-full"
             >
               <Icons.HiDotsVertical />
             </span>
             {showOptions && (
               <CardOptions setShowOptions={setShowOptions} videoId={video.id} />
             )}
-          </>
+          </div>
         ) : (
           <div
             onClick={handleDeleteClick}

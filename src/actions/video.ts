@@ -362,6 +362,51 @@ export async function fetchSubscribedChannelVideos(userId: string) {
     }
 }
 
+export async function fetchRecommendedVideos(videoId: string) {
+    try {
+
+        if (!videoId) {
+            return null;
+        }
+
+        // now what should be similar videos
+
+        const videoData = await client.video.findMany(
+            {
+                select: {
+                    id: true,
+                    title: true,
+                    createdAt: true,
+                    url: true,
+                    description: true,
+                    viewsCount: true,
+                    tags: true,
+                    isAgeRestricted: true,
+                    thumbnail: true,
+                    likesCount: true,
+                    user: {
+                        select: {
+                            id: true,
+                            profileImage: true,
+                            userName: true,
+                            name: true,
+                            subscribersCount: true
+                        }
+                    }
+                }
+            }
+        );
+
+
+        return videoData;
+
+    } catch (err: any) {
+
+        console.log("Server failed to get recommended video, try again later: ", err)
+        throw new Error("Server failed to get recommended video, try again later")
+    }
+}
+
 export async function fetchVideo(videoId: string) {
     try {
 

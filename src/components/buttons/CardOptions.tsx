@@ -58,7 +58,7 @@ const CardOptions = ({ setShowOptions, videoId }: any) => {
   return (
     <div
       ref={optionsRef}
-      className="p-2 absolute right-5 z-10 top-5 flex rounded-lg flex-col gap-2 font-semibold bg-[#212020] text-white"
+      className="p-2 absolute shrink-0 right-5 z-10 top-5 flex rounded-lg flex-col gap-2 font-semibold bg-[#212020] text-white"
     >
       {showPlaylists && (
         <Playlist
