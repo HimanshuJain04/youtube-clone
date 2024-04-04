@@ -626,6 +626,7 @@ export async function fetchSearchedVideos(value: string) {
                 duration: true,
                 thumbnail: true,
                 createdAt: true,
+                description: true,
                 url: true,
                 viewsCount: true,
                 user: {

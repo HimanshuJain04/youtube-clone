@@ -3,6 +3,7 @@
 import { fetchSubscribedChannelVideos } from "@/actions/video";
 import { Context } from "@/app/context";
 import HomeCard from "@/components/cards/CardVideoFlexCol";
+import ShowVideos from "@/components/cards/ShowVideos";
 import Sidebar from "@/components/common/Sidebar";
 import { removeVideoUnderVideoFromObject } from "@/utils/modifiedData";
 import React, { useContext, useEffect, useState } from "react";
@@ -24,19 +25,15 @@ const Page = () => {
   }, [user]);
 
   return (
-    <div className="w-full gap-5 flex relative min-h-screen bg-black">
-      <div>
-        <Sidebar />
-      </div>
-      <div className="w-full bg-black flex flex-wrap justify-start items-start gap-y-10 gap-x-5">
-        {videos && videos?.length > 0 ? (
-          videos?.map((video: any) => (
-            <HomeCard key={video?.id} video={video} />
-          ))
+    <div className="w-full  min-h-screen bg-black">
+      {videos &&
+        (videos && videos?.length > 0 ? (
+          <ShowVideos flag={true} Type="Playlist" videos={videos} />
         ) : (
-          <></>
-        )}
-      </div>
+          <div className="text-white w-full text-center text-2xl font-bold pt-20">
+            <p>No videos found</p>
+          </div>
+        ))}
     </div>
   );
 };
