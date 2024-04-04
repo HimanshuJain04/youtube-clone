@@ -12,31 +12,34 @@ datasource db {
 }
 
 model User {
-  id                        String            @id @default(cuid())
-  email                     String            @unique
-  userName                  String            @unique
+  id                        String              @id @default(cuid())
+  email                     String              @unique
+  userName                  String              @unique
   name                      String
   password                  String
   profileImage              String
   coverImage                String?
   description               String?
-  createdAt                 DateTime          @default(now())
-  updatedAt                 DateTime          @updatedAt
-  isVerified                Boolean           @default(false)
+  createdAt                 DateTime            @default(now())
+  updatedAt                 DateTime            @updatedAt
+  isVerified                Boolean             @default(false)
   verifyToken               String?
   verifyTokenExpiry         DateTime?
   forgotPasswordToken       String?
   forgotPasswordTokenExpiry DateTime?
   videos                    Video[]
+  comments                  Comment[]
   playlists                 Playlist[]
   history                   viewsOnVideo[]
   watchLater                WatchLater[]
   likedVideos               likesOnVideo[]
+  likedComments             likesOnComment[]
+  disLikedComments          disLikesOnComment[]
   dislikedVideos            dislikesOnVideo[]
-  subscribers               User[]            @relation("UserFollows")
-  subscribesTo              User[]            @relation("UserFollows")
-  subscribersCount          Int               @default(0)
-  subscribesToCount         Int               @default(0)
+  subscribers               User[]              @relation("UserFollows")
+  subscribesTo              User[]              @relation("UserFollows")
+  subscribersCount          Int                 @default(0)
+  subscribesToCount         Int                 @default(0)
 }
 
 model Video {
@@ -58,10 +61,44 @@ model Video {
   likesCount      Int               @default(0)
   dislikesCount   Int               @default(0)
   playlists       PlaylistVideo[]
+  comments        Comment[]
   views           viewsOnVideo[]
   likes           likesOnVideo[]
   dislikes        dislikesOnVideo[]
   watchLaterAddBy WatchLater[]
+}
+
+model Comment {
+  id        String              @id @default(cuid())
+  userId    String
+  user      User                @relation(fields: [userId], references: [id])
+  content   String
+  createdAt DateTime            @default(now())
+  updatedAt DateTime            @updatedAt
+  video     Video               @relation(fields: [videoId], references: [id])
+  videoId   String
+  likes     likesOnComment[]
+  disLikes  disLikesOnComment[]
+}
+
+model likesOnComment {
+  comment   Comment  @relation(fields: [commentId], references: [id])
+  commentId String
+  likedAt   DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+
+  @@id([commentId, userId])
+}
+
+model disLikesOnComment {
+  comment    Comment  @relation(fields: [commentId], references: [id])
+  commentId  String
+  dislikedAt DateTime @default(now())
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String
+
+  @@id([commentId, userId])
 }
 
 model Playlist {
@@ -104,22 +141,22 @@ model likesOnVideo {
   @@id([videoId, userId])
 }
 
-model WatchLater {
-  video   Video    @relation(fields: [videoId], references: [id])
-  videoId String
-  addedAt DateTime @default(now())
-  user    User     @relation(fields: [userId], references: [id])
-  userId  String
-
-  @@id([videoId, userId])
-}
-
 model dislikesOnVideo {
   video      Video    @relation(fields: [videoId], references: [id])
   videoId    String
   dislikedAt DateTime @default(now())
   user       User     @relation(fields: [userId], references: [id])
   userId     String
+
+  @@id([videoId, userId])
+}
+
+model WatchLater {
+  video   Video    @relation(fields: [videoId], references: [id])
+  videoId String
+  addedAt DateTime @default(now())
+  user    User     @relation(fields: [userId], references: [id])
+  userId  String
 
   @@id([videoId, userId])
 }
