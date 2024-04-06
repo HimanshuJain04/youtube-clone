@@ -381,6 +381,7 @@ export async function fetchRecommendedVideos(videoId: string) {
                     description: true,
                     viewsCount: true,
                     tags: true,
+                    duration: true,
                     isAgeRestricted: true,
                     thumbnail: true,
                     likesCount: true,

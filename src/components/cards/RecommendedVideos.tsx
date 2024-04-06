@@ -33,6 +33,7 @@ const RecommendedVideos = ({ videoId }: any) => {
                   css="w-[220px] h-[130px]"
                   flag={true}
                   video={video}
+                  Type="Recommended"
                 />
               </div>
             </div>

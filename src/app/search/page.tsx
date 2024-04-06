@@ -1,7 +1,5 @@
 "use client";
 
-import HomeCard from "@/components/cards/CardVideoFlexCol";
-import Sidebar from "@/components/common/Sidebar";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";

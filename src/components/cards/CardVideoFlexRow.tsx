@@ -14,7 +14,7 @@ import { dislikedPostHandler } from "@/actions/like";
 import { removeFromPlaylist } from "@/actions/playlist";
 import CardOptions from "@/components/buttons/CardOptions";
 
-function VideoCard({ video, Type, css, flag }: any) {
+function VideoCard({ video, Type, css = "w-[400px] h-[200px]", flag }: any) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [showOptions, setShowOptions] = useState(false);
@@ -86,7 +86,7 @@ function VideoCard({ video, Type, css, flag }: any) {
       <div className="w-full relative group flex justify-between items-start">
         <div
           className={`flex group flex-row gap-5 relative  text-white  justify-start items-start
-         overflow-hidden w-full`}
+         overflow-hidden w-full `}
         >
           {/* video | image */}
           <VideoThumbnailCard
@@ -142,7 +142,11 @@ function VideoCard({ video, Type, css, flag }: any) {
             </div>
 
             {/* description of video */}
-            <p className="text-[white]/[0.6] mt-2 max-w-full text-[15px]">
+            <p
+              className={`text-[white]/[0.6] mt-2 max-w-full text-[15px]  ${
+                Type === "Recommended" ? "hidden" : "block"
+              }`}
+            >
               {`${video?.description?.substring(0, 200)}..`}
             </p>
           </div>
