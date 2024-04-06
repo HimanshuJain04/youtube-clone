@@ -7,7 +7,7 @@ export const Context = createContext({});
 
 export function AppContext({ children }: { children: React.ReactNode }) {
   const [category, setCategory] = useState("Home");
-  const [showSideBar, setShowSideBar] = useState(true);
+  const [showSideBar, setShowSideBar] = useState(false);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
 

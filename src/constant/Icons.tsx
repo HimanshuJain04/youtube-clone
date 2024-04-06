@@ -50,7 +50,10 @@ import { BsFillFilePlayFill, BsFire, BsNewspaper } from "react-icons/bs";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { LiaShoppingBagSolid } from "react-icons/lia";
 
+import { IoMdAdd } from "react-icons/io";
+
 export const Icons = {
+  IoMdAdd,
   FaRegImage,
   FaFileVideo,
   MdOutlineWatchLater,

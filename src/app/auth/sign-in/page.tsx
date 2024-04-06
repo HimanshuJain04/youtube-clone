@@ -14,7 +14,7 @@ export default function SigninPage() {
     if (user) {
       router.push("/");
     }
-  }, []);
+  }, [user]);
 
   const [formData, setFormData] = useState({
     userNameOrEmail: "",
@@ -33,7 +33,6 @@ export default function SigninPage() {
   async function signinHandler() {
     try {
       setLoading(true);
-
       const response = await axios.post("/api/auth/signin", formData);
       toast.success("Login successfully!");
       setUser(response.data.data);
