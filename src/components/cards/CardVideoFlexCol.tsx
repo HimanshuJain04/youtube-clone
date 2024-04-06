@@ -44,8 +44,7 @@ function VideoCard({ video, css }: any) {
                   alt="channel"
                   src={video?.user?.profileImage}
                   loading="lazy"
-                  layout="fill"
-                  objectFit="cover"
+                  fill
                   className="h-full w-full shrink-0 object-cover rounded-full"
                 />
               </div>

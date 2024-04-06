@@ -44,8 +44,7 @@ const Profile = () => {
       <div className="text-sm w-[40px] relative h-[40px] cursor-pointer rounded-full overflow-hidden">
         <Image
           src={user?.profileImage}
-          layout="fill"
-          objectFit="cover"
+          fill
           className="rounded-full object-contain"
           alt="User-profile"
         />

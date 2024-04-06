@@ -128,8 +128,7 @@ function VideoCard({ video, Type, css = "w-[400px] h-[200px]", flag }: any) {
                   <Image
                     alt="channel"
                     loading="lazy"
-                    layout="fill"
-                    objectFit="cover"
+                    fill
                     src={video?.user?.profileImage}
                   />
                 </div>

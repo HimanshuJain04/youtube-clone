@@ -48,8 +48,7 @@ const VideoCard = (props: videoCardProps) => {
               src={imageUrl}
               loading="lazy"
               alt="thumbnail"
-              layout="fill"
-              objectFit="cover"
+              fill
               className="rounded-2xl transition-opacity duration-[2000] ease-in-out  w-full h-full"
             />
           )}
