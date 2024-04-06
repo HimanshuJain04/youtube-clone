@@ -38,6 +38,13 @@ const LikeButtons = ({ videoId, likesCount }: any) => {
     }
   }
 
+  function shareHandler() {
+    console.log(process.env.BASE_URL);
+    const link = `http://localhost:3000/video/watch/${videoId}`;
+    navigator.clipboard.writeText(link);
+    toast.success("Copied!");
+  }
+
   return (
     <div>
       <div className="flex justify-center items-center gap-5">
@@ -60,7 +67,10 @@ const LikeButtons = ({ videoId, likesCount }: any) => {
           </div>
         </div>
         {/* share */}
-        <div className="text-white flex justify-center items-center gap-2 rounded-full cursor-pointer hover:bg-white/[0.25] transition-all duration-200 ease-in-out text-xl py-2 px-4 bg-white/[0.2]">
+        <div
+          onClick={shareHandler}
+          className="text-white flex justify-center items-center gap-2 rounded-full cursor-pointer hover:bg-white/[0.25] transition-all duration-200 ease-in-out text-xl py-2 px-4 bg-white/[0.2]"
+        >
           <Icons.FaShare />
           <p className="text-base">Share</p>
         </div>

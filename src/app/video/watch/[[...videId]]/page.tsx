@@ -24,7 +24,7 @@ export default function Watch() {
 
   async function getVideos() {
     try {
-       const data: any = await fetchVideo(videoId!);
+      const data: any = await fetchVideo(videoId!);
       setVideoData(data);
       setViews(data?.viewsCount);
       setSubscribers(data?.user?.subscribersCount);
@@ -33,7 +33,7 @@ export default function Watch() {
     } catch (error) {
       console.log("Error : ", error);
       router.push("/something-went-wrong");
-    } 
+    }
   }
 
   async function increaseViews() {
