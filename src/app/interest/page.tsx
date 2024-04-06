@@ -4,21 +4,12 @@ import { Icons } from "@/constant/Icons";
 import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../context";
 import { useRouter } from "next/navigation";
+import { categories } from "@/constant/category";
 
 const Page = () => {
-  const [categories, setCategories] = useState(null);
   const [userInterest, setUserInterest] = useState<String[]>([]);
-  const { user } = useContext(Context);
+  const { user }: any = useContext(Context);
   const router = useRouter();
-
-  async function getAllCategories() {
-    try {
-      const res: any = await fetchCategories();
-      setCategories(res);
-    } catch (error) {
-      console.log("Error getAllCategories: ", error);
-    }
-  }
 
   function addHandler(category: String) {
     setUserInterest([...userInterest, category]);
@@ -51,9 +42,7 @@ const Page = () => {
       router.push("/profile");
       return;
     }
-
-    getAllCategories();
-  }, []);
+  }, [user]);
 
   return (
     <div className="bg-black w-full flex-col min-h-screen gap-5 flex justify-center items-center">

@@ -15,6 +15,10 @@ const nextConfig = {
                 hostname: "e0.pxfuel.com"
             },
         ],
-    }
+    },
+    env: {
+        BASE_URL: "http://localhost:3000"
+    },
 };
+
 export default nextConfig;

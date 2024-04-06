@@ -1,0 +1,22 @@
+export const categories = [
+    "Art & Design",
+    "Beauty & Fashion",
+    "Comedy",
+    "Education",
+    "Entertainment",
+    "Family Entertainment",
+    "Film & Animation",
+    "Food",
+    "Gaming",
+    "Health & Fitness",
+    "How-to & Style",
+    "Music",
+    "News & Politics",
+    "Nonprofits & Activism",
+    "People & Blogs",
+    "Pets & Animals",
+    "Science & Technology",
+    "Sports",
+    "Travel & Events",
+    "Vehicles"
+];

@@ -39,8 +39,7 @@ const LikeButtons = ({ videoId, likesCount }: any) => {
   }
 
   function shareHandler() {
-    console.log(process.env.BASE_URL);
-    const link = `http://localhost:3000/video/watch/${videoId}`;
+    const link = `${process.env.BASE_URL}/video/watch/${videoId}`;
     navigator.clipboard.writeText(link);
     toast.success("Copied!");
   }

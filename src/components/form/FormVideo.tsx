@@ -9,6 +9,8 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { Icons } from "@/constant/Icons";
 import Image from "next/image";
+import { categories } from "@/constant/category";
+
 
 interface FileData {
   lastModified: number;
@@ -25,6 +27,7 @@ interface InitialFormValuesProps {
   isAgeRestricted: Boolean;
   tags: String[];
   status: String;
+  category: String;
   videoId?: String;
   thumbnailFile: FileData | String | MediaSource | Blob;
   videoFile: FileData | String | File | MediaSource | Blob;
@@ -51,6 +54,7 @@ export default function FormVideo({ InitialFormValues, TYPE }: Props) {
     thumbnailFile: InitialFormValues.thumbnailFile,
     videoFile: InitialFormValues.videoFile,
     status: InitialFormValues.status,
+    category: InitialFormValues.category,
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -217,6 +221,7 @@ export default function FormVideo({ InitialFormValues, TYPE }: Props) {
           />
         </div>
 
+        {/* others */}
         <div className="w-full flex gap-5">
           {/* Checkbox for Age Restriction */}
           <div className="w-full flex justify-start items-center border-2 rounded-lg p-2 border-white/[0.15] gap-3">
@@ -252,6 +257,27 @@ export default function FormVideo({ InitialFormValues, TYPE }: Props) {
               <option className="bg-white/[0.5] text-black" value="Private">
                 Private
               </option>
+            </select>
+          </div>
+
+          {/* video category */}
+          <div className="w-full  flex justify-start items-center border-2 rounded-lg p-2 border-white/[0.15] gap-3">
+            <label htmlFor="category" className="block text-white mb-2">
+              Category
+            </label>
+            <select
+              className="outline-none px-5 py-1 rounded-md bg-white/[0.1]"
+              name="category"
+              id="category"
+            >
+              <option className="bg-white/[0.5] text-black" value="">
+                Select category
+              </option>
+              {categories?.map((category: string) => (
+                <option value={category} className="" key={category}>
+                  {category}
+                </option>
+              ))}
             </select>
           </div>
         </div>

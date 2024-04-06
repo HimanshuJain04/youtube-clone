@@ -1,4 +1,3 @@
-Category for each video
 option to update channel category
 channel  | user crud opertaions
 immediately effect on ui when deleting like history, playlist , like, etc,
@@ -6,6 +5,5 @@ add loading on like ,comments, add to playlist
 responsive
 summary -> (optional)
 feed algo (own)
-share
-BASEURL fix  in share 
-
+BASEURL fix  in share
+delete likeComment , dis.. , comments before deleting video
