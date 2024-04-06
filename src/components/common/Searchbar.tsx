@@ -1,30 +1,63 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import IconHover from "@/components/common/IconHover";
 import { Icons } from "@/constant/Icons";
 import { fetchRelatedSearch } from "@/actions/video";
+import { useRouter } from "next/navigation";
 
 const Searchbar = ({ inputValue, setInputValue }) => {
+  const router = useRouter();
   const [searchedNames, setSearchedNames] = useState(null);
+
+  const divRef = useRef(null);
+  const searchRef = useRef(null);
   async function getMoreRelatedSearch() {
     try {
       if (!inputValue) {
+        setSearchedNames(null);
         return;
       }
-
       const res: any = await fetchRelatedSearch(inputValue);
-      console.log(res);
       setSearchedNames(res);
     } catch (error) {
       console.log("Error: ", error);
     }
   }
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const handleClickOutside = (event: any) => {
+    if (
+      divRef.current &&
+      !divRef.current?.contains(event.target) &&
+      searchRef.current &&
+      !searchRef.current?.contains(event.target)
+    ) {
+      setSearchedNames(null);
+    }
+  };
+
+  function navigateHandler(title: string) {
+    if (!title) return;
+    router.push(`/search?value=${title}`);
+    setSearchedNames(null);
+  }
+
   useEffect(() => {
     getMoreRelatedSearch();
   }, [inputValue]);
+
   return (
     <>
-      <div className="border-[1px] relative w-full group-focus-within:border-blue-500 h-full border-white/[0.2] flex justify-center items-center rounded-l-full ">
+      <div
+        ref={searchRef}
+        className="border-[1px] relative w-full group-focus-within:border-blue-500 h-full border-white/[0.2] flex justify-center items-center rounded-l-full "
+      >
         <input
           type="text"
           placeholder="Search"
@@ -46,16 +79,25 @@ const Searchbar = ({ inputValue, setInputValue }) => {
         )}
       </div>
 
-      <div className="w-10 absolute top-16 h-4 bg-red-300">
-        <div>
-          {searchedNames &&
-            searchedNames?.map((item: any, index: number) => (
-              <div key={index}>
-                <p>{item}</p>
+      {searchedNames && (
+        <div
+          ref={divRef}
+          className="w-full absolute top-[44px] h-auto py-3 rounded-lg bg-[#373232]"
+        >
+          <div className="flex flex-col">
+            {searchedNames?.map((item: any, index: number) => (
+              <div
+                onClick={() => navigateHandler(item?.title)}
+                key={index}
+                className="flex px-2 py-1 border-b-2 border-white/[0.15] cursor-pointer transition-all duration-200 ease-in-out hover:bg-white/[0.1] gap-2 justify-start items-center"
+              >
+                <Icons.AiOutlineSearch className="text-xl" />
+                <p className="text-base font-semibold">{item?.title}</p>
               </div>
             ))}
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 };

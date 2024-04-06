@@ -40,10 +40,10 @@ export default function Navbar() {
           </div>
 
           {/* SearchBar and Mic */}
-          <div className={`md:flex hidden justify-center h-full items-center gap-3`}>
+          <div className={`md:flex relative hidden justify-center h-full items-center gap-3`}>
 
             {/* searchBar */}
-            <div className="flex flex-row h-[40px] group justify-center items-center rounded-full w-full">
+            <div className="flex relative flex-row h-[40px] group justify-center items-center rounded-full w-full">
               <Searchbar inputValue={inputValue} setInputValue={setInputValue} />
 
               {/* right side of bar */}

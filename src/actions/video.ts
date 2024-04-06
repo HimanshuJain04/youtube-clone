@@ -382,12 +382,6 @@ export async function fetchRelatedSearch(searchValue: string) {
                 },
                 select: {
                     title: true,
-                    user: {
-                        select: {
-                            userName: true,
-                            name: true,
-                        }
-                    }
                 }
             }
         );
