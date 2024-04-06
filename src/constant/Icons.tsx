@@ -49,12 +49,14 @@ import { PiMusicNoteBold, PiFilmSlate } from "react-icons/pi";
 import { BsFillFilePlayFill, BsFire, BsNewspaper } from "react-icons/bs";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { LiaShoppingBagSolid } from "react-icons/lia";
+import { CgProfile } from "react-icons/cg";
 
 import { IoMdAdd } from "react-icons/io";
 
 export const Icons = {
   IoMdAdd,
   FaRegImage,
+  CgProfile,
   FaFileVideo,
   MdOutlineWatchLater,
   MdPlaylistAdd,

@@ -15,6 +15,12 @@ export const HomeCategory = [
     icon: <Icons.MdOutlineSubscriptions />,
     path: "/subscriptions",
   },
+  {
+    id: uuidv4(),
+    name: "Profile",
+    icon: <Icons.CgProfile />,
+    path: "/profile",
+  },
 ];
 
 export const videosCategory = [
