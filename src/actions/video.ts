@@ -5,11 +5,23 @@ import { uploadFileToCloudinary } from "@/utils/uploadFileToCloudinary";
 import { FileIntoBuffer } from "@/utils/FileIntoBuffer";
 import { formToJSON } from "axios";
 
-
+interface FormBody {
+    title: string;
+    description: string;
+    isAgeRestricted: string;
+    userId: string;
+    tags: string;
+    category: string;
+    status: string;
+    thumbnailFile: File;
+    videoFile: File;
+}
 export async function createVideo(body: any) {
     try {
-        const { title, description, isAgeRestricted, userId, tags, category, status, thumbnailFile, videoFile
-        } = formToJSON(body);
+
+        // Assuming formToJSON returns an object of type FormBody
+        const formData = formToJSON(body) as FormBody;
+        const { title, description, isAgeRestricted, userId, tags, category, status, thumbnailFile, videoFile } = formData;
 
         if (!title || !description || !tags || !thumbnailFile || !category || !status || !videoFile) {
             throw new Error("All fields are required");
@@ -25,7 +37,7 @@ export async function createVideo(body: any) {
         const thumbnailRes = await uploadFileToCloudinary(thumbnailBuffer);
         const videoRes = await uploadFileToCloudinary(videoBuffer);
 
-        const allTags = tags.split(",");
+        const allTags: string[] = tags.split(",");
 
         const createdVideo = await client.video.create(
             {
