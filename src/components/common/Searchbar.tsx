@@ -1,8 +1,27 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import IconHover from "@/components/common/IconHover";
 import { Icons } from "@/constant/Icons";
+import { fetchRelatedSearch } from "@/actions/video";
 
 const Searchbar = ({ inputValue, setInputValue }) => {
+  const [searchedNames, setSearchedNames] = useState(null);
+  async function getMoreRelatedSearch() {
+    try {
+      if (!inputValue) {
+        return;
+      }
+
+      const res: any = await fetchRelatedSearch(inputValue);
+      console.log(res);
+      setSearchedNames(res);
+    } catch (error) {
+      console.log("Error: ", error);
+    }
+  }
+  useEffect(() => {
+    getMoreRelatedSearch();
+  }, [inputValue]);
   return (
     <>
       <div className="border-[1px] relative w-full group-focus-within:border-blue-500 h-full border-white/[0.2] flex justify-center items-center rounded-l-full ">
@@ -27,7 +46,16 @@ const Searchbar = ({ inputValue, setInputValue }) => {
         )}
       </div>
 
-      <div className="w-full h-4 bg-red-300"></div>
+      <div className="w-10 absolute top-16 h-4 bg-red-300">
+        <div>
+          {searchedNames &&
+            searchedNames?.map((item: any, index: number) => (
+              <div key={index}>
+                <p>{item}</p>
+              </div>
+            ))}
+        </div>
+      </div>
     </>
   );
 };

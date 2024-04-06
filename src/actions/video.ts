@@ -362,6 +362,44 @@ export async function fetchSubscribedChannelVideos(userId: string) {
     }
 }
 
+export async function fetchRelatedSearch(searchValue: string) {
+    try {
+
+        if (!searchValue) {
+            return null;
+        }
+
+        const searchTerm = `%${searchValue}%`;
+
+        // now what should be similar videos
+        const names = await client.video.findMany(
+            {
+                where: {
+                    title: {
+                        contains: searchTerm,
+                        mode: "insensitive"
+                    }
+                },
+                select: {
+                    title: true,
+                    user: {
+                        select: {
+                            userName: true,
+                            name: true,
+                        }
+                    }
+                }
+            }
+        );
+
+        return names;
+
+    } catch (err: any) {
+
+        console.log("Server failed to get simliar search titles, try again later: ", err)
+        throw new Error("Server failed to get simliar search titles, try again later")
+    }
+}
 export async function fetchRecommendedVideos(videoId: string) {
     try {
 

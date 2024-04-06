@@ -39,7 +39,7 @@ export default function SigninPage() {
       router.push("/");
     } catch (err: any) {
       toast.error("Login failed!");
-      toast.error(err?.respose?.data?.message);
+      toast.error(err?.response?.data?.message);
       console.log("Login error : ", err);
     } finally {
       setLoading(false);
