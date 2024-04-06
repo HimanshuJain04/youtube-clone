@@ -27,7 +27,6 @@ export default function Navbar() {
     <div className="w-full flex sticky mb-3 top-0 z-10 bg-black justify-center items-start ">
       <div className="text-white relative flex items-center justify-between pt-2 pb-5 h-[60px] w-full px-5">
         <>
-
           {/* Logo and Hamburger */}
           <div className={`justify-center shrink-0 gap-5 items-center flex`}>
             <IconHover Icon={Icons.RxHamburgerMenu} handler={() => { setShowSideBar(!showSideBar) }} />
@@ -64,7 +63,7 @@ export default function Navbar() {
 
           {/* Responsive SearchBar for Phone */}
           <div className="flex md:hidden justify-center h-full items-center">
-            
+
             <div
               onClick={() => {
                 setShowSeachBar(!showSeachBar);
@@ -78,12 +77,14 @@ export default function Navbar() {
 
             {
               showSeachBar && (
-                <div className="flex absolute left-0 top-0 bg-black px-5 mt-2 z-10 flex-row h-[40px] group justify-start items-center rounded-full w-full">
+                <div className="flex absolute left-0 top-0 bg-black px-5 mt-1 z-10 flex-row h-[40px] group justify-start items-center rounded-full w-full">
 
                   <span onClick={() => { setShowSeachBar(false) }} className="text-xl p-1 hover:bg-white/[0.15] rounded-full">
                     <Icons.RxCross1 />
                   </span>
+
                   <Searchbar inputValue={inputValue} setInputValue={setInputValue} />
+
                   {/* right side of bar */}
                   <div
                     onClick={() => { push(`/search?value=${inputValue}`) }}
@@ -91,6 +92,7 @@ export default function Navbar() {
                   >
                     <Icons.AiOutlineSearch className="text-2xl" />
                   </div>
+
                 </div>
               )
             }
@@ -117,7 +119,6 @@ export default function Navbar() {
             }
           </div>
         </>
-
       </div>
     </div>
   );

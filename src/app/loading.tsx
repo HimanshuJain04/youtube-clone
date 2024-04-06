@@ -2,8 +2,8 @@ import React from "react";
 
 const Loading = () => {
   return (
-    <div className="w-screen h-screen text-white">
-      <p>Screen-loading.....</p>
+    <div className="w-screen flex justify-center items-center h-screen text-white">
+      <span className="loader"></span>
     </div>
   );
 };

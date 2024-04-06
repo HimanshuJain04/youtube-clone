@@ -38,12 +38,12 @@ export default async function Home() {
   });
 
   return (
-    <div className="w-full gap-5 flex relative min-h-screen bg-black">
-      <div>
+    <div className="w-full flex relative min-h-screen bg-black">
+      <div className="sm:relative absolute min-h-screen bg-black">
         <Sidebar />
       </div>
 
-      <div className="w-full bg-black flex flex-wrap justify-start items-start gap-y-10 gap-x-5">
+      <div className="w-full bg-black pb-10 px-5 flex flex-wrap justify-start items-start gap-y-10 gap-x-5">
         {videos?.length > 0 &&
           videos?.map((video) => <HomeCard key={video?.id} video={video} />)}
       </div>

@@ -11,14 +11,14 @@ import { Icons } from "@/constant/Icons";
 function SideBar() {
 
     const { category, showSideBar, user } = useContext(Context);
-    const [showLibrary, setShowLibrary] = useState(false)
+    const [showLibrary, setShowLibrary] = useState(false);
 
     return (
         <>
             <div className={` bg-black relative flex justify-start items-center text-white h-screen
          ${showSideBar ? " w-[250px] block " : " w-[80px]  md:block hidden"}`}>
 
-                <div className={`overflow-y-auto scroll-smooth h-[calc(100vh-60px)] ${showSideBar ? "px-3 w-[250px] " : "px-2 w-[80px] "}  top-14  left-0  z-[8] fixed scroll-smooth bg-black transition-all duration-200 ease-in-out`}>
+                <div className={`overflow-y-auto scroll-smooth h-[calc(100vh-50px)] ${showSideBar ? "px-3 w-[250px] " : "px-2 w-[80px] "}  top-14  left-0  z-[8] fixed scroll-smooth bg-black transition-all duration-200 ease-in-out`}>
 
                     <div className={`border-b-2 border-[white]/[0.3] pt-3 pb-5 `}>
                         {HomeCategory.map((item, index) => (

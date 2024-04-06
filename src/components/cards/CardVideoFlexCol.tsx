@@ -23,14 +23,14 @@ function VideoCard({ video, css }: any) {
   return (
     <Link href={`video/watch/${video.id}`}>
       <div
-        className={`flex group flex-col relative  text-white  justify-start items-start sm:w-[400px] ${css}`}
+        className={`flex group flex-col relative  text-white  justify-start items-start ${css}`}
       >
         {/* video | image */}
         <VideoThumbnailCard
           imageUrl={video?.thumbnail}
           videoUrl={video?.url}
           duration={video?.duration}
-          css="w-[400px] h-[240px]"
+          css="w-[400px] h-[250px]"
         />
 
         <div className="mt-3 relative flex justify-between items-start w-full">

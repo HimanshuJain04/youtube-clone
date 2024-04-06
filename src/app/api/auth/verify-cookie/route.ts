@@ -1,11 +1,23 @@
-import { verifyTokenCookie } from "@/helper/verifyToken";
 import { NextRequest, NextResponse } from "next/server";
 import client from "@/db";
+import jwt from "jsonwebtoken"
 
 export async function GET(req: NextRequest) {
     try {
 
-        const userData: any = await verifyTokenCookie(req);
+        const token = req.cookies.get('YOUTUBE_TOKEN')?.value || "";
+
+        if (!token) {
+            return NextResponse.json(
+                {
+                    message: "Token not found",
+                    data: null,
+                },
+                { status: 404 }
+            )
+        }
+
+        const userData = await jwt.verify(token, process.env.JSON_WEB_TOKEN_SECRET!);
 
         if (!userData) {
             return NextResponse.json(
