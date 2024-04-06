@@ -38,6 +38,7 @@ export default function UpdateVideo() {
             videoFile: video?.url,
             videoId: video?.id,
             status: video?.status || "",
+            category: video?.category || "",
           }}
           TYPE="UPDATE"
         />

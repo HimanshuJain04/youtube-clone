@@ -37,7 +37,9 @@ const MyVideoCard = ({ video }: any) => {
 
         <div className="w-full py-3 flex justify-between items-start">
           {/* visibility */}
-          <div>Visible</div>
+          <div>
+            <p>{video?.status}</p>
+          </div>
 
           {/* restriction */}
           <div>

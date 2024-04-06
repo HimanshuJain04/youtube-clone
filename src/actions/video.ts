@@ -8,10 +8,10 @@ import { formToJSON } from "axios";
 
 export async function createVideo(body: any) {
     try {
-        const { title, description, isAgeRestricted, userId, tags, thumbnailFile, videoFile
+        const { title, description, isAgeRestricted, userId, tags, category, status, thumbnailFile, videoFile
         } = formToJSON(body);
 
-        if (!title || !description || !tags || !thumbnailFile || !videoFile) {
+        if (!title || !description || !tags || !thumbnailFile || !category || !status || !videoFile) {
             throw new Error("All fields are required");
         }
 
@@ -32,12 +32,14 @@ export async function createVideo(body: any) {
                 data: {
                     title,
                     description,
-                    url: videoRes?.secure_url,
-                    thumbnail: thumbnailRes?.secure_url,
+                    url: videoRes?.secure_url || "",
+                    thumbnail: thumbnailRes?.secure_url || "",
                     isAgeRestricted: isAgeRestricted === "true" ? true : false,
                     tags: allTags,
                     userId: userId,
-                    duration: videoRes.duration,
+                    duration: videoRes?.duration || 0,
+                    status,
+                    category,
                 }
             }
         );
@@ -196,6 +198,7 @@ export async function fetchUserVideos(channelId: string) {
                     description: true,
                     thumbnail: true,
                     createdAt: true,
+                    status: true,
                     url: true,
                     viewsCount: true,
                     likesCount: true,

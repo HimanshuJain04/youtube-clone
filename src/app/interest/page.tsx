@@ -47,7 +47,7 @@ const Page = () => {
   return (
     <div className="bg-black w-full flex-col min-h-screen gap-5 flex justify-center items-center">
       {categories && (
-        <div className="bg-white/[0.2] flex flex-wrap gap-4 max-w-[600px] p-5 rounded-lg">
+        <div className="bg-white/[0.15] flex flex-wrap gap-4 max-w-[600px] p-5 rounded-lg">
           {categories?.map((category: string, index: number) => (
             <div key={index} className="relative">
               <div

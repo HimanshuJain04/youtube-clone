@@ -11,7 +11,6 @@ import { Icons } from "@/constant/Icons";
 import Image from "next/image";
 import { categories } from "@/constant/category";
 
-
 interface FileData {
   lastModified: number;
   lastModifiedDate: Date;
@@ -244,8 +243,10 @@ export default function FormVideo({ InitialFormValues, TYPE }: Props) {
               Status
             </label>
             <select
+              onChange={handleChange}
               className="outline-none px-5 py-1 rounded-md bg-white/[0.1]"
               name="status"
+              value={formValues.status}
               id="status"
             >
               <option className="bg-white/[0.5] text-black" value="">
@@ -266,15 +267,21 @@ export default function FormVideo({ InitialFormValues, TYPE }: Props) {
               Category
             </label>
             <select
+              onChange={handleChange}
               className="outline-none px-5 py-1 rounded-md bg-white/[0.1]"
               name="category"
+              value={formValues.category}
               id="category"
             >
-              <option className="bg-white/[0.5] text-black" value="">
+              <option className="text-white bg-black/[0.8] " value="">
                 Select category
               </option>
               {categories?.map((category: string) => (
-                <option value={category} className="" key={category}>
+                <option
+                  value={category}
+                  className="text-white bg-black/[0.8] "
+                  key={category}
+                >
                   {category}
                 </option>
               ))}

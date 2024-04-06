@@ -29,13 +29,11 @@ const Page = () => {
       {data && (
         <div className="w-10/12 flex flex-col gap-5 justify-start items-start">
           {/* cover image */}
-
-          <div className="w-full bg-white/[0.15]  relative rounded-3xl h-[200px]">
-            {data.coverImage && (
+          {data.coverImage && (
+            <div className="w-full bg-white/[0.15]  relative rounded-3xl h-[200px]">
               <Image alt="Cover-profile" src={data.coverImage} layout="fill" />
-            )}
-          </div>
-
+            </div>
+          )}
           {/* profile description */}
           <div className="flex gap-10 mt-5">
             {/* profileimage */}
