@@ -1,6 +1,5 @@
 "use client";
 
-import { verifyTokenCookie } from "@/helper/verifyToken";
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
 
@@ -10,14 +9,18 @@ export function AppContext({ children }: { children: React.ReactNode }) {
   const [category, setCategory] = useState("Home");
   const [showSideBar, setShowSideBar] = useState(true);
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   async function getUserByToken() {
+    setLoading(true);
     try {
       const data = await axios.get("/api/auth/verify-cookie");
       setUser(data.data.data);
     } catch (error) {
       setUser(null);
       console.log("Error when verifying cookie: ", error);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -31,6 +34,8 @@ export function AppContext({ children }: { children: React.ReactNode }) {
         category,
         setCategory,
         showSideBar,
+        loading,
+        setLoading,
         setShowSideBar,
         setUser,
         user,

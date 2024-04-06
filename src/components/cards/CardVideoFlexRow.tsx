@@ -7,7 +7,7 @@ import { getTime, getViews } from "@/utils/videoUtils";
 import VideoThumbnailCard from "@/components/cards/VideoThumbnailCard";
 import { Icons } from "@/constant/Icons";
 import { removeFromHistory, removeFromWatchLater } from "@/actions/video";
-import { useContext, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { Context } from "@/app/context";
 import toast from "react-hot-toast";
 import { dislikedPostHandler } from "@/actions/like";
@@ -18,6 +18,7 @@ function VideoCard({ video, Type, css = "w-[400px] h-[200px]", flag }: any) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [showOptions, setShowOptions] = useState(false);
+  const dotRef = useRef();
 
   const { user }: any = useContext(Context);
 
@@ -153,17 +154,23 @@ function VideoCard({ video, Type, css = "w-[400px] h-[200px]", flag }: any) {
         </div>
         {/* hover dots */}
         {flag ? (
-          <div className="relative ">
-            <span
+          <>
+            <div
+              ref={dotRef}
               onClick={handleOptionsClick}
               className="text-white absolute right-0 group-hover:block hidden text-xl hover:bg-white/[0.15] p-2  rounded-full"
             >
               <Icons.HiDotsVertical />
-            </span>
+            </div>
+
             {showOptions && (
-              <CardOptions setShowOptions={setShowOptions} videoId={video.id} />
+              <CardOptions
+                dotRef={dotRef}
+                setShowOptions={setShowOptions}
+                videoId={video.id}
+              />
             )}
-          </div>
+          </>
         ) : (
           <div
             onClick={handleDeleteClick}

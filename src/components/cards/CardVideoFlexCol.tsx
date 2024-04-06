@@ -6,11 +6,12 @@ import { useRouter } from "next/navigation";
 import { getTime, getViews } from "@/utils/videoUtils";
 import VideoThumbnailCard from "@/components/cards/VideoThumbnailCard";
 import { Icons } from "@/constant/Icons";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import CardOptions from "@/components/buttons/CardOptions";
 
 function VideoCard({ video, css }: any) {
   const router = useRouter();
+  const dotRef = useRef(null);
 
   const [showOptions, setShowOptions] = useState(false);
 
@@ -23,19 +24,19 @@ function VideoCard({ video, css }: any) {
   return (
     <Link href={`video/watch/${video.id}`}>
       <div
-        className={`flex group flex-col relative  text-white  justify-start items-start ${css}`}
+        className={`flex group flex-col  w-[400px] relative  text-white  justify-start items-start ${css}`}
       >
         {/* video | image */}
         <VideoThumbnailCard
           imageUrl={video?.thumbnail}
           videoUrl={video?.url}
           duration={video?.duration}
-          css="w-[400px] h-[250px]"
+          css="w-full h-[250px]"
         />
 
         <div className="mt-3 relative flex justify-between items-start w-full">
           {/* details */}
-          <div className="flex gap-3 cursor-pointer justify-start items-start">
+          <div className="flex gap-3 w-full cursor-pointer justify-start items-start">
             {/* Channel Logo */}
             <Link href={`/channel/@${video?.user.userName}`}>
               <div className="mt-1 w-12 h-12 relative rounded-full shrink-0 bg-white/[0.2] ">
@@ -80,7 +81,9 @@ function VideoCard({ video, css }: any) {
               </div>
             </div>
           </div>
+
           <span
+            ref={dotRef}
             onClick={handleOptionsClick}
             className="text-white group-hover:block hidden text-xl hover:bg-white/[0.15] p-2  rounded-full"
           >
@@ -88,7 +91,11 @@ function VideoCard({ video, css }: any) {
           </span>
 
           {showOptions && (
-            <CardOptions setShowOptions={setShowOptions} videoId={video.id} />
+            <CardOptions
+              dotRef={dotRef}
+              setShowOptions={setShowOptions}
+              videoId={video.id}
+            />
           )}
         </div>
       </div>

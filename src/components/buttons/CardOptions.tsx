@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import { addToWatchLater } from "@/actions/video";
 import Playlist from "@/components/cards/Playlist";
 
-const CardOptions = ({ setShowOptions, videoId }: any) => {
+const CardOptions = ({ setShowOptions, dotRef, videoId }: any) => {
   const optionsRef = useRef(null);
   const { user } = useContext(Context);
 
@@ -20,7 +20,12 @@ const CardOptions = ({ setShowOptions, videoId }: any) => {
   }, []);
 
   const handleClickOutside = (event: any) => {
-    if (optionsRef.current && !optionsRef.current?.contains(event.target)) {
+    if (
+      optionsRef.current &&
+      !optionsRef.current?.contains(event.target) &&
+      dotRef.current &&
+      !dotRef.current?.contains(event.target)
+    ) {
       setShowOptions(false);
     }
   };
