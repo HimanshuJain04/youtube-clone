@@ -36,6 +36,11 @@ export default function SigninPage() {
       const response = await axios.post("/api/auth/signin", formData);
       toast.success("Login successfully!");
       setUser(response.data.data);
+      if (response.data.data.interest.length <= 0) {
+        router.push("/interest");
+        return;
+      }
+
       router.push("/");
     } catch (err: any) {
       toast.error("Login failed!");

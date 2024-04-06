@@ -23,6 +23,7 @@ model User {
   createdAt                 DateTime            @default(now())
   updatedAt                 DateTime            @updatedAt
   isVerified                Boolean             @default(false)
+  interest                  String[]            @default([])
   verifyToken               String?
   verifyTokenExpiry         DateTime?
   forgotPasswordToken       String?

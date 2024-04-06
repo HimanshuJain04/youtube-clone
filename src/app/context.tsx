@@ -16,6 +16,7 @@ export function AppContext({ children }: { children: React.ReactNode }) {
     try {
       const data = await axios.get("/api/auth/verify-cookie");
       setUser(data.data.data);
+      
     } catch (error) {
       setUser(null);
       console.log("Error when verifying cookie: ", error);
