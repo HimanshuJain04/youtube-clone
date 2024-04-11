@@ -4,6 +4,8 @@ import client from "@/db";
 import { uploadFileToCloudinary } from "@/utils/uploadFileToCloudinary";
 import { FileIntoBuffer } from "@/utils/FileIntoBuffer";
 import { formToJSON } from "axios";
+import { UploadApiResponse } from "cloudinary";
+
 
 interface FormBody {
     title: string;
@@ -15,7 +17,9 @@ interface FormBody {
     status: string;
     thumbnailFile: File;
     videoFile: File;
+    videoId?: string
 }
+
 export async function createVideo(body: any) {
     try {
 
@@ -34,7 +38,7 @@ export async function createVideo(body: any) {
         const thumbnailBuffer = await FileIntoBuffer(thumbnailFile);
         const videoBuffer = await FileIntoBuffer(videoFile);
 
-        const thumbnailRes = await uploadFileToCloudinary(thumbnailBuffer);
+        const thumbnailRes: UploadApiResponse = await uploadFileToCloudinary(thumbnailBuffer);
         const videoRes = await uploadFileToCloudinary(videoBuffer);
 
         const allTags: string[] = tags.split(",");
@@ -44,8 +48,8 @@ export async function createVideo(body: any) {
                 data: {
                     title,
                     description,
-                    url: videoRes?.secure_url || "",
-                    thumbnail: thumbnailRes?.secure_url || "",
+                    url: videoRes?.secure_url,
+                    thumbnail: thumbnailRes?.secure_url,
                     isAgeRestricted: isAgeRestricted === "true" ? true : false,
                     tags: allTags,
                     userId: userId,
@@ -71,7 +75,9 @@ export async function createVideo(body: any) {
 
 export async function updateVideo(body: any) {
     try {
-        const { title, description, isAgeRestricted, userId, tags, thumbnailFile, videoFile, status, videoId } = formToJSON(body);
+        // const { title, description, isAgeRestricted, userId, tags, thumbnailFile, videoFile, status, videoId } = formToJSON(body);
+        const formData = formToJSON(body) as FormBody;
+        const { title, description, isAgeRestricted, userId, tags, category, status, thumbnailFile, videoFile, videoId } = formData;
 
         if (!title || !description || !tags || !thumbnailFile || !videoFile || !videoId) {
             throw new Error("All fields are required");
@@ -81,14 +87,14 @@ export async function updateVideo(body: any) {
             throw new Error("User not found, Try again later");
         }
 
-        let videoRes = videoFile;
+        let videoRes: UploadApiResponse;
 
         if (typeof videoFile !== "string") {
             const videoBuffer = await FileIntoBuffer(videoFile);
             videoRes = await uploadFileToCloudinary(videoBuffer);
         }
 
-        let thumbnailRes = thumbnailFile;
+        let thumbnailRes: UploadApiResponse;
 
         if (typeof thumbnailFile !== "string") {
             const thumbnailBuffer = await FileIntoBuffer(thumbnailFile);
@@ -105,12 +111,14 @@ export async function updateVideo(body: any) {
                 data: {
                     title,
                     description,
-                    url: videoRes?.secure_url,
-                    thumbnail: thumbnailRes?.secure_url,
+                    url: videoRes! && videoRes?.secure_url,
+                    thumbnail: thumbnailRes! && thumbnailRes?.secure_url,
                     isAgeRestricted: isAgeRestricted === "true" ? true : false,
                     tags: allTags,
                     userId: userId,
-                    duration: videoRes.duration,
+                    status,
+                    category,
+                    duration: videoRes! && videoRes.duration,
                 }
             }
         );

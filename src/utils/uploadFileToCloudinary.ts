@@ -1,4 +1,4 @@
-import { v2 as cloudinary } from "cloudinary";
+import { v2 as cloudinary, UploadApiResponse } from "cloudinary";
 import { cloudinaryConnection } from '@/config/cloudinaryConnection';
 
 cloudinaryConnection();
@@ -12,7 +12,7 @@ export const uploadFileToCloudinary = async (file: any) => {
         };
 
         // Using async/await for clarity
-        const result = await new Promise((resolve, reject) => {
+        const result: UploadApiResponse = await new Promise((resolve, reject) => {
             cloudinary.uploader.upload_stream(options, function (error: any, result: any) {
                 if (error) {
                     reject(error);

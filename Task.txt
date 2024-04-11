@@ -5,5 +5,4 @@ add loading on like ,comments, add to playlist
 responsive
 summary -> (optional)
 feed algo (own)
-BASEURL fix  in share
 delete likeComment , dis.. , comments before deleting video
